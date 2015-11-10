@@ -1,0 +1,47 @@
+	.text
+	.globl	cl_copy
+	.align	2
+	.type	cl_copy,@function
+	.ent       cl_copy              # @cl_copy
+cl_copy:
+	.solverkernel
+	.frame     %SP,0
+# BB#0:                                 # %entry
+    args 2
+        argspc     1, 3
+        argspc     0, 3
+	mnum       2
+	bb         0
+	rli        %a1
+	rli        %a0
+	mov        %r1, %a1
+	mov        %r0, %a0
+	sll        %r2, %GLOBAL_ID.X, 2
+	mloc       1
+	lw         %r1, %r1, %r2
+	mloc       2
+	sw         %r1, %r0, %r2
+	ret        %RA
+	.end       cl_copy
+$tmp0:
+	.size	cl_copy, ($tmp0)-cl_copy
+
+        .globl	cl_copy_launch
+	.align	2
+	.type	cl_copy_launch,@function
+	.ent       cl_copy_launch 
+cl_copy_launch:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	bb         0
+    numgr      1, 1, 1
+    grsize     16, 1, 1
+    mov        %a0, 0
+    mov        %a1, 4
+	call       cl_copy
+	ret        %RA
+	.end       cl_copy_launch
+$tmp1:
+	.size	cl_copy_launch, ($tmp1)-cl_copy_launch
+
+

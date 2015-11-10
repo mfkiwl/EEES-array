@@ -1,0 +1,205 @@
+###BEGIN: use_sdiv 4 stage bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o use_sdiv-4stage-bypass.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json
+###TOOL: ${S_AS}
+###ARGS: use_sdiv-4stage-bypass.s -o use_sdiv-4stage-bypass -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:use_sdiv-4stage-bypass --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json -dmem 0:cp:use_sdiv-4stage-bypass.cp.dmem_init -max-cycle 10000 -dump-dmem -dump-dmem-prefix use_sdiv-4-b
+###MDUMP: use_sdiv-4-b.baseline.scalar.dump:use_sdiv.dump.ref
+###END:
+
+###BEGIN: use_sdiv 4 stage no bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o use_sdiv-4stage.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json
+###TOOL: ${S_AS}
+###ARGS: use_sdiv-4stage.s -o use_sdiv-4stage -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:use_sdiv-4stage --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json -dmem 0:cp:use_sdiv-4stage.cp.dmem_init -max-cycle 10000 -dump-dmem -dump-dmem-prefix use_sdiv-4
+###MDUMP: use_sdiv-4.baseline.scalar.dump:use_sdiv.dump.ref
+###END:
+
+###BEGIN: use_sdiv 5 stage bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o use_sdiv-5stage-bypass.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json
+###TOOL: ${S_AS}
+###ARGS: use_sdiv-5stage-bypass.s -o use_sdiv-5stage-bypass -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:use_sdiv-5stage-bypass --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json -dmem 0:cp:use_sdiv-5stage-bypass.cp.dmem_init -max-cycle 10000 -dump-dmem -dump-dmem-prefix use_sdiv-5-b
+###MDUMP: use_sdiv-5-b.baseline.scalar.dump:use_sdiv.dump.ref
+###END:
+
+###BEGIN: use_sdiv 5 stage no bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o use_sdiv-5stage.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json
+###TOOL: ${S_AS}
+###ARGS: use_sdiv-5stage.s -o use_sdiv-5stage -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:use_sdiv-5stage --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json -dmem 0:cp:use_sdiv-5stage.cp.dmem_init -max-cycle 10000 -dump-dmem -dump-dmem-prefix use_sdiv-5
+###MDUMP: use_sdiv-5.baseline.scalar.dump:use_sdiv.dump.ref
+###END:
+
+###BEGIN: use_sdiv 4 stage bypass RTL
+###TOOL: ${S_CC}
+###ARGS: ${FILE} -o use_sdiv-4-b --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json 
+###RTL: use_sdiv-4-b.zip ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json ${SOLVER_ROOT}/rtl
+###MDUMP: cp.dmem.dump:use_sdiv.dump.ref
+###END:
+	.text
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main                 # @main
+main:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       0
+	rvals      32
+	mnum       6
+	bb         0
+	succ       1
+	dom        1
+	mov        %r0, az
+	mloc       1
+	lw         %a0, %r0, 0
+	mov        %r0, bz
+	mloc       2
+	lw         %a1, %r0, 0
+	call       __divsi3
+	mov        %r0, cz
+	mloc       3
+	sw         %v0, %r0, 0
+	mov        %r0, %ZERO
+$BB0_1:                                 # %for.body
+                                        # =>This Inner Loop Header: Depth=1
+	bb         1
+	loop       0
+	lext       0
+	lhdr       0, 1
+	pred       1
+	pred       0
+	succ       1
+	succ       2
+	dom        2
+	pdom       0
+	rli        %r0
+	sll        %r1, %r0, 2
+	mov        %r2, a
+	mloc       4
+	lw         %a0, %r2, %r1
+	mov        %r2, b
+	mloc       5
+	lw         %a1, %r2, %r1
+	call       __divsi3
+	mov        %r2, c
+	mloc       6
+	sw         %v0, %r2, %r1
+	add        %r0, %r0, 1
+	brne       %r0, 32, ($BB0_1)
+# BB#2:                                 # %for.end
+	bb         2
+	pred       1
+	pdom       1
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp0:
+	.size	main, ($tmp0)-main
+
+	.type	a,@object               # @a
+	.data
+	.globl	a
+	.align	2
+a:
+	.long	3139895871              # 0xbb27023f
+	.long	4143012462              # 0xf6f15a6e
+	.long	3200127099              # 0xbebe107b
+	.long	4143193115              # 0xf6f41c1b
+	.long	552423021               # 0x20ed4e6d
+	.long	3271956208              # 0xc30616f0
+	.long	2136162845              # 0x7f53421d
+	.long	2217823349              # 0x84314c75
+	.long	2435080903              # 0x912462c7
+	.long	546981527               # 0x209a4697
+	.long	3331822539              # 0xc69793cb
+	.long	2025641097              # 0x78bcd489
+	.long	2853817152              # 0xaa19cb40
+	.long	818509270               # 0x30c975d6
+	.long	706332444               # 0x2a19c71c
+	.long	2358470091              # 0x8c9365cb
+	.long	601396790               # 0x23d89636
+	.long	462668335               # 0x1b93c22f
+	.long	2612680814              # 0x9bba586e
+	.long	1410538814              # 0x54131d3e
+	.long	3607372162              # 0xd7042182
+	.long	446386754               # 0x1a9b5242
+	.long	4049356644              # 0xf15c4764
+	.long	2889460975              # 0xac39acef
+	.long	259698839               # 0xf7ab097
+	.long	3964779452              # 0xec51bbbc
+	.long	332375335               # 0x13cfa527
+	.long	1382695088              # 0x526a40b0
+	.long	2323205945              # 0x8a794f39
+	.long	463533383               # 0x1ba0f547
+	.long	1536498260              # 0x5b951a54
+	.long	352388281               # 0x150104b9
+	.size	a, 128
+
+	.type	b,@object               # @b
+	.globl	b
+	.align	2
+b:
+	.long	3887632859              # 0xe7b891db
+	.long	393344744               # 0x1771f6e8
+	.long	1251143577              # 0x4a92ef99
+	.long	2076725600              # 0x7bc85160
+	.long	1215184139              # 0x486e3d0b
+	.long	1297108472              # 0x4d504df8
+	.long	3884954793              # 0xe78fb4a9
+	.long	861293380               # 0x33564b44
+	.long	788448797               # 0x2efec61d
+	.long	3972150522              # 0xecc234fa
+	.long	1086850853              # 0x40c80725
+	.long	2066660730              # 0x7b2ebd7a
+	.long	608598760               # 0x24467ae8
+	.long	791331352               # 0x2f2ac218
+	.long	2792671739              # 0xa674c9fb
+	.long	1832191319              # 0x6d350557
+	.long	602434482               # 0x23e86bb2
+	.long	274381426               # 0x105aba72
+	.long	3347641781              # 0xc788f5b5
+	.long	2587331338              # 0x9a378b0a
+	.long	3958462515              # 0xebf15833
+	.long	4023998734              # 0xefd9590e
+	.long	916070043               # 0x369a1e9b
+	.long	444427240               # 0x1a7d6be8
+	.long	488137896               # 0x1d1864a8
+	.long	2011353591              # 0x77e2d1f7
+	.long	2445113815              # 0x91bd79d7
+	.long	1090465                 # 0x10a3a1
+	.long	1833208                 # 0x1bf8f8
+	.long	2187395110              # 0x82610026
+	.long	1304021545              # 0x4db9ca29
+	.long	3499756107              # 0xd09a0a4b
+	.size	b, 128
+
+	.type	az,@object              # @az
+	.bss
+	.globl	az
+	.align	2
+az:
+	.long	0                       # 0x0
+	.size	az, 4
+
+	.type	bz,@object              # @bz
+	.data
+	.globl	bz
+	.align	2
+bz:
+	.long	23412                   # 0x5b74
+	.size	bz, 4
+
+	.type	cz,@object              # @cz
+	.comm	cz,4,4
+	.type	c,@object               # @c
+	.comm	c,128,4
+

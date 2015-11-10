@@ -1,0 +1,47 @@
+library verilog;
+use verilog.vl_types.all;
+entity cp_id is
+    port(
+        iClk            : in     vl_logic;
+        iReset          : in     vl_logic;
+        oTask_Finished  : out    vl_logic;
+        oID_IF_Branch_Target_Addr: out    vl_logic_vector(16 downto 0);
+        oID_IF_Branch_Taken_Flag: out    vl_logic;
+        iIF_ID_PC       : in     vl_logic_vector(16 downto 0);
+        iIF_ID_Instruction: in     vl_logic_vector(23 downto 0);
+        iIF_ID_Branch_Op: in     vl_logic_vector(2 downto 0);
+        iIF_ID_Predication: in     vl_logic_vector(1 downto 0);
+        iEX_ID_Flag_Register: in     vl_logic;
+        iEX_ID_P0       : in     vl_logic;
+        iEX_ID_P1       : in     vl_logic;
+        oID_EX_RF_Write_Addr: out    vl_logic_vector(4 downto 0);
+        oID_EX_RF_WriteBack: out    vl_logic_vector(2 downto 0);
+        oID_EX_Write_Shadow_Register: out    vl_logic;
+        oID_EX_ALU_Opcode: out    vl_logic_vector(3 downto 0);
+        oID_EX_ALU_Operand_A: out    vl_logic_vector(31 downto 0);
+        oID_EX_ALU_Operand_B: out    vl_logic_vector(31 downto 0);
+        oID_EX_LSU_Memory_Write_Enable: out    vl_logic;
+        oID_EX_LSU_Memory_Read_Enable: out    vl_logic;
+        oID_EX_LSU_Operand_A: out    vl_logic_vector(31 downto 0);
+        oID_EX_LSU_Operand_B: out    vl_logic_vector(31 downto 0);
+        oID_EX_LSU_Opcode: out    vl_logic_vector(1 downto 0);
+        oID_EX_LSU_Store_Data: out    vl_logic_vector(31 downto 0);
+        oID_EX_MUL_SHIFT_LOGIC_Opcode: out    vl_logic_vector(2 downto 0);
+        oID_EX_MUL_SHIFT_LOGIC_Operand_A: out    vl_logic_vector(31 downto 0);
+        oID_EX_MUL_SHIFT_LOGIC_Operand_B: out    vl_logic_vector(31 downto 0);
+        oID_EX_Is_Multiplication: out    vl_logic;
+        oID_EX_Is_Shift : out    vl_logic;
+        oID_EX_Update_Flag: out    vl_logic;
+        oID_EX_Update_P0: out    vl_logic;
+        oID_EX_Update_P1: out    vl_logic;
+        oID_EX_PC       : out    vl_logic_vector(16 downto 0);
+        iRF_BP_Read_Data_B: in     vl_logic_vector(31 downto 0);
+        iBP_ID_Operand_A: in     vl_logic_vector(31 downto 0);
+        iBP_ID_Operand_B: in     vl_logic_vector(31 downto 0);
+        iBP_ID_LSU_Store_Data: in     vl_logic_vector(31 downto 0);
+        oID_BP_Immediate: out    vl_logic_vector(31 downto 0);
+        oID_BP_Is_Long_Immediate: out    vl_logic;
+        oID_BP_Long_Immediate: out    vl_logic_vector(23 downto 0);
+        oID_BP_Is_SUB   : out    vl_logic
+    );
+end cp_id;

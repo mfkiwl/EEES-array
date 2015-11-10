@@ -1,0 +1,174 @@
+	.file	"fir5.c"
+	.text
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main
+main:
+	.frame     %SP,0
+	args       0
+        rvals      32
+	bb         0
+	mov        %a0, output
+	mov        %a1, samples
+	mov        %a2, z_coef
+	mov        %a3, 8
+	call       fir5
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp0:
+	.size	main, ($tmp0)-main
+
+	.globl	fir5
+	.align	2
+	.type	fir5,@function
+	.ent       fir5
+fir5:
+	.frame     %SP,0
+	args       4
+	mnum       11
+	malias     9, 11
+	malias     9, 10
+	malias     8, 11
+	malias     8, 10
+	malias     7, 11
+	malias     7, 10
+	malias     6, 11
+	malias     6, 10
+	malias     5, 11
+	malias     5, 10
+	malias     4, 11
+	malias     4, 10
+	malias     3, 11
+	malias     3, 10
+	malias     2, 11
+	malias     2, 10
+	malias     1, 11
+	malias     1, 10
+	bb         0
+	succ       3
+	succ       1
+	dom        3
+	dom        1
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	brlt       %a3, 1, ($BB1_3)
+	bb         1
+	pred       0
+	succ       2
+	dom        2
+	rli        %a3
+	rli        %a0
+	rli        %a2
+	rli        %a1
+	mloc       1
+	lw         %r0, %a2, 16
+	mloc       2
+	lw         %r1, %a2, 12
+	mloc       3
+	lw         %r2, %a2, 8
+	mloc       4
+	lw         %r3, %a2, 4
+	mloc       5
+	lw         %r4, %a2, 0
+	add        %r5, %a1, 16
+	mloc       6
+	lw         %r6, %a1, 12
+	mloc       7
+	lw         %r10, %a1, 8
+	mloc       8
+	lw         %r11, %a1, 4
+	mloc       9
+	lw         %r12, %a1, 0
+$BB1_2:
+	bb         2
+	loop       0
+	lext       0
+	lhdr       0, 1
+	pred       2
+	pred       1
+	succ       2
+	succ       3
+	pdom       1
+	rli        %r12
+	rli        %r11
+	rli        %r10
+	rli        %r6
+	rli        %a3
+	rli        %r5
+	rli        %a0
+	rli        %r0
+	rli        %r1
+	rli        %r2
+	rli        %r3
+	rli        %r4
+	mov        %r7, %r6
+	mov        %r8, %r10
+	mov        %r9, %r11
+	mul        %r6, %r12, %r4
+	mul        %r10, %r9, %r3
+	add        %r6, %r10, %r6
+	mul        %r10, %r8, %r2
+	add        %r6, %r6, %r10
+	mul        %r10, %r7, %r1
+	add        %r10, %r6, %r10
+	mloc       10
+	lw         %r6, %r5, 0
+	mul        %r11, %r6, %r0
+	add        %r10, %r10, %r11
+	mloc       11
+	sw         %r10, %a0, 0
+	add        %a0, %a0, 4
+	add        %r5, %r5, 4
+	add        %a3, %a3, -1
+	mov        %r10, %r7
+	mov        %r11, %r8
+	mov        %r12, %r9
+	brne       %a3, 0, ($BB1_2)
+$BB1_3:
+	bb         3
+	pred       2
+	pred       0
+	pdom       2
+	pdom       0
+	ret        %RA
+	.end       fir5
+$tmp1:
+	.size	fir5, ($tmp1)-fir5
+
+	.type	samples,@object
+	.data
+	.globl	samples
+	.align	2
+samples:
+	.long	17101
+	.long	30365
+	.long	58637
+	.long	40520
+	.long	26213
+	.long	32387
+	.long	56652
+	.long	26315
+	.long	40561
+	.long	4458
+	.long	58256
+	.long	24914
+	.size	samples, 48
+
+	.type	z_coef,@object
+	.globl	z_coef
+	.align	2
+z_coef:
+	.long	3137
+	.long	1141
+	.long	2272
+	.long	3789
+	.long	3417
+	.size	z_coef, 20
+
+	.type	output,@object
+	.comm	output,32,4
+

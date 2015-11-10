@@ -1,0 +1,94 @@
+###BEGIN: use_memmove 4 stage bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o use_memmove-4stage-bypass.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json
+###TOOL: ${S_AS}
+###ARGS: use_memmove-4stage-bypass.s -o use_memmove-4stage-bypass -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:use_memmove-4stage-bypass --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json -dmem 0:cp:use_memmove-4stage-bypass.cp.dmem_init -max-cycle 1500 -dump-dmem -dump-dmem-prefix use_memmove-4-b
+###MDUMP: use_memmove-4-b.baseline.scalar.dump:use_memmove.dump.ref
+###END:
+
+###BEGIN: use_memmove 4 stage no bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o use_memmove-4stage.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json
+###TOOL: ${S_AS}
+###ARGS: use_memmove-4stage.s -o use_memmove-4stage -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:use_memmove-4stage --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json -dmem 0:cp:use_memmove-4stage.cp.dmem_init -max-cycle 1500 -dump-dmem -dump-dmem-prefix use_memmove-4
+###MDUMP: use_memmove-4.baseline.scalar.dump:use_memmove.dump.ref
+###END:
+
+###BEGIN: use_memmove 5 stage bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o use_memmove-5stage-bypass.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json
+###TOOL: ${S_AS}
+###ARGS: use_memmove-5stage-bypass.s -o use_memmove-5stage-bypass -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:use_memmove-5stage-bypass --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json -dmem 0:cp:use_memmove-5stage-bypass.cp.dmem_init -max-cycle 1500 -dump-dmem -dump-dmem-prefix use_memmove-5-b
+###MDUMP: use_memmove-5-b.baseline.scalar.dump:use_memmove.dump.ref
+###END:
+
+###BEGIN: use_memmove 5 stage no bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o use_memmove-5stage.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json
+###TOOL: ${S_AS}
+###ARGS: use_memmove-5stage.s -o use_memmove-5stage -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:use_memmove-5stage --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json -dmem 0:cp:use_memmove-5stage.cp.dmem_init -max-cycle 1500 -dump-dmem -dump-dmem-prefix use_memmove-5
+###MDUMP: use_memmove-5.baseline.scalar.dump:use_memmove.dump.ref
+###END:
+
+###BEGIN: use_memmove 4 stage bypass RTL
+###TOOL: ${S_CC}
+###ARGS: ${FILE} -o use_memmove-4-b --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json 
+###RTL: use_memmove-4-b.zip ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json ${SOLVER_ROOT}/rtl
+###MDUMP: cp.dmem.dump:use_memmove.dump.ref
+###END:
+
+	.text
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main                 # @main
+main:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       0
+	rvals      32
+	mnum       1
+	bb         0
+	mov        %a0, b
+	mov        %a1, a
+	mov        %a2, 40
+	call       memmove
+	mov        %r0, c
+	mloc       1
+	sw         %v0, %r0, 0
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp0:
+	.size	main, ($tmp0)-main
+
+	.type	a,@object               # @a
+	.data
+	.globl	a
+	.align	2
+a:
+	.long	0                       # 0x0
+	.long	1                       # 0x1
+	.long	2                       # 0x2
+	.long	3                       # 0x3
+	.long	4                       # 0x4
+	.long	5                       # 0x5
+	.long	6                       # 0x6
+	.long	7                       # 0x7
+	.long	8                       # 0x8
+	.long	9                       # 0x9
+	.size	a, 40
+
+	.type	b,@object               # @b
+	.comm	b,40,4
+	.type	c,@object               # @c
+	.comm	c,4,4
+

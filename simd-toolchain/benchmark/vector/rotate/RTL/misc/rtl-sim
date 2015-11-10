@@ -1,0 +1,76 @@
+#!/bin/env python
+import os, sys, subprocess
+from optparse import OptionParser
+import zipfile
+import tempfile
+import shutil
+
+d = '/home/shahnawaz/simd-toolchain/build/lib/solver/python'
+if d not in sys.path: sys.path.append(d)
+from simulation.solver_rtl_sim import *
+from arch_config.arch_config import read_arch_config
+
+def read_config_bin_ar(bin_ar):
+    conf=None
+    try:
+        RB_WD = tempfile.mkdtemp()
+        zfd = zipfile.ZipFile(bin_ar, 'r')
+        zfd.extractall(RB_WD)
+        cfg, stab, arch_config = None, None, None
+        for r,_,fl in os.walk(RB_WD):
+            for f in fl:
+                if f.endswith('.json'):
+                    if cfg: raise RuntimeError('Too many CFG files in Binary Archive')
+                    cfg = os.path.join(r, f)
+        if cfg: 
+            conf=read_arch_config(cfg)
+    finally:
+        if RB_WD: shutil.rmtree(RB_WD)
+    return conf
+
+if __name__ == '__main__':
+    #get top-level RTL dir
+    RTL_dir=os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
+
+    parser = OptionParser('Usage: %prog [options] application')
+    parser.add_option("--verbose", action="store_true", help="Run verbose mode")
+    parser.add_option("-o", dest="sim_out", default='rtl-sim-out',
+                      help="Output directory (default=rtl-sim-out)")
+    parser.add_option('--rtl-flow', help='tool for RTL simulation (def=vsim)',
+                      dest='rtl_flow', default='vsim')
+    parser.add_option('--rtl-dir', help='Folder containing the generated RTL',
+                      dest='rtl_dir', default=RTL_dir)
+    parser.add_option('--gui', help='Simulate with GUI',
+                      dest='gui', action='store_true')
+    (opts, args) = parser.parse_args()
+    
+    if len(args) <1:
+        print 'No archive specified'
+        exit(-1)
+    if len(args) >1:
+        print 'Too many archives specified'
+        exit(-1)
+    bin_ar=args[0]
+
+
+    VERBOSE = opts.verbose
+    sim_out = os.path.abspath(opts.sim_out)
+    sim_wd = rtl_path = opts.rtl_dir
+    flow=opts.rtl_flow
+    
+    cfg=read_config_bin_ar(bin_ar)
+
+    sim_cc, sim_exe = sim_utils.get_rtl_tools(flow)
+
+    # Check if it is necessary to compile the simulation libraries
+    check_and_compile_solver_rtl(rtl_path, sim_wd, flow, sim_cc)
+
+    clean_solver_rtl_simulation(sim_wd)
+    app_name = sys_utils.get_path_basename(bin_ar)
+    setup_solver_mem_files(bin_ar, sim_wd)
+    
+    # Run the actual simulation
+    run_solver_rtl_simulation(sim_exe, sim_wd, flow, rtl_path, cfg, gui=opts.gui)
+    
+    #move files to output
+    move_dump_files(sim_wd, sim_out)

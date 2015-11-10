@@ -1,0 +1,69 @@
+.instr_div {
+    margin:5px;
+    padding: 5px;
+}
+.instr_table {
+    text-align:center;
+}
+
+.instr_table td, .instr_table th  {
+    font-size:1em;
+    padding:3px 15px 2px 15px;
+    border: 1px solid;
+}
+.instr_table th  {
+    font-size:1.1em;
+    padding-top:5px;
+    padding-bottom:4px;
+    background-color:#6387D1;
+    color:#E0F0FF;
+}
+
+.selected_instr {
+    background-color:#0099FF;
+}
+
+.selected_user {
+    background-color:#FFCC00;
+}
+
+.selected_producer {
+    background-color:#33CC33;
+}
+
+.info_div {
+    position:fixed;
+    min-width:300px;
+}
+
+.info_div h4 {
+    margin-top: 0;
+}
+
+#func_info {
+    min-width:280px;
+    background-color:#DDEDFF;
+    padding:15px 10px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    box-shadow: 2px 2px #888888;
+}
+
+#op_info {
+    margin-top: 15px;
+    min-width:280px;
+    background-color:#DDEDFF;
+    padding:15px 10px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    box-shadow: 2px 2px #888888;
+}
+
+#selected_op_info td, #func_info td {
+    text-align:left;
+    padding: 3px 10px 2px 10px;
+}

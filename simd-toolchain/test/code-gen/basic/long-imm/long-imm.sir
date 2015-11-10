@@ -1,0 +1,26 @@
+	.file	"/tmp/tmpLcSSVD/SCCTMP_LIMM_C_6ORTEI.bc"
+	.text
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main                 # @main
+main:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       0
+	rvals      32
+	mnum       1
+	bb         0
+	mov        %r0, a
+	mov        %r1, 2144997937
+	mloc       1
+	sw         %r1, %r0, 0
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp0:
+	.size	main, ($tmp0)-main
+
+	.type	a,@object               # @a
+	.comm	a,4,4
+

@@ -1,0 +1,105 @@
+###BEGIN: malloc_free 4 stage bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o malloc_free-4stage-bypass.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json
+###TOOL: ${S_AS}
+###ARGS: malloc_free-4stage-bypass.s -o malloc_free-4stage-bypass -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:malloc_free-4stage-bypass --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json -dmem 0:cp:malloc_free-4stage-bypass.cp.dmem_init -max-cycle 1500 -dump-dmem -dump-dmem-prefix malloc_free
+###MDUMP: malloc_free.baseline.scalar.dump
+###END:
+
+###BEGIN: malloc_free 4 stage
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o malloc_free-4stage.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json
+###TOOL: ${S_AS}
+###ARGS: malloc_free-4stage.s -o malloc_free-4stage -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:malloc_free-4stage --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json -dmem 0:cp:malloc_free-4stage.cp.dmem_init -max-cycle 1500 -dump-dmem -dump-dmem-prefix malloc_free
+###MDUMP: malloc_free.baseline.scalar.dump
+###END:
+
+###BEGIN: malloc_free 5 stage bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o malloc_free-5stage-bypass.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json
+###TOOL: ${S_AS}
+###ARGS: malloc_free-5stage-bypass.s -o malloc_free-5stage-bypass -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:malloc_free-5stage-bypass --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json -dmem 0:cp:malloc_free-5stage-bypass.cp.dmem_init -max-cycle 1500 -dump-dmem -dump-dmem-prefix malloc_free
+###MDUMP: malloc_free.baseline.scalar.dump
+###END:
+
+###BEGIN: malloc_free 5 stage
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o malloc_free-5stage.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json
+###TOOL: ${S_AS}
+###ARGS: malloc_free-5stage.s -o malloc_free-5stage -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:malloc_free-5stage --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json -dmem 0:cp:malloc_free-5stage.cp.dmem_init -max-cycle 1500 -dump-dmem -dump-dmem-prefix malloc_free
+###MDUMP: malloc_free.baseline.scalar.dump
+###END:
+
+###BEGIN: malloc_free 4 stage RTL
+###TOOL: ${S_CC}
+###ARGS: ${FILE} -o malloc_free-4 --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json
+###RTL: malloc_free-4.zip ${SOLVER_ROOT}/arch/baseline-32b-4stage.json ${SOLVER_ROOT}/rtl
+###MDUMP: cp.dmem.dump:malloc_free.baseline.scalar.dump.ref
+###END:
+
+###BEGIN: malloc_free 4 stage bypass RTL
+###TOOL: ${S_CC}
+###ARGS: ${FILE} -o malloc_free-4stage-bypass --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json
+###RTL: malloc_free-4stage-bypass.zip ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json ${SOLVER_ROOT}/rtl
+###MDUMP: cp.dmem.dump:malloc_free.baseline.scalar.dump.ref
+###END:
+
+	.text
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main                 # @main
+main:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       0
+	rvals      32
+	mnum       7
+	malias     4, 6
+	malias     2, 5
+	malias     1, 3
+	bb         0
+	mov        %a0, 32
+	call       malloc
+	mov        %r0, a
+	mloc       1
+	sw         %v0, %r0, 0
+	call       malloc
+	mloc       2
+	sw         %v0, %r0, 4
+	mloc       3
+	lw         %a0, %r0, 0
+	call       free
+	mov        %a0, 16
+	call       malloc
+	mloc       4
+	sw         %v0, %r0, 8
+	mloc       5
+	lw         %a0, %r0, 4
+	call       free
+	mloc       6
+	lw         %a0, %r0, 8
+	call       free
+	mov        %a0, 64
+	call       malloc
+	mloc       7
+	sw         %v0, %r0, 12
+	mov        %a0, %v0
+	call       free
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp0:
+	.size	main, ($tmp0)-main
+
+	.type	a,@object               # @a
+	.comm	a,16,4
+

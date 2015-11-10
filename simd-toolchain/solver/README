@@ -1,0 +1,15 @@
+This folder contains target files for Solver target architectures.
+
+arch/
+    Target architecture configurations
+include/
+    Header files for target architectures
+lib-src/
+    High-level source files of the runtime libraries. It is just for reference.
+lib/
+    Libraries in SIR assembly format. They are mostly target independent.
+    The libraries in this folder is created based on the source in lib-src/, but
+    some of them are manually tuned. 
+rtl/
+    RTL source template files for generating the actual implementation of the
+    processor

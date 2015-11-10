@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="css/instr_table.css">
+{% endblock %}
+{% block title %}Program Information {{program_name}}{% endblock %}
+
+{% block topbar %} <h1>Information of {{program_name}}</h1> {% endblock %}
+
+{% block content %}
+  {%- if program['functions'] %}
+  <p><h2>Functions</h2></p>
+  <p>There are {{funcs|length}} functions, double click on the row see details of the function:</p>
+  <table class="summary_table" id="func_table">
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Size</th>
+      <th>BB</th>
+    </tr>  
+    {% for f in funcs -%}
+    <tr class="func_row">
+      <td>{{f[1]['name']}}</td>
+      <td>{{f[1]['address']}}</td>
+      <td>{{f[1]['size']}}</td>
+      <td>{{f[1]['bb']|length}}</td>
+    </tr>
+    {%- endfor %}
+  </table>
+  {%- endif %}
+  
+  {% if dobjs -%}
+  <p><h2>Data Objects</h2></p>
+  <p>There are {{dobjs|length}} data_objects:</p>
+  <table class="summary_table">
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Address</th>
+      <th>Size</th>
+    </tr>  
+    {% for d in dobjs -%}
+    <tr>
+      <td>{{d[1]['name']}}</td>
+      <td>{{d[1]['type']}}</td>
+      <td>{{d[1]['address']}}</td>
+      <td>{{d[1]['size']}}</td>
+    </tr>
+    {%- endfor %}
+  </table>
+  {%- endif %}
+{% endblock %}
+
+{% block bodyend %}
+  <script>
+    $(function() {
+      $(".func_row").dblclick(function(evt) {
+        event.preventDefault();
+        var row= $(evt.target).parent("tr");
+        var fn = row.children("td").first().text();
+        window.location = "func_"+fn+".html";
+      });
+    });
+  </script>
+{% endblock %}

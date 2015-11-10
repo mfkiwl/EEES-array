@@ -1,0 +1,10 @@
+syntax:glob
+*build*
+nbproject
+tmp
+*.pyc
+*~
+.\#*
+cscope.out
+cscope.files
+*.swp

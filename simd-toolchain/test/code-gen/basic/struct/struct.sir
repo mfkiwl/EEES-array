@@ -1,0 +1,29 @@
+	.file	"/tmp/SCCTMP_STRUCT_C_CISVSO.bc"
+	.text
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main                 # @main
+main:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       0
+        rvals      32
+	mnum       2
+	bb         0
+	mov        %r0, foo
+	mov        %r1, 9
+	mloc       1
+	sw         %r1, %r0, 0
+	mov        %r1, 255
+	mloc       2
+	sb         %r1, %r0, 4
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp0:
+	.size	main, ($tmp0)-main
+
+	.type	foo,@object             # @foo
+	.comm	foo,8,4
+

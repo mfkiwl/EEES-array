@@ -1,0 +1,109 @@
+	.file	"global.c"
+	.text
+	.globl	glb_sum
+	.align	2
+	.type	glb_sum,@function
+	.ent       glb_sum
+glb_sum:
+	.frame     %SP,0
+	args       0
+        rvals      32
+	mnum       2
+	bb         0
+	succ       4
+	succ       1
+	dom        4
+	dom        1
+	mov        %r0, global_cnt
+	mloc       1
+	lw         %r0, %r0, 0
+	brlt       %r0, 1, ($BB0_4)
+	bb         1
+	pred       0
+	succ       2
+	dom        2
+	rli        %r0
+	mov        %v0, %ZERO
+	mov        %r1, %ZERO
+	mov        %r3, global_array
+$BB0_2:
+	bb         2
+	loop       0
+	lext       0
+	lhdr       0, 1
+	pred       1
+	pred       2
+	succ       3
+	succ       2
+	dom        3
+	pdom       1
+	rli        %r3
+	rli        %v0
+	rli        %r1
+	rli        %r0
+	sll        %r2, %r1, 2
+	mloc       2
+	lw         %r2, %r3, %r2
+	add        %v0, %r2, %v0
+	add        %r1, %r1, 1
+	brlt       %r1, %r0, ($BB0_2)
+	bb         3
+	pred       2
+	pdom       2
+	rli        %v0
+	ret        %RA
+$BB0_4:
+	bb         4
+	pred       0
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       glb_sum
+$tmp0:
+	.size	glb_sum, ($tmp0)-glb_sum
+
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main
+main:
+	.frame     %SP,0
+	args       0
+        rvals      32
+	mnum       2
+	bb         0
+	mov        %r0, global_cnt
+	mov        %r1, 5
+	mloc       1
+	sw         %r1, %r0, 0
+	call       glb_sum
+	mov        %r0, global_sum
+	mloc       2
+	sw         %v0, %r0, 0
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp1:
+	.size	main, ($tmp1)-main
+
+	.type	global_array,@object
+	.data
+	.globl	global_array
+	.align	2
+global_array:
+	.long	0
+	.long	1
+	.long	2
+	.long	3
+	.long	4
+	.long	5
+	.long	6
+	.long	7
+	.long	8
+	.long	9
+	.size	global_array, 40
+
+	.type	global_cnt,@object
+	.comm	global_cnt,4,4
+	.type	global_sum,@object
+	.comm	global_sum,4,4
+

@@ -1,0 +1,606 @@
+################################################################################
+#  init_malloc(): initialize global structure required by malloc() and free().
+#                 It should be called once BEFORE using malloc().
+################################################################################
+        .text
+        .globl  init_malloc
+        .type   init_malloc,@function
+        .ent       init_malloc
+init_malloc:
+        .frame     %SP,0
+        args       0
+        mnum       4
+        bb         0
+        mloc       1
+        lw         %r0, %ZERO, __heap_start
+        mov        %r1, heap_ptr
+        mloc       2
+        sw         %r0, %r1, 0
+        mov        %r0, free_block_list_head
+        mloc       3
+        sw         %ZERO, %r0, 0
+        mloc       4
+        sw         %ZERO, %r0, 4
+        ret        %RA
+        .end       init_malloc
+
+################################################################################
+#  malloc(): allocate memory block. First try to find a block in the free block
+#            list that is sufficiently large. If it fails, allocate a block
+#            in the heap.
+#            It returns the pointer to the allocated block if it succeeds.
+#            Otherwise it returns 0.
+################################################################################
+        .globl  malloc
+        .type   malloc,@function
+        .ent       malloc               # @malloc
+malloc:
+        .frame     %SP,0
+# BB#0:                                 # %entry
+        args       1
+        rvals      32
+        mnum       7
+        malias     6, 7
+        malias     5, 7
+        malias     5, 6
+        malias     3, 4
+        malias     2, 7
+        malias     2, 6
+        malias     2, 5
+        malias     1, 7
+        malias     1, 6
+        malias     1, 5
+        malias     1, 4
+        malias     1, 3
+        malias     1, 2
+        bb         0
+        succ       1
+        dom        1
+        rli        %a0
+        mov        %r0, free_block_list_head
+        add        %r3, %r0, 4
+        add        %r0, %a0, 23
+        and        %r1, %r0, 4294967280
+$malloc_BB1:                                 # %while.cond
+                                        # =>This Inner Loop Header: Depth=1
+        bb         1
+        loop       0
+        lext       0
+        lhdr       0, 1
+        pred       2
+        pred       0
+        succ       2
+        succ       4
+        dom        2
+        dom        4
+        pdom       0
+        rli        %r3
+        rli        %r1
+        mov        %r2, %r3
+        mloc       1
+        lw         %r0, %r3, 0
+        breq       %r0, 0, ($malloc_BB4)
+# BB#2:                                 # %while.body
+                                        #   in Loop: Header=BB1_1 Depth=1
+        bb         2
+        loop       0
+        lext       0
+        pred       1
+        succ       3
+        succ       1
+        dom        3
+        rli        %r0
+        rli        %r2
+        rli        %r1
+        add        %r3, %r0, 4
+        mloc       2
+        lw         %r4, %r0, 0
+        brltu      %r4, %r1, ($malloc_BB1)
+$malloc_BB3:                                 # %if.then
+        bb         3
+        pred       2
+        rli        %r0
+        rli        %r2
+        mloc       3
+        lw         %r1, %r0, 4
+        mloc       4
+        sw         %r1, %r2, 0
+        add        %v0, %r0, 8
+        ret        %RA
+$malloc_BB4:                                 # %while.end
+        bb         4
+        pred       1
+        rli        %r1
+        mov        %r2, heap_ptr
+        mloc       5
+        lw         %r0, %r2, 0
+        add        %r3, %r0, %r1
+        mloc       6
+        sw         %r3, %r2, 0
+        mloc       7
+        sw         %r1, %r0, 0
+        add        %v0, %r0, 8
+        ret        %RA
+        .end       malloc
+
+################################################################################
+#  free(): release memory block and add it to free list.
+################################################################################
+        .globl  free
+        .type   free,@function
+        .ent       free
+free:
+        .frame     %SP,0
+# BB#0:                                 # %entry
+        args       1
+        mnum       3
+        malias     2, 3
+        malias     1, 3
+        malias     1, 2
+        bb         0
+        succ       1
+        succ       2
+        dom        1
+        dom        2
+        rli        %a0
+        breq       %a0, 0, ($free_BB2)
+# BB#1:                                 # %if.end
+        bb         1
+        pred       0
+        succ       2
+        rli        %a0
+        mov        %r0, free_block_list_head
+        mloc       1
+        lw         %r1, %r0, 4
+        mloc       2
+        sw         %r1, %a0, -4
+        add        %r1, %a0, -8
+        mloc       3
+        sw         %r1, %r0, 4
+$free_BB2:                                 # %return
+        bb         2
+        pred       1
+        pred       0
+        pdom       1
+        pdom       0
+        ret        %RA
+        .end       free
+
+        .type   heap_ptr,@object
+        .local  heap_ptr
+        .comm   heap_ptr,4,4
+        .type   free_block_list_head,@object
+        .local  free_block_list_head
+        .comm   free_block_list_head,8,4
+
+################################################################################
+#  abort(): terminate execution by executing a self branch.
+################################################################################
+        .text
+        .globl  abort
+        .type   abort,@function
+        .ent       abort
+abort:
+        .frame     %SP,0
+        args       0
+        bb         0
+        j          abort
+        ret        %RA
+        .end       abort
+################################################################################
+#  exit(): terminate execution by executing a self branch.
+################################################################################
+        .text
+        .globl  exit
+        .type   exit,@function
+        .ent       exit
+exit:
+        .frame     %SP,0
+        args       1
+        rvals      32
+        bb         0
+        mov        %v0, %a0
+        j          exit
+        ret        %RA
+        .end       exit
+################################################################################
+#  memmove(): copy memory content, assuming no overlap
+################################################################################
+        .text
+        .globl  memmove
+        .align  2
+        .type   memmove,@function
+        .ent       memmove              # @memmove
+memmove:
+        .frame     %SP,0
+# BB#0:                                 # %entry
+        args       3
+        rvals      32
+        mnum       2
+        malias     1, 2
+        bb         0
+        succ       1
+        succ       3
+        dom        1
+        dom        3
+        rli        %a2
+        rli        %a1
+        rli        %a0
+        breq       %a2, 0, ($memmove_BB3)
+# BB#1:
+        bb         1
+        pred       0
+        succ       2
+        dom        2
+        rli        %a2
+        rli        %a1
+        rli        %a0
+        mov        %r0, %a0
+$memmove_BB2:                                 # %for.body
+                                        # =>This Inner Loop Header: Depth=1
+        bb         2
+        loop       0
+        lext       0
+        lhdr       0, 1
+        pred       1
+        pred       2
+        succ       2
+        succ       3
+        pdom       1
+        rli        %a2
+        rli        %r0
+        rli        %a1
+        rli        %a0
+        mloc       1
+        lb         %r1, %a1, 0
+        mloc       2
+        sb         %r1, %r0, 0
+        add        %a1, %a1, 1
+        add        %r0, %r0, 1
+        add        %a2, %a2, -1
+        brne       %a2, 0, ($memmove_BB2)
+$memmove_BB3: # %for.end
+        bb         3
+        pred       2
+        pred       0
+        pdom       2
+        pdom       0
+        rli        %a0
+        mov        %v0, %a0
+        ret        %RA
+        .end       memmove
+
+################################################################################
+#  memcpy(): copy memory content
+################################################################################
+        .globl  memcpy
+        .align  2
+        .type   memcpy,@function
+        .ent       memcpy               # @memcpy
+memcpy:
+        .frame     %SP,0
+# BB#0:                                 # %entry
+        args       3
+        rvals      32
+        mnum       2
+        malias     1, 2
+        bb         0
+        succ       1
+        succ       3
+        dom        1
+        dom        3
+        rli        %a2
+        rli        %a1
+        rli        %a0
+        breq       %a2, 0, ($memcpy_BB3)
+# BB#1:
+        bb         1
+        pred       0
+        succ       2
+        dom        2
+        rli        %a2
+        rli        %a1
+        rli        %a0
+        mov        %r0, %a0
+$memcpy_BB2:                                 # %for.body
+                                        # =>This Inner Loop Header: Depth=1
+        bb         2
+        loop       0
+        lext       0
+        lhdr       0, 1
+        pred       1
+        pred       2
+        succ       2
+        succ       3
+        pdom       1
+        rli        %a2
+        rli        %r0
+        rli        %a1
+        rli        %a0
+        mloc       1
+        lb         %r1, %a1, 0
+        mloc       2
+        sb         %r1, %r0, 0
+        add        %a1, %a1, 1
+        add        %r0, %r0, 1
+        add        %a2, %a2, -1
+        brne       %a2, 0, ($memcpy_BB2)
+$memcpy_BB3: # %for.end
+        bb         3
+        pred       2
+        pred       0
+        pdom       2
+        pdom       0
+        rli        %a0
+        mov        %v0, %a0
+        ret        %RA
+        .end       memcpy
+################################################################################
+#  memset(): initialize memory content
+################################################################################
+        .globl  memset
+        .align  2
+        .type   memset,@function
+        .ent       memset               # @memset
+memset:
+        .frame     %SP,0
+# BB#0:                                 # %entry
+        args       3
+        rvals      32
+        mnum       1
+        bb         0
+        succ       1
+        succ       3
+        dom        1
+        dom        3
+        rli        %a2
+        rli        %a1
+        rli        %a0
+        breq       %a2, 0, ($memset_BB3)
+# BB#1:                                 # %for.body.lr.ph
+        bb         1
+        pred       0
+        succ       2
+        dom        2
+        rli        %a2
+        rli        %a1
+        rli        %a0
+        mov        %r0, %a0
+$memset_BB2:                                 # %for.body
+                                        # =>This Inner Loop Header: Depth=1
+        bb         2
+        loop       0
+        lext       0
+        lhdr       0, 1
+        pred       2
+        pred       1
+        succ       2
+        succ       3
+        pdom       1
+        rli        %a2
+        rli        %r0
+        rli        %a1
+        rli        %a0
+        mloc       1
+        sb         %a1, %r0, 0
+        add        %r0, %r0, 1
+        add        %a2, %a2, -1
+        brne       %a2, 0, ($memset_BB2)
+$memset_BB3:                                 # %for.end
+        bb         3
+        pred       2
+        pred       0
+        pdom       2
+        pdom       0
+        rli        %a0
+        mov        %v0, %a0
+        ret        %RA
+        .end       memset
+
+################################################################################
+#  __udivsi3(): unsigned integer division
+################################################################################
+        .text
+        .globl  __udivsi3
+        .align  2
+        .type   __udivsi3,@function
+        .ent       __udivsi3            # @__udivsi3
+__udivsi3:
+        .frame     %SP,0
+# BB#0:                                 # %entry
+        args       2
+        rvals      32
+        bb         0
+        succ       1
+        succ       12
+        dom        1
+        dom        12
+        rli        %a1
+        rli        %a0
+        mov        %v0, %ZERO
+        breq       %a1, 0, ($__udivsi3_BB12)
+# BB#1:                                 # %entry
+        bb         1
+        pred       0
+        succ       2
+        succ       12
+        dom        2
+        rli        %v0
+        rli        %a0
+        rli        %a1
+        breq       %a0, 0, ($__udivsi3_BB12)
+# BB#2:                                 # %entry
+        bb         2
+        pred       1
+        succ       3
+        succ       12
+        dom        3
+        rli        %v0
+        rli        %a0
+        rli        %a1
+        brltu      %a0, %a1, ($__udivsi3_BB12)
+        j          ($__udivsi3_BB3)
+$__udivsi3_BB3:                                 # %while.cond.preheader
+        bb         3
+        pred       2
+        succ       7
+        succ       4
+        dom        7
+        dom        8
+        dom        4
+        rli        %a0
+        rli        %a1
+        brle       %a1, -1, ($__udivsi3_BB7)
+# BB#4:
+        bb         4
+        pred       3
+        succ       5
+        dom        5
+        rli        %a0
+        rli        %a1
+        mov        %r0, %ZERO
+$__udivsi3_BB5:                                 # %while.body
+                                        # =>This Inner Loop Header: Depth=1
+        bb         5
+        loop       1
+        lext       1
+        lhdr       1, 1
+        pred       4
+        pred       5
+        succ       6
+        succ       5
+        dom        6
+        pdom       4
+        rli        %a0
+        rli        %a1
+        rli        %r0
+        add        %r0, %r0, 1
+        sll        %a1, %a1, 1
+        brgt       %a1, -1, ($__udivsi3_BB5)
+# BB#6:                                 # %for.cond.preheader
+        bb         6
+        pred       5
+        succ       8
+        succ       12
+        pdom       5
+        rli        %a0
+        rli        %a1
+        rli        %r0
+        mov        %v0, %ZERO
+        brlt       %r0, 0, ($__udivsi3_BB12)
+        j          ($__udivsi3_BB8)
+$__udivsi3_BB7:
+        bb         7
+        pred       3
+        succ       8
+        rli        %a0
+        rli        %a1
+        mov        %r0, %ZERO
+$__udivsi3_BB8:                                 # %for.body.lr.ph
+        bb         8
+        pred       7
+        pred       6
+        succ       9
+        dom        9
+        pdom       7
+        rli        %a0
+        rli        %a1
+        rli        %r0
+        add        %r0, %r0, 1
+        mov        %v0, %ZERO
+$__udivsi3_BB9:                                 # %for.body
+                                        # =>This Inner Loop Header: Depth=1
+        bb         9
+        loop       0
+        lhdr       0, 1
+        pred       11
+        pred       8
+        succ       10
+        succ       11
+        dom        10
+        dom        11
+        pdom       8
+        rli        %v0
+        rli        %a0
+        rli        %r0
+        rli        %a1
+        sll        %v0, %v0, 1
+        brltu      %a0, %a1, ($__udivsi3_BB11)
+        j          ($__udivsi3_BB10)
+$__udivsi3_BB10:                                # %if.then7
+                                        #   in Loop: Header=__udivsi3_BB9 Depth=1
+        bb         10
+        loop       0
+        pred       9
+        succ       11
+        rli        %v0
+        rli        %a0
+        rli        %r0
+        rli        %a1
+        sub       %a0, %a0, %a1
+        or         %v0, %v0, 1
+$__udivsi3_BB11:                                # %if.end9
+                                        #   in Loop: Header=__udivsi3_BB9 Depth=1
+        bb         11
+        loop       0
+        lext       0
+        pred       10
+        pred       9
+        succ       9
+        succ       12
+        pdom       10
+        pdom       9
+        rli        %v0
+        rli        %a0
+        rli        %r0
+        rli        %a1
+        add        %r0, %r0, -1
+        srl        %a1, %a1, 1
+        brne       %r0, 0, ($__udivsi3_BB9)
+$__udivsi3_BB12:                                # %return
+        bb         12
+        pred       1
+        pred       0
+        pred       11
+        pred       6
+        pred       2
+        pdom       11
+        pdom       3
+        pdom       6
+        pdom       0
+        pdom       1
+        pdom       2
+        rli        %v0
+        ret        %RA
+        .end       __udivsi3
+################################################################################
+#  __divsi3(): signed integer division
+################################################################################
+        .text
+        .globl  __divsi3
+        .align  2
+        .type   __divsi3,@function
+        .ent       __divsi3             # @__divsi3
+__divsi3:
+        .frame     %SP,0
+# BB#0:                                 # %entry
+        args       2
+        rvals      32
+        bb         0
+        rli        %a1
+        rli        %a0
+        mov        %r0, %a1
+        mov        %r1, %a0
+        sra        %r2, %r1, 31
+        xor        %r3, %r2, %r1
+        sub        %a0, %r3, %r2
+        sra        %r2, %r0, 31
+        xor        %r3, %r2, %r0
+        sub        %a1, %r3, %r2
+        call       __udivsi3
+        xor        %r0, %r0, %r1
+        sra        %r0, %r0, 31
+        xor        %r1, %v0, %r0
+        sub       %v0, %r1, %r0
+        ret        %RA
+        .end       __divsi3

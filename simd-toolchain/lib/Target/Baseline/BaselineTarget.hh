@@ -1,0 +1,6 @@
+#ifndef ES_SIMD_BASELINETARGET_HH
+#define ES_SIMD_BASELINETARGET_HH
+
+#include "BaselineBasicInfo.hh"
+
+#endif//ES_SIMD_BASELINETARGET_HH

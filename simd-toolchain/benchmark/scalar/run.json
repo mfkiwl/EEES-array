@@ -1,0 +1,6 @@
+{
+    "arch":["baseline-32b-4stage","baseline-32b-4stage-bypass",
+            "baseline-32b-5stage","baseline-32b-5stage-bypass"],
+    "app":["fir5-nr", "histogram256", "histogram256-u", "idct8x8", "yuv2rgb.mod", "crc32", "des", "mat-vec-mul"],
+    "stat":["cycles", "cp_reg_wr", "cp_reg_rd", "cp_load", "cp_store"]
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="js/vendor/jquery-1.10.2.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+    {% endblock %}
+    <title>{% block title %}Program Information {{program_name}}{% endblock %}</title>
+  </head>
+  <body>
+    <header id="banner" class="body">
+      <div id="topbar">{% block topbar %}{% endblock %}</div>
+      <div id="navbar">
+        <nav>
+        {% block navbar %}
+        
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Functions</a>
+              <ul>
+                {%- for f in funcs %}
+                <li><a href="func_{{f[1]['name']}}.html">{{f[1]['name']}}</a></li>
+                {%- endfor -%}
+              </ul>
+            </li>
+          </ul>
+        {% endblock %}
+        </nav>
+      </div>
+    </header>
+    <div id="content" class="body">
+      <div id="column_left">{% block content %}{% endblock %}</div>
+      <div id="column_right">{% block sidebar %}{% endblock %}</div>
+    </div>
+    <footer id="contentinfo" class="body">
+      <address id="about" class="vcard body">
+        &copy; Copyright 2013 by <a href="http://www.tue.nl/">Eindhoven University of Technology</a>.
+      </address><!-- /#about -->
+    </footer>
+    {% block bodyend %}{% endblock %}
+  </body>
+</html>

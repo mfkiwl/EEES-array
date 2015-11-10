@@ -1,0 +1,217 @@
+s-cc - ES-SIMD compiler driver
+==============================
+
+SYNOPSIS
+--------
+
+:program:`s-cc` [*options*] filename
+
+DESCRIPTION
+-----------
+
+The :program:`s-cc` command drives the compilation process for a specified
+architecture.
+
+The choice of architecture is determined by the :option:`-arch` option or the
+:option:`-arch-cfg`.
+
+
+OPTIONS
+-------
+
+The input files can be in several format. The input language is determined by
+the extension of the input file:
+
+- ``*.c``: C.
+- ``*.cc/*.cpp``: C++.
+- ``*.cl``: OpenCL.
+- ``*.sir``: SIR.
+- ``*.s``: assembly.
+
+The :program:`s-cc` is a driver program. And it depends on several external
+programs to function properly. The following paths should be set:
+
+ *SOLVER_LLVM_PATH*
+  
+ Path to the Clang/LLVM compiler framework that is patched for generating
+ Solver IR (SIR), including :program:`clang`, :program:`opt` and :program:`llc`.
+ It can be set by  environment variable or by :option:`--solver-llvm-path` option.
+
+ *SOLVER_PATH*
+
+ Path to the ES-SIMD toolchain tools. In particular, :program:`s-cg` and :program:`s-as`.
+ It can be set by  environment variable or by :option:`--solver-path` option.
+
+ *SOLVER_TARGET_ROOT*
+
+ Path to the root of the Solver toolchain. It can be set by environment variable
+ or by :option:`--solver-target-root` option.
+
+ *SOLVER_INCLUDE_PATH*
+
+ Path to the include directory. It can be set by environment variable or by
+ :option:`--solver-inc-path` option.
+
+ *SOLVER_LIB_PATH*
+
+ Path to the target libraries. It can be set by environment variable or by
+ :option:`--solver-lib-path` option.
+
+By default, :program:`s-cc` produces a zip archive file that contains all the memory
+initialization files. If the :option:`-o` option is omitted, then :program:`s-cc` will
+use the default output prefix ``out``.
+
+Other :program:`s-cc` options are described below.
+
+End-user Options
+~~~~~~~~~~~~~~~~
+
+.. option::  -h, --help
+
+ Show the help message and exit.
+
+.. option::  -v, --verbose
+
+ Run in verbose mode.
+
+.. option:: --quiet
+
+ Suppress all output.
+
+.. option:: -S
+
+ Generate assembly output.
+
+.. option:: -o OUTPUT_FILE
+
+ Name or prefix of the output files.
+
+.. option:: --emit-sir
+
+ Generate SIR as output.
+
+.. option:: --keep
+
+ Keep temporary files generated during compilation.
+
+.. option:: -O OPT_LEVEL
+
+ Optimization level: 0, 1, 2 or 3. The default value is 0.
+
+.. option:: -I INC_DIRS
+
+ Add a directory to header search paths.
+
+.. option:: -L LIB_DIRS
+
+ Add a directory to library search paths.
+
+.. option:: -l LINK_LIBS 
+
+ Add a library for linker.
+
+.. option:: --cg-stat
+
+ Collect code generation statistics. The statistics will be kept in
+ a prefix.stat.txt if the output format is binary archive.
+
+.. option:: --keep-asm   
+
+ Keep assembly output in a file named ``asm.s`` in the binary archive.
+
+Tool Options
+~~~~~~~~~~~~
+
+.. option:: --solver-llvm-path=LLVM_PATH
+
+ Specify path to LLVM tools (default=$SOLVER_LLVM_PATH).
+
+.. option:: --solver-path=SOLVER_PATH
+
+ Specify path to Solver toolchain (default=$SOLVER_PATH).
+
+.. option:: --solver-inc-path=SOLVER_INC_PATH
+
+ Specify path to Solver headers (default=$SOLVER_INCLUDE_PATH).
+
+.. option:: --solver-lib-path=SOLVER_LIB_PATH
+
+ Specify path to Solver libraries (default=$SOLVER_LIB_PATH).
+
+.. option:: --solver-target-root=SOLVER_TARGET_ROOT
+
+ Specify path to Solver libraries (default=$SOLVER_TARGET_ROOT).
+
+.. option:: --clang-opt=CLANG_OPTS
+
+ Specify extra options that will be passed directly to :program:`clang`.
+
+.. option:: --llc-opt=LLC_OPTS
+
+ Specify extra options that will be passed directly to :program:`llc`.
+
+.. option:: --as-opt=AS_OPTS
+
+ Specify extra options that will be passed directly to :program:`s-as`.
+
+.. option:: --cg-opt=CG_OPTS 
+
+ Specify extra options that will be passed directly to :program:`s-cg`.
+
+Target Options
+~~~~~~~~~~~~~~
+
+.. option:: --arch=<arch>
+
+ Specify the architecture for which to generate assembly. If no architecture
+ configuration file is specified by :option:`-arch-cfg`, the default target
+ architecture is "baseline", which is a baseline 32-bit processor with 4 PE
+ and explicit bypassing in both CP and PE.
+
+ If the architecture is different from the one specified by the configuration
+ file, this option is ignored.
+
+.. option:: --arch-cfg=<arch.json>
+
+ Specify an architecture configuration file in JSON format.
+
+.. option:: --arch-param=<params>
+ 
+ Set specific architecture architecture parameters. A paramter is specified
+ with a key:value pair. Multiple parameters are separated by comma.
+
+ For example, the following command sets the number of PE to 128 and the
+ number of data memory entries to 2048:
+
+.. code-block:: none
+
+   s-cc --arch=baseline --arch-param pe:128,dmem-depth:2048
+
+.. option:: --no-sched
+
+ Instruct the compiler to keep the IR order as much as possible.
+
+.. option:: --cp-dmem=<CP_DMEM_INIT>
+  
+ Specify an additional data initialization file for CP. The content of the
+ specified file will be appended to the data initialization generated by
+ the compiler. Note that the file is not validated so the user should gurantee
+ that the file is a valid memory init file
+
+.. option:: --pe-dmem=<PE_DMEM_INIT>
+ 
+ Specify an additional data initialization for PE array. The behaviour is
+ similar to :option:`--cp-dmem`.
+
+EXIT STATUS
+-----------
+
+If :program:`s-cc` succeeds, it will exit with 0.  Otherwise, if an error
+occurs, it will exit with a non-zero value.
+
+SEE ALSO
+--------
+
+s-as
+s-cg
+

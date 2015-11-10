@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>s-cc - ES-SIMD compiler driver &mdash; ES-SIMD 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="ES-SIMD 0.1 documentation" href="../index.html" />
+    <link rel="up" title="ES-SIMD Command Guide" href="index.html" />
+    <link rel="next" title="s-run-sim - ES-SIMD simulation driver" href="s-run-sim.html" />
+    <link rel="prev" title="s-sim - ES-SIMD simulator" href="s-sim.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="s-run-sim.html" title="s-run-sim - ES-SIMD simulation driver"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="s-sim.html" title="s-sim - ES-SIMD simulator"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">ES-SIMD 0.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">ES-SIMD Command Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="s-cc-es-simd-compiler-driver">
+<h1>s-cc - ES-SIMD compiler driver<a class="headerlink" href="#s-cc-es-simd-compiler-driver" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="synopsis">
+<h2>SYNOPSIS<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<p><strong class="program">s-cc</strong> [<em>options</em>] filename</p>
+</div>
+<div class="section" id="description">
+<h2>DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>The <strong class="program">s-cc</strong> command drives the compilation process for a specified
+architecture.</p>
+<p>The choice of architecture is determined by the <a class="reference internal" href="s-sim.html#cmdoption-arch"><em class="xref std std-option">-arch</em></a> option or the
+<a class="reference internal" href="s-sim.html#cmdoption-arch-cfg"><em class="xref std std-option">-arch-cfg</em></a>.</p>
+</div>
+<div class="section" id="options">
+<h2>OPTIONS<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<p>The input files can be in several format. The input language is determined by
+the extension of the input file:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">*.c</span></tt>: C.</li>
+<li><tt class="docutils literal"><span class="pre">*.cc/*.cpp</span></tt>: C++.</li>
+<li><tt class="docutils literal"><span class="pre">*.cl</span></tt>: OpenCL.</li>
+<li><tt class="docutils literal"><span class="pre">*.sir</span></tt>: SIR.</li>
+<li><tt class="docutils literal"><span class="pre">*.s</span></tt>: assembly.</li>
+</ul>
+<p>The <strong class="program">s-cc</strong> is a driver program. And it depends on several external
+programs to function properly. The following paths should be set:</p>
+<blockquote>
+<div><p><em>SOLVER_LLVM_PATH</em></p>
+<p>Path to the Clang/LLVM compiler framework that is patched for generating
+Solver IR (SIR), including <strong class="program">clang</strong>, <strong class="program">opt</strong> and <strong class="program">llc</strong>.
+It can be set by  environment variable or by <a class="reference internal" href="#cmdoption--solver-llvm-path"><em class="xref std std-option">--solver-llvm-path</em></a> option.</p>
+<p><em>SOLVER_PATH</em></p>
+<p>Path to the ES-SIMD toolchain tools. In particular, <strong class="program">s-cg</strong> and <strong class="program">s-as</strong>.
+It can be set by  environment variable or by <a class="reference internal" href="s-run-sim.html#cmdoption--solver-path"><em class="xref std std-option">--solver-path</em></a> option.</p>
+<p><em>SOLVER_TARGET_ROOT</em></p>
+<p>Path to the root of the Solver toolchain. It can be set by environment variable
+or by <a class="reference internal" href="#cmdoption--solver-target-root"><em class="xref std std-option">--solver-target-root</em></a> option.</p>
+<p><em>SOLVER_INCLUDE_PATH</em></p>
+<p>Path to the include directory. It can be set by environment variable or by
+<a class="reference internal" href="#cmdoption--solver-inc-path"><em class="xref std std-option">--solver-inc-path</em></a> option.</p>
+<p><em>SOLVER_LIB_PATH</em></p>
+<p>Path to the target libraries. It can be set by environment variable or by
+<a class="reference internal" href="#cmdoption--solver-lib-path"><em class="xref std std-option">--solver-lib-path</em></a> option.</p>
+</div></blockquote>
+<p>By default, <strong class="program">s-cc</strong> produces a zip archive file that contains all the memory
+initialization files. If the <a class="reference internal" href="s-rtl-gen.html#cmdoption-o"><em class="xref std std-option">-o</em></a> option is omitted, then <strong class="program">s-cc</strong> will
+use the default output prefix <tt class="docutils literal"><span class="pre">out</span></tt>.</p>
+<p>Other <strong class="program">s-cc</strong> options are described below.</p>
+<div class="section" id="end-user-options">
+<h3>End-user Options<a class="headerlink" href="#end-user-options" title="Permalink to this headline">¶</a></h3>
+<dl class="option">
+<dt id="cmdoption-h">
+<tt class="descname">-h</tt><tt class="descclassname"></tt><tt class="descclassname">, </tt><tt class="descname">--help</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-h" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the help message and exit.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-v">
+<tt class="descname">-v</tt><tt class="descclassname"></tt><tt class="descclassname">, </tt><tt class="descname">--verbose</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run in verbose mode.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--quiet">
+<tt class="descname">--quiet</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption--quiet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Suppress all output.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-S">
+<tt class="descname">-S</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-S" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate assembly output.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-o">
+<tt class="descname">-o</tt><tt class="descclassname"> OUTPUT_FILE</tt><a class="headerlink" href="#cmdoption-o" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name or prefix of the output files.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--emit-sir">
+<tt class="descname">--emit-sir</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption--emit-sir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate SIR as output.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--keep">
+<tt class="descname">--keep</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption--keep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keep temporary files generated during compilation.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-O">
+<tt class="descname">-O</tt><tt class="descclassname"> OPT_LEVEL</tt><a class="headerlink" href="#cmdoption-O" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimization level: 0, 1, 2 or 3. The default value is 0.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-I">
+<tt class="descname">-I</tt><tt class="descclassname"> INC_DIRS</tt><a class="headerlink" href="#cmdoption-I" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a directory to header search paths.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-L">
+<tt class="descname">-L</tt><tt class="descclassname"> LIB_DIRS</tt><a class="headerlink" href="#cmdoption-L" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a directory to library search paths.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-l">
+<tt class="descname">-l</tt><tt class="descclassname"> LINK_LIBS</tt><a class="headerlink" href="#cmdoption-l" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a library for linker.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--cg-stat">
+<tt class="descname">--cg-stat</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption--cg-stat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect code generation statistics. The statistics will be kept in
+a prefix.stat.txt if the output format is binary archive.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--keep-asm">
+<tt class="descname">--keep-asm</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption--keep-asm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keep assembly output in a file named <tt class="docutils literal"><span class="pre">asm.s</span></tt> in the binary archive.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="tool-options">
+<h3>Tool Options<a class="headerlink" href="#tool-options" title="Permalink to this headline">¶</a></h3>
+<dl class="option">
+<dt id="cmdoption--solver-llvm-path">
+<tt class="descname">--solver-llvm-path</tt><tt class="descclassname">=LLVM_PATH</tt><a class="headerlink" href="#cmdoption--solver-llvm-path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify path to LLVM tools (default=$SOLVER_LLVM_PATH).</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--solver-path">
+<tt class="descname">--solver-path</tt><tt class="descclassname">=SOLVER_PATH</tt><a class="headerlink" href="#cmdoption--solver-path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify path to Solver toolchain (default=$SOLVER_PATH).</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--solver-inc-path">
+<tt class="descname">--solver-inc-path</tt><tt class="descclassname">=SOLVER_INC_PATH</tt><a class="headerlink" href="#cmdoption--solver-inc-path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify path to Solver headers (default=$SOLVER_INCLUDE_PATH).</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--solver-lib-path">
+<tt class="descname">--solver-lib-path</tt><tt class="descclassname">=SOLVER_LIB_PATH</tt><a class="headerlink" href="#cmdoption--solver-lib-path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify path to Solver libraries (default=$SOLVER_LIB_PATH).</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--solver-target-root">
+<tt class="descname">--solver-target-root</tt><tt class="descclassname">=SOLVER_TARGET_ROOT</tt><a class="headerlink" href="#cmdoption--solver-target-root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify path to Solver libraries (default=$SOLVER_TARGET_ROOT).</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--clang-opt">
+<tt class="descname">--clang-opt</tt><tt class="descclassname">=CLANG_OPTS</tt><a class="headerlink" href="#cmdoption--clang-opt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify extra options that will be passed directly to <strong class="program">clang</strong>.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--llc-opt">
+<tt class="descname">--llc-opt</tt><tt class="descclassname">=LLC_OPTS</tt><a class="headerlink" href="#cmdoption--llc-opt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify extra options that will be passed directly to <strong class="program">llc</strong>.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--as-opt">
+<tt class="descname">--as-opt</tt><tt class="descclassname">=AS_OPTS</tt><a class="headerlink" href="#cmdoption--as-opt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify extra options that will be passed directly to <strong class="program">s-as</strong>.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--cg-opt">
+<tt class="descname">--cg-opt</tt><tt class="descclassname">=CG_OPTS</tt><a class="headerlink" href="#cmdoption--cg-opt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify extra options that will be passed directly to <strong class="program">s-cg</strong>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="target-options">
+<h3>Target Options<a class="headerlink" href="#target-options" title="Permalink to this headline">¶</a></h3>
+<dl class="option">
+<dt id="cmdoption--arch">
+<tt class="descname">--arch</tt><tt class="descclassname">=&lt;arch&gt;</tt><a class="headerlink" href="#cmdoption--arch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the architecture for which to generate assembly. If no architecture
+configuration file is specified by <a class="reference internal" href="s-sim.html#cmdoption-arch-cfg"><em class="xref std std-option">-arch-cfg</em></a>, the default target
+architecture is &#8220;baseline&#8221;, which is a baseline 32-bit processor with 4 PE
+and explicit bypassing in both CP and PE.</p>
+<p>If the architecture is different from the one specified by the configuration
+file, this option is ignored.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--arch-cfg">
+<tt class="descname">--arch-cfg</tt><tt class="descclassname">=&lt;arch.json&gt;</tt><a class="headerlink" href="#cmdoption--arch-cfg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify an architecture configuration file in JSON format.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--arch-param">
+<tt class="descname">--arch-param</tt><tt class="descclassname">=&lt;params&gt;</tt><a class="headerlink" href="#cmdoption--arch-param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set specific architecture architecture parameters. A paramter is specified
+with a key:value pair. Multiple parameters are separated by comma.</p>
+<p>For example, the following command sets the number of PE to 128 and the
+number of data memory entries to 2048:</p>
+</dd></dl>
+
+<div class="highlight-none"><div class="highlight"><pre>s-cc --arch=baseline --arch-param pe:128,dmem-depth:2048
+</pre></div>
+</div>
+<dl class="option">
+<dt id="cmdoption--no-sched">
+<tt class="descname">--no-sched</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption--no-sched" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instruct the compiler to keep the IR order as much as possible.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--cp-dmem">
+<tt class="descname">--cp-dmem</tt><tt class="descclassname">=&lt;CP_DMEM_INIT&gt;</tt><a class="headerlink" href="#cmdoption--cp-dmem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify an additional data initialization file for CP. The content of the
+specified file will be appended to the data initialization generated by
+the compiler. Note that the file is not validated so the user should gurantee
+that the file is a valid memory init file</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--pe-dmem">
+<tt class="descname">--pe-dmem</tt><tt class="descclassname">=&lt;PE_DMEM_INIT&gt;</tt><a class="headerlink" href="#cmdoption--pe-dmem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify an additional data initialization for PE array. The behaviour is
+similar to <a class="reference internal" href="#cmdoption--cp-dmem"><em class="xref std std-option">--cp-dmem</em></a>.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="exit-status">
+<h2>EXIT STATUS<a class="headerlink" href="#exit-status" title="Permalink to this headline">¶</a></h2>
+<p>If <strong class="program">s-cc</strong> succeeds, it will exit with 0.  Otherwise, if an error
+occurs, it will exit with a non-zero value.</p>
+</div>
+<div class="section" id="see-also">
+<h2>SEE ALSO<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<p>s-as
+s-cg</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">s-cc - ES-SIMD compiler driver</a><ul>
+<li><a class="reference internal" href="#synopsis">SYNOPSIS</a></li>
+<li><a class="reference internal" href="#description">DESCRIPTION</a></li>
+<li><a class="reference internal" href="#options">OPTIONS</a><ul>
+<li><a class="reference internal" href="#end-user-options">End-user Options</a></li>
+<li><a class="reference internal" href="#tool-options">Tool Options</a></li>
+<li><a class="reference internal" href="#target-options">Target Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exit-status">EXIT STATUS</a></li>
+<li><a class="reference internal" href="#see-also">SEE ALSO</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="s-sim.html"
+                        title="previous chapter">s-sim - ES-SIMD simulator</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="s-run-sim.html"
+                        title="next chapter">s-run-sim - ES-SIMD simulation driver</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/ToolGuide/s-cc.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="s-run-sim.html" title="s-run-sim - ES-SIMD simulation driver"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="s-sim.html" title="s-sim - ES-SIMD simulator"
+             >previous</a> |</li>
+        <li><a href="../index.html">ES-SIMD 0.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >ES-SIMD Command Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dongrui She.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

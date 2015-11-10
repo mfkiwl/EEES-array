@@ -1,0 +1,1 @@
+/usr/local/bin/clang++  -fPIC -Wall -Wextra -Wno-unused-parameter -Wunused-function -fvisibility-inlines-hidden   -g   -shared -Wl,-soname,libjsoncpp.so -o ../../lib/libjsoncpp.so CMakeFiles/jsoncpp.dir/jsoncpp.cpp.o  -L/usr/local/lib -Wl,-rpath,::::::::::::::::::::::::::::: 

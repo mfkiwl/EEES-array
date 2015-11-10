@@ -1,0 +1,7 @@
+This is a JPEG decoder.
+
+The check_sim.py file can be use to check outpuf of each step (VLD, IDCT 
+and CC) against the C program on host.
+
+The C source code can be found in the benchmark directory.
+

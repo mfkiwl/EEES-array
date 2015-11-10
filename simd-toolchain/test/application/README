@@ -1,0 +1,10 @@
+This folder contains some more "complete" test applications.
+
+These test applications are not included in the standard regression test
+because they are too big, that: 
+1. It takes long to run them,
+2. When something is wrong, it is difficult to pin-point the problem.
+
+The idea is to put the compiled SIR source code for testing. The high-level
+source code should be included (either in test or in benchmark directory),
+but just for reference.

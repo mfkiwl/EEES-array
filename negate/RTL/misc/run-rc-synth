@@ -1,0 +1,92 @@
+#!/bin/env python
+import os, sys, shutil, json, subprocess, tempfile, glob, collections, multiprocessing
+from optparse import OptionParser
+
+d = '/home/shahnawaz/simd-toolchain/build/lib/solver/python'
+if d not in sys.path: sys.path.append(d)
+from rtl_tools import rc_synthesis
+
+if d not in sys.path: sys.path.append(d)
+from rtl_tools import rc_synthesis
+from utils import sys_utils
+from simulation.solver_rtl_sim import setup_solver_mem_files
+
+AppConfig = collections.namedtuple(
+    'AppConfig', ['binary', 'run_dir', 'design', 'tcsh_rc','verbose'])
+
+def_synth=os.path.join(os.path.abspath(os.path.dirname(__file__)), 'synth.json')
+VERBOSE = False
+KEEP    = False
+
+def _get_run_name(design, clk_period, clk_gating):
+    return '{0}-{1}{2}-rc-run'.format(
+        design.synth_module, clk_period, '-cg' if clk_gating else'')
+
+def estimate_application_power(app_config):
+    bin_ar = os.path.abspath(app_config.binary)
+    app_name = sys_utils.get_path_basename(bin_ar)
+    if VERBOSE: print('Processing {0} ({1})'.format(app_name, bin_ar))
+    app_dir = os.path.join(app_config.run_dir, 'sim', app_name)
+    cds_lib = os.path.join(app_config.run_dir, 'cds.lib')
+    sys_utils.mkdir_p(app_dir)
+    cwd = os.getcwd()
+    os.chdir(app_dir)
+    try:
+        if VERBOSE: print('-- [%s] Running post-synthesis simulation'%app_name)
+        setup_solver_mem_files(bin_ar, app_dir)
+        rc_synthesis.run_post_synth_sim(
+            app_config.design.sim_module, app_config.tcsh_rc,
+            app_dir, app_config.run_dir, cds_lib)
+        for f in glob.glob(os.path.join(app_dir, 'nc*.log')):os.remove(f)
+        if VERBOSE: print('-- [%s] Estimating power with RC'%app_name)
+        rc_synthesis.run_rc_power_analysis(
+            app_config.tcsh_rc, app_dir, app_config.run_dir)
+        for f in glob.glob(os.path.join(app_dir, 'rc.log*')):os.remove(f)
+        for f in glob.glob(os.path.join(app_dir, 'rc.cmd*')):os.remove(f)
+    finally: os.chdir(cwd)
+
+if __name__ == '__main__':
+    parser = OptionParser('Usage: %prog [options] [application list]')
+    parser.add_option("--verbose", action="store_true", help="Run verbose mode")
+    parser.add_option("--keep", action="store_true", help='Keep temp files')
+    parser.add_option("--parallel", action="store_true", help='Run in parallel')
+    parser.add_option("--rerun", action="store_true", help='Rerun everything')
+    parser.add_option("--no-clk-gating", action="store_false",
+                      dest='clk_gating', default=True, help='Keep temp files')
+    parser.add_option("--clk-period", type="int", default=10000,
+                        help="Clock period in ps")
+    parser.add_option("--effort",choices=['low','medium','high'],default='high',
+                      help='Synthesis effort level (default=high)')
+    parser.add_option("--synth", default=def_synth,
+                      help='Design synthesis configurations')
+    parser.add_option("-o", dest="out_dir", default='synth-out',
+                      help="Output directory (default=synth-out)")
+    parser.add_option("--synth-lib", help="Override synthesis library option")
+    (opts, args) = parser.parse_args()
+    VERBOSE, KEEP = opts.verbose, opts.keep
+    opts.out_dir = os.path.abspath(opts.out_dir)
+    with open(opts.synth) as f: synth = json.load(f)
+    design = rc_synthesis.RTLDesign(**synth['design'])
+    tech_lib = json.load(opts.synth_lib) if opts.synth_lib         else rc_synthesis.TechLib(**synth['tech_lib'])
+
+    sys_utils.mkdir_p(opts.out_dir)
+    rc_run_dir = os.path.join(
+        opts.out_dir,
+        _get_run_name(design, opts.clk_period, opts.clk_gating))
+    sys_utils.mkdir_p(rc_run_dir)
+    rc_synthesis.generate_rc_scripts(design, tech_lib, opts.clk_period,
+                                     opts.clk_gating, opts.effort, rc_run_dir)
+    tcsh_rc = '/home/eda/share/cadence_cds_2012_lnx.csh'
+    rc_synthesis.check_and_synthesis(
+        design, rc_run_dir, tcsh_rc, opts.rerun, VERBOSE)
+    if opts.parallel:
+        app_cfg = [AppConfig(binary=b, run_dir=rc_run_dir, design=design,
+                             tcsh_rc=tcsh_rc, verbose=VERBOSE) for b in args]
+        pool = multiprocessing.Pool(processes=multiprocessing.cpu_count(),
+                                    initializer=os.nice, initargs=[1])
+        pool.map(estimate_application_power, app_cfg)
+    else:
+        for bin_ar in args:
+            estimate_application_power(
+                AppConfig(binary=bin_ar, run_dir=rc_run_dir,
+                          design=design, tcsh_rc=tcsh_rc, verbose=VERBOSE))

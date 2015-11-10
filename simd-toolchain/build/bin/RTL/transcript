@@ -1,0 +1,41 @@
+# do /home/shahnawaz/simd-toolchain/build/bin/RTL/misc/vsim.run.do 
+# vsim -nostdout -quiet -novopt work.simd_top_testbench 
+# //  ModelSim SE-64 10.1a Feb 21 2012 Linux 2.6.32-431.29.2.el6.x86_64
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.simd_top_testbench
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.simd_top
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.cp_imem
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.cp_dmem
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_imem
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_dmem
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.core_top
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.cp_top
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.cp_if
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.cp_id
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.cp_agu
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.cp_rf
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.cp_bypass
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.cp_ex
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.my_isolation
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.cp_wb
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_array_top
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_array_if
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_array_id
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_top
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_id
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_agu
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_rf
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_bypass
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_ex
+# Refreshing /home/shahnawaz/simd-toolchain/build/bin/RTL/work.pe_wb
+# Break in Module simd_top_testbench at /home/shahnawaz/simd-toolchain/build/bin/RTL/testbench/simd_top_testbench.v line 226
+# Stopped at /home/shahnawaz/simd-toolchain/build/bin/RTL/testbench/simd_top_testbench.v line 226 
+# ** Note: $finish    : /home/shahnawaz/simd-toolchain/build/bin/RTL/testbench/simd_top_testbench.v(294)
+#    Time: 82495 ns  Iteration: 0  Instance: /simd_top_testbench

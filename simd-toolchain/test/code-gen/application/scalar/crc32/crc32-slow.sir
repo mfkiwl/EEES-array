@@ -1,0 +1,240 @@
+	.text
+	.globl	crcSlow
+	.align	2
+	.type	crcSlow,@function
+	.ent       crcSlow              # @crcSlow
+crcSlow:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       2
+	rvals      32
+	mnum       2
+	malias     1, 2
+	bb         0
+	succ       5
+	succ       1
+	dom        5
+	dom        1
+	rli        %a1
+	rli        %a0
+	mov        %r0, %a1
+	mov        %r1, %a0
+	mov        %r2, -1
+	brlt       %r0, 1, ($BB0_5)
+# BB#1:                                 # %for.body.lr.ph
+	bb         1
+	pred       0
+	succ       2
+	dom        2
+	rli        %r0
+	rli        %r1
+	mov        %r2, POLYNOMIAL
+	mloc       1
+	lw         %r3, %r2, 0
+	mov        %r2, -1
+	mov        %r4, %ZERO
+$BB0_2:                                 # %for.body
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB0_3 Depth 2
+	bb         2
+	loop       0
+	lhdr       0, 1
+	pred       4
+	pred       1
+	succ       3
+	dom        3
+	pdom       1
+	rli        %r4
+	rli        %r2
+	rli        %r0
+	rli        %r1
+	rli        %r3
+	mloc       2
+	lb         %a0, %r1, %r4
+	mov        %a1, 8
+	call       reflect
+	sll        %r5, %v0, 24
+	xor        %r2, %r5, %r2
+$BB0_3:                                 # %for.body5
+                                        #   Parent Loop BB0_2 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	bb         3
+	loop       1
+	lext       1
+	lhdr       1, 2
+	loop       0
+	pred       3
+	pred       2
+	succ       3
+	succ       4
+	dom        4
+	pdom       2
+	rli        %a1
+	rli        %r4
+	rli        %r2
+	rli        %r0
+	rli        %r1
+	rli        %r3
+	sra        %r5, %r2, 31
+	and        %r5, %r5, %r3
+	sll        %r2, %r2, 1
+	xor        %r2, %r2, %r5
+	add        %a1, %a1, -1
+	and        %r5, %a1, 255
+	brne       %r5, 0, ($BB0_3)
+# BB#4:                                 # %for.inc9
+                                        #   in Loop: Header=BB0_2 Depth=1
+	bb         4
+	loop       0
+	lext       0
+	pred       3
+	succ       2
+	succ       5
+	pdom       3
+	rli        %r4
+	rli        %r2
+	rli        %r0
+	rli        %r1
+	rli        %r3
+	add        %r4, %r4, 1
+	brne       %r4, %r0, ($BB0_2)
+$BB0_5:                                 # %for.end10
+	bb         5
+	pred       4
+	pred       0
+	pdom       4
+	pdom       0
+	rli        %r2
+	mov        %a1, 32
+	mov        %a0, %r2
+	call       reflect
+	xor        %v0, %v0, 4294967295
+	ret        %RA
+	.end       crcSlow
+$tmp0:
+	.size	crcSlow, ($tmp0)-crcSlow
+
+	.align	2
+	.type	reflect,@function
+	.ent       reflect              # @reflect
+reflect:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       2
+	rvals      32
+	bb         0
+	succ       5
+	succ       1
+	dom        5
+	dom        1
+	rli        %a1
+	rli        %a0
+	mov        %v0, %ZERO
+	brlt       %a1, 1, ($BB1_5)
+# BB#1:                                 # %for.body.lr.ph
+	bb         1
+	pred       0
+	succ       2
+	dom        2
+	rli        %a0
+	rli        %a1
+	add        %r0, %a1, -1
+	mov        %v0, %ZERO
+$BB1_2:                                 # %for.body
+                                        # =>This Inner Loop Header: Depth=1
+	bb         2
+	loop       0
+	lhdr       0, 1
+	pred       4
+	pred       1
+	succ       3
+	succ       4
+	dom        3
+	dom        4
+	pdom       1
+	rli        %a0
+	rli        %v0
+	rli        %r0
+	and        %r1, %a0, 1
+	breq       %r1, 0, ($BB1_4)
+# BB#3:                                 # %if.then
+                                        #   in Loop: Header=BB1_2 Depth=1
+	bb         3
+	loop       0
+	pred       2
+	succ       4
+	rli        %a0
+	rli        %v0
+	rli        %r0
+	mov        %r1, 1
+	sll        %r1, %r1, %r0
+	or         %v0, %r1, %v0
+$BB1_4:                                 # %if.end
+                                        #   in Loop: Header=BB1_2 Depth=1
+	bb         4
+	loop       0
+	lext       0
+	pred       2
+	pred       3
+	succ       2
+	succ       5
+	pdom       2
+	pdom       3
+	rli        %a0
+	rli        %v0
+	rli        %r0
+	add        %r0, %r0, -1
+	srl        %a0, %a0, 1
+	brne       %r0, -1, ($BB1_2)
+$BB1_5:                                 # %for.end
+	bb         5
+	pred       4
+	pred       0
+	pdom       4
+	pdom       0
+	rli        %v0
+	ret        %RA
+	.end       reflect
+$tmp1:
+	.size	reflect, ($tmp1)-reflect
+
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main                 # @main
+main:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       0
+	rvals      32
+	mnum       1
+	bb         0
+	mov        %a0, msg
+	mov        %a1, 6
+	call       crcSlow
+	mov        %r0, out
+	mloc       1
+	sw         %v0, %r0, 0
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp2:
+	.size	main, ($tmp2)-main
+
+	.type	POLYNOMIAL,@object      # @POLYNOMIAL
+	.data
+	.globl	POLYNOMIAL
+	.align	2
+POLYNOMIAL:
+	.long	79764919                # 0x4c11db7
+	.size	POLYNOMIAL, 4
+
+	.type	msg,@object             # @msg
+	.globl	msg
+msg:
+	.ascii	 "abcdef\000"
+	.size	msg, 7
+
+	.type	out,@object             # @out
+	.comm	out,4,4
+

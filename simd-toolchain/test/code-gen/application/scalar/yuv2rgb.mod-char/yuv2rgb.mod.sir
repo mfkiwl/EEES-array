@@ -1,0 +1,141 @@
+	.file	"/tmp/SCCTMP_SCCTMP_YUV2RGB_MOD_C_TV6A5X_BC_6V9AIH.bc"
+	.text
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main                 # @main
+main:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       0
+        rvals      32
+	bb         0
+	mov        %a0, rgb
+	mov        %a1, yuv
+	mov        %a2, 8
+	call       yuv2rgb_mod
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp0:
+	.size	main, ($tmp0)-main
+
+	.globl	yuv2rgb_mod
+	.align	2
+	.type	yuv2rgb_mod,@function
+	.ent       yuv2rgb_mod          # @yuv2rgb_mod
+yuv2rgb_mod:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       3
+	mnum       6
+	malias     5, 6
+	malias     4, 6
+	malias     4, 5
+	malias     2, 3
+	malias     1, 3
+	malias     1, 2
+	bb         0
+	succ       3
+	succ       1
+	dom        3
+	dom        1
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	brlt       %a2, 1, ($BB1_3)
+# BB#1:                                 # %for.body.preheader
+	bb         1
+	pred       0
+	succ       2
+	dom        2
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	add        %r0, %a1, %a2
+	add        %r1, %a0, %a2
+	sll        %r3, %a2, 1
+	add        %r2, %a1, %r3
+	add        %r3, %a0, %r3
+	mov        %r4, %ZERO
+$BB1_2:                                 # %for.body
+                                        # =>This Inner Loop Header: Depth=1
+	bb         2
+	loop       0
+	lext       0
+	lhdr       0, 1
+	pred       2
+	pred       1
+	succ       2
+	succ       3
+	pdom       1
+	rli        %r4
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	rli        %r0
+	rli        %r1
+	rli        %r2
+	rli        %r3
+	sub       %r5, %a1, %r4
+	mloc       1
+	lb         %r5, %r5, 0
+	sub       %r6, %r2, %r4
+	mloc       2
+	lb         %r6, %r6, 0
+	add        %r6, %r6, -128
+	mul        %r7, %r6, 359
+	sra        %r7, %r7, 8
+	add        %r7, %r7, %r5
+	min        %r7, %r7, 255
+	max        %r7, %r7, 0
+	sub       %r8, %r0, %r4
+	mloc       3
+	lb         %r8, %r8, 0
+	sub       %r9, %a0, %r4
+	mloc       4
+	sb         %r7, %r9, 0
+	add        %r7, %r8, -128
+	mul        %r8, %r7, 11
+	sra        %r8, %r8, 5
+	sub       %r8, %r5, %r8
+	mul        %r6, %r6, 183
+	sra        %r6, %r6, 8
+	sub       %r6, %r8, %r6
+	min        %r6, %r6, 255
+	max        %r6, %r6, 0
+	sub       %r8, %r1, %r4
+	mloc       5
+	sb         %r6, %r8, 0
+	mul        %r6, %r7, 227
+	sra        %r6, %r6, 7
+	add        %r5, %r6, %r5
+	min        %r5, %r5, 255
+	max        %r5, %r5, 0
+	sub       %r6, %r3, %r4
+	mloc       6
+	sb         %r5, %r6, 0
+	add        %r4, %r4, -1
+	add        %r5, %a2, %r4
+	brne       %r5, 0, ($BB1_2)
+$BB1_3:                                 # %for.end
+	bb         3
+	pred       2
+	pred       0
+	pdom       2
+	pdom       0
+	ret        %RA
+	.end       yuv2rgb_mod
+$tmp1:
+	.size	yuv2rgb_mod, ($tmp1)-yuv2rgb_mod
+
+	.type	yuv,@object             # @yuv
+	.data
+	.globl	yuv
+yuv:
+	.ascii	 "\307\326\367p\256\350\2536$`z(\213\333\b\276\374\nY2/P!q"
+	.size	yuv, 24
+
+	.type	rgb,@object             # @rgb
+	.comm	rgb,24,1
+

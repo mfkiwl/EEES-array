@@ -1,0 +1,499 @@
+m255
+K3
+13
+cModel Technology
+Z0 d/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass
+vcore_top
+V6I_zA`=BWnid@[nNTUOF92
+r1
+31
+IEBH9l`?[^S;[Ohf@3T`mz0
+Z1 d/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass
+Z2 w1423844420
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/core_top.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/core_top.v
+L0 21
+Z3 OL;L;10.1a;51
+Z4 o-quiet -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+Z5 !s92 -quiet +incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s85 0
+!s100 Z13GcIRzmf7BGW7f;3MB31
+!s108 1423844421.108774
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/core_top.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/core_top.v|
+vcp_agu
+VY@Zl;o5;^60U9KgkWdEj<3
+r1
+31
+I4BY1o7Qlm[6M;@?9zIGH^1
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_agu.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_agu.v
+L0 17
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 ?<dKzjKYR]_@m=C3m``3I0
+!s108 1423844420.698303
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_agu.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_agu.v|
+vcp_bypass
+Vibfm5UNRm^Fo?<F72`HE=0
+r1
+31
+IBB7K]lYcZ_8UP`l]U[Zf^3
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_bypass.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_bypass.v
+L0 18
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 ?blFam1:?V?DaGH_FKkIP0
+!s108 1423844420.999218
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_bypass.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_bypass.v|
+vcp_dmem
+V1A[gSo:7Q50iYFOfIllTJ3
+r1
+31
+I4W[C4FK8GXONT<SJ9L[M?2
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_dmem.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_dmem.v
+L0 18
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 FlgSKVeQnQOUIio6h=f5R3
+!s108 1423844420.722355
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_dmem.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_dmem.v|
+vcp_ex
+V9Xc2nHlEPR7RN;l252O8l2
+r1
+31
+ILDGBM]LYEb1PIF;>S5@[`2
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_ex.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_ex.v
+L0 17
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 eMK5HlT<QV9XZ7gVOH0[Z1
+!s108 1423844420.759479
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_ex.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_ex.v|
+vcp_id
+VJ]_VEjhP5l3LJ42fVmgZP1
+r1
+31
+InKznfSh^P4;VaTAVW<Lg;2
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_id.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_id.v
+L0 17
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 ]lznOn@^>`[J_Q3jH_K<g3
+!s108 1423844420.815472
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_id.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_id.v|
+vcp_if
+VQPkVZ3A4o=IDOYHGXUQP43
+r1
+31
+IBFcI]hRhhiU_@U[:;oBHV0
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_if.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_if.v
+L0 20
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 Lam0^QQHZkj81KCbhX?Dk3
+!s108 1423844420.985638
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_if.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_if.v|
+vcp_imem
+V`z:XGGP]AHl>T1ciEIHP;3
+r1
+31
+IlO9cfAWD>N5:a35bECm?i2
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_imem.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_imem.v
+L0 18
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 OXTbh``eWM_Tm9gUd32mg1
+!s108 1423844420.710363
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_imem.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_imem.v|
+vcp_rf
+V3VaFfk47BEm5<;0PcPKUU2
+r1
+31
+Ifdd2ddO@BMlHJ73W@d95L0
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_rf.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_rf.v
+L0 19
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 eomSIWOP27zUnm`Fh?ePV3
+!s108 1423844420.746544
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_rf.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_rf.v|
+vcp_top
+VFn72HGaC8IF39jXRLEbl61
+r1
+31
+IQEJ>H;Y7i_K7nR@g<amI61
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_top.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_top.v
+L0 18
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 9j18Q06LE8lW7Q<5SJgo]0
+!s108 1423844420.962094
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_top.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_top.v|
+vcp_wb
+V2HKEPLW[CX>mil>H7GBIW2
+r1
+31
+IIlaCQJ@fKGbmg4R`c`U;Q1
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_wb.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_wb.v
+L0 18
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 Zgig2b2W`Y5PVA4a2nfU83
+!s108 1423844420.949679
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_wb.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/cp_wb.v|
+vmy_isolation
+V8:@H_5@Xm4CJBePcioPj00
+r1
+31
+I5nHL8A]Q>zjZbYKZC>WES3
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/my_isolation.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/my_isolation.v
+L0 15
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 8Xnh2ZBFo>SP6D[@UPeiY3
+!s108 1423844421.018188
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/my_isolation.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/my_isolation.v|
+vpe_agu
+VBgWfo:_A:nkOab8817bBm3
+r1
+31
+IDkgdPZ6z2@<BV<QgIjdNg1
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_agu.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_agu.v
+L0 17
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 Poe_7dAEUVh[1zRG]^F[>1
+!s108 1423844420.680468
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_agu.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_agu.v|
+vpe_array_id
+VRlQN`z1DZeh2:<fmCJkeh2
+r1
+31
+InH>kdA^AP[VTA0Khia]Zh3
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_id.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_id.v
+L0 17
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 ?EB<fj6n^D_CR2L`fK@La0
+!s108 1423844420.660465
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_id.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_id.v|
+vpe_array_if
+V?W]B>7[ChaBg>obX1MznR3
+r1
+31
+ITYTgETd;[L:>JgaPEjRi63
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_if.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_if.v
+L0 18
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 llFbU;o[]TomQee6IPDDA2
+!s108 1423844421.069243
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_if.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_if.v|
+vpe_array_top
+VCPP>?9VPDo3`0;CHT2GzD0
+r1
+31
+I[MDaFz:mSMI=7WS`n3NPb3
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_top.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_top.v
+L0 18
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 =Q[SEiQ2ezzil_@J]Jbb<0
+!s108 1423844420.833550
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_top.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_array_top.v|
+vpe_bypass
+VzH3jc947d5i]eoNBNBI<l2
+r1
+31
+IQ]RF?F]ZWT:c=[h@GAam:2
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_bypass.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_bypass.v
+L0 17
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 b[Bi4IE<6A@RPN6^e[:hQ2
+!s108 1423844420.802559
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_bypass.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_bypass.v|
+vpe_dmem
+V<OmCoifb7iAkc_[Czjc>X2
+r1
+31
+Im=[eP]UBIeB=<j[Sd_kYS3
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_dmem.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_dmem.v
+L0 18
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 F;VIFCZQmkml@5;l?C8[]1
+!s108 1423844420.790060
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_dmem.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_dmem.v|
+vpe_ex
+V1nl]DMR2VDCBVUAO<N3@=1
+r1
+31
+I26f?hLPVVLdWcU7UQnbJ?0
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_ex.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_ex.v
+L0 17
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 HUfTFXN3zlZ`fBmeikA;22
+!s108 1423844421.088334
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_ex.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_ex.v|
+vpe_id
+VU[E2bIaBYi>6DXGFnYG961
+r1
+31
+I92fdS_b7f@Te^YGV:3aZG3
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_id.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_id.v
+L0 17
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 I]:L;TgToV53=2ZDaGnIT1
+!s108 1423844420.886126
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_id.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_id.v|
+vpe_imem
+V=I_bAY2OJLacC]89ZocNL3
+r1
+31
+IDWaYkhFC4?Pg9M1Hz_PRf1
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_imem.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_imem.v
+L0 18
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 Bhj7K=W8gQ5>2]ZBj@5E`2
+!s108 1423844421.037363
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_imem.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_imem.v|
+vpe_rf
+V4LBST=Qj8YY?hNU37]C@91
+r1
+31
+I3`[44oB]XRi>P3g`GBNK31
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_rf.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_rf.v
+L0 19
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 PGJDmTSZfWzXB0CG8;W:91
+!s108 1423844421.049962
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_rf.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_rf.v|
+vpe_top
+V[aWb]eGG<8m3BdaGf9:SI2
+r1
+31
+I]9T3SP6IY0kbz`ZET4D<o2
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_top.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_top.v
+L0 18
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 @]W`m=0A2ozH]9OC2U0on1
+!s108 1423844420.772960
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_top.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_top.v|
+vpe_wb
+!i10b 1
+V`CMUOmjITR2U`h22<Q=fL2
+r1
+!s85 0
+31
+I2c]W_l==R?COd[;i43KVi3
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_wb.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_wb.v
+L0 18
+R3
+R4
+R5
+!s100 6mBH;ILM3d44jFh>?MD^e2
+!s108 1423844420.734724
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_wb.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/pe_wb.v|
+vsimd_top
+VCVM2eddL]Ro4_2N7e=X4I3
+r1
+31
+IojLenR1X<UaMjgEkWmlJK2
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/simd_top.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/simd_top.v
+L0 20
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 LC@oAJT426k8ZJfk83BnD3
+!s108 1423844420.907916
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/simd_top.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/verilog/simd_top.v|
+vsimd_top_testbench
+VJD>iI2XP[CB2G_oO8KUV>1
+r1
+31
+I4nlo]f:USKoPMihd:YbDV2
+R1
+R2
+8/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/testbench/simd_top_testbench.v
+F/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/testbench/simd_top_testbench.v
+L0 20
+R3
+R4
+R5
+!i10b 1
+!s85 0
+!s100 4d2gA<4;dgO[_0OcCz0h<1
+!s108 1423844421.180164
+!s107 /home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-testbench.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-pe.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define/def-cp.v|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/testbench/simd_top_testbench.v|
+!s90 -quiet|+incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/define|/home/shahnawaz/simd-toolchain/benchmark/vector/rotate/RTL-baseline-32b-4stage-bypass/testbench/simd_top_testbench.v|

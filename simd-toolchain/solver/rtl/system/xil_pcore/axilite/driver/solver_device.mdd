@@ -1,0 +1,9 @@
+OPTION psf_version = 2.1.0;
+
+BEGIN DRIVER solver_{{cfg.pe.size}}pe_{{cfg.get_tgt_attr()|replace('-', '_')}}
+
+  OPTION supported_peripherals=(solver_{{cfg.pe.size}}pe_{{cfg.get_tgt_attr()|replace('-', '_')}});
+  OPTION depends = (common_v1_00_a);
+  OPTION copyfiles = all;
+
+END DRIVER

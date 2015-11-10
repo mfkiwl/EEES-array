@@ -1,0 +1,39 @@
+	.file	"func.c"
+	.text
+	.globl	add
+	.align	2
+	.type	add,@function
+	.ent       add
+add:
+	.frame     %SP,0
+	args       2
+        rvals      32
+	bb         0
+	rli        %a1
+	rli        %a0
+	add        %v0, %a1, %a0
+	ret        %RA
+	.end       add
+$tmp0:
+	.size	add, ($tmp0)-add
+
+	.globl	use_add
+	.align	2
+	.type	use_add,@function
+	.ent       use_add
+use_add:
+	.frame     %SP,0
+	args       3
+        rvals      32
+	bb         0
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	call       add
+	add        %v0, %v0, %a2
+	ret        %RA
+	.end       use_add
+$tmp1:
+	.size	use_add, ($tmp1)-use_add
+
+

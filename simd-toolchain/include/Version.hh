@@ -1,0 +1,9 @@
+#ifndef ES_SIMD_VERSION_HH
+#define ES_SIMD_VERSION_HH
+
+#define VERSION_MAJOR 0
+#define VERSION_MINOR 1
+
+#define PRJ_NAME "ES SIMD Toolchain"
+
+#endif//ES_SIMD_VERSION_HH

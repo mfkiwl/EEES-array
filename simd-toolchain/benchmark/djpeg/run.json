@@ -1,0 +1,8 @@
+{
+    "arch":["baseline-32b-4stage","baseline-32b-4stage-bypass",
+            "baseline-32b-5stage","baseline-32b-5stage-bypass"],
+    "arch-param":"cp-dmem-depth:8192",
+    "app":["djpeg-scalar"],
+    "dbin": {"djpeg-scalar":["cp:input_buffer:surfer.jpg"] },
+    "stat":["cycles", "cp_reg_wr", "cp_reg_rd", "cp_load", "cp_store"]
+}

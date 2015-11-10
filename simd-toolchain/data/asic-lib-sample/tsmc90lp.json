@@ -1,0 +1,8 @@
+{
+    "search_path":"/home/eda/TSMCHOME/digital/Front_End/timing_power/tcbn90lphp_150c",
+    "library":"tcbn90lphptc.lib",
+    "lef_lib":"/home/eda/TSMCHOME/digital/Back_End/lef/tcbn90lphp_150d/lef/tcbn90lphp_6lmT1.lef",
+    "cap_tab":"/home/eda/TSMCHOME/digital/Back_End/lef/tcbn90lphp_150d/techfiles/cln90_1p06m_top1_typical.ict.captable",
+    "sim_vlog":"/home/eda/TSMCHOME/digital/Front_End/verilog/tcbn90lphp_150j/tcbn90lphp.v",
+    "cds_lib":"/home/eda/TSMCHOME/cds.lib"
+}

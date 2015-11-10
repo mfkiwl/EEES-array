@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>s-cg - ES-SIMD code generator &mdash; ES-SIMD 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="ES-SIMD 0.1 documentation" href="../index.html" />
+    <link rel="up" title="ES-SIMD Command Guide" href="index.html" />
+    <link rel="next" title="s-as - ES-SIMD assembler" href="s-as.html" />
+    <link rel="prev" title="ES-SIMD Command Guide" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="s-as.html" title="s-as - ES-SIMD assembler"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="ES-SIMD Command Guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">ES-SIMD 0.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">ES-SIMD Command Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="s-cg-es-simd-code-generator">
+<h1>s-cg - ES-SIMD code generator<a class="headerlink" href="#s-cg-es-simd-code-generator" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="synopsis">
+<h2>SYNOPSIS<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<p><strong class="program">s-cg</strong> [<em>options</em>] filename</p>
+</div>
+<div class="section" id="description">
+<h2>DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>The <strong class="program">s-cg</strong> command compiles SIR source inputs into assembly language
+for a specified architecture.  The assembly language output can then be passed
+through a assembler to generate an executable.</p>
+<p>The choice of architecture is determined by the <a class="reference internal" href="s-sim.html#cmdoption-arch"><em class="xref std std-option">-arch</em></a> option or the
+<a class="reference internal" href="s-sim.html#cmdoption-arch-cfg"><em class="xref std std-option">-arch-cfg</em></a>.</p>
+</div>
+<div class="section" id="options">
+<h2>OPTIONS<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<p>The input files should be in SIR assembly format (<tt class="docutils literal"><span class="pre">.sir</span></tt>).</p>
+<p>If the <a class="reference internal" href="s-rtl-gen.html#cmdoption-o"><em class="xref std std-option">-o</em></a> option is omitted, then <strong class="program">s-cg</strong> will write the
+result to a default output file <tt class="docutils literal"><span class="pre">out.s</span></tt>.</p>
+<p>Other <strong class="program">s-cg</strong> options are described below.</p>
+<div class="section" id="end-user-options">
+<h3>End-user Options<a class="headerlink" href="#end-user-options" title="Permalink to this headline">¶</a></h3>
+<dl class="option">
+<dt id="cmdoption-help">
+<tt class="descname">-help</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a summary of command line options.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-o">
+<tt class="descname">-o</tt><tt class="descclassname">=&lt;filename&gt;</tt><a class="headerlink" href="#cmdoption-o" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the output filename.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-arch">
+<tt class="descname">-arch</tt><tt class="descclassname">=&lt;arch&gt;</tt><a class="headerlink" href="#cmdoption-arch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the architecture for which to generate assembly. If no architecture
+configuration file is specified by <a class="reference internal" href="s-sim.html#cmdoption-arch-cfg"><em class="xref std std-option">-arch-cfg</em></a>, the default target
+architecture is &#8220;baseline&#8221;, which is a baseline 32-bit processor with 4 PE
+and explicit bypassing in both CP and PE.</p>
+<p>If the architecture is different from the one specified by the configuration
+file, this option is ignored.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-arch-cfg">
+<tt class="descname">-arch-cfg</tt><tt class="descclassname">=&lt;arch.json&gt;</tt><a class="headerlink" href="#cmdoption-arch-cfg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify an architecture configuration file in JSON format.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-arch-param">
+<tt class="descname">-arch-param</tt><tt class="descclassname">=&lt;params&gt;</tt><a class="headerlink" href="#cmdoption-arch-param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set specific architecture architecture parameters. A paramter is specified
+with a key:value pair. Multiple parameters are separated by comma.</p>
+<p>For example, the following command sets the number of PE to 128 and the
+number of data memory entries to 2048:</p>
+</dd></dl>
+
+<div class="highlight-none"><div class="highlight"><pre>s-cg -arch=baseline -arch-param pe:128,dmem-depth:2048
+</pre></div>
+</div>
+<dl class="option">
+<dt id="cmdoption-no-sched">
+<tt class="descname">-no-sched</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-no-sched" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scheduler keep the IR order as much as possible.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bare">
+<tt class="descname">-bare</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-bare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run in bare mode, the code generator layout functions in IR order and does not
+try to run the linking process.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-parse-only">
+<tt class="descname">-parse-only</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-parse-only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop after all IR files are parsed.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-init-asm">
+<tt class="descname">-init-asm</tt><tt class="descclassname">=&lt;filename&gt;</tt><a class="headerlink" href="#cmdoption-init-asm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify initalization assembly files. The content of the files will be added to
+the output file.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="debuging-information-options">
+<h3>Debuging/Information Options<a class="headerlink" href="#debuging-information-options" title="Permalink to this headline">¶</a></h3>
+<dl class="option">
+<dt id="cmdoption-cg-dbg">
+<tt class="descname">-cg-dbg</tt><tt class="descclassname">=&lt;key&gt;</tt><a class="headerlink" href="#cmdoption-cg-dbg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Code generator debug option</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-parser-info-level">
+<tt class="descname">-parser-info-level</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-parser-info-level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the information level of IR parser. The default level is <em>none</em>.
+The following options are available:</p>
+<p><em>none</em>     No information.</p>
+<p><em>quick</em>    Enable quick debug information.</p>
+<p><em>info</em>     Enable comprehensive debug information.</p>
+<p><em>detailed</em> Enable most detailed debug information.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-print-codegen-stat">
+<tt class="descname">-print-codegen-stat</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-print-codegen-stat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print code generation statistics.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-print-generate">
+<tt class="descname">-print-generate</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-print-generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print code generation result to stdout.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-print-parsing">
+<tt class="descname">-print-parsing</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-print-parsing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print parsing result to stdout.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-print-pass-name">
+<tt class="descname">-print-pass-name</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-print-pass-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the name of each pass executed.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-log-pass">
+<tt class="descname">-log-pass</tt><tt class="descclassname"> &lt;pass&gt;</tt><a class="headerlink" href="#cmdoption-log-pass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable logging of specified passes. Multiple names are separated by comma.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-quiet">
+<tt class="descname">-quiet</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-quiet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Suppress any terminal output.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-verbose">
+<tt class="descname">-verbose</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run in verbose mode.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-version">
+<tt class="descname">-version</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the version of this program.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="exit-status">
+<h2>EXIT STATUS<a class="headerlink" href="#exit-status" title="Permalink to this headline">¶</a></h2>
+<p>If <strong class="program">s-cg</strong> succeeds, it will exit with 0.  Otherwise, if an error
+occurs, it will exit with a non-zero value.</p>
+</div>
+<div class="section" id="see-also">
+<h2>SEE ALSO<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<p>s-as
+s-cc</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">s-cg - ES-SIMD code generator</a><ul>
+<li><a class="reference internal" href="#synopsis">SYNOPSIS</a></li>
+<li><a class="reference internal" href="#description">DESCRIPTION</a></li>
+<li><a class="reference internal" href="#options">OPTIONS</a><ul>
+<li><a class="reference internal" href="#end-user-options">End-user Options</a></li>
+<li><a class="reference internal" href="#debuging-information-options">Debuging/Information Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exit-status">EXIT STATUS</a></li>
+<li><a class="reference internal" href="#see-also">SEE ALSO</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">ES-SIMD Command Guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="s-as.html"
+                        title="next chapter">s-as - ES-SIMD assembler</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/ToolGuide/s-cg.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="s-as.html" title="s-as - ES-SIMD assembler"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="ES-SIMD Command Guide"
+             >previous</a> |</li>
+        <li><a href="../index.html">ES-SIMD 0.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >ES-SIMD Command Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dongrui She.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

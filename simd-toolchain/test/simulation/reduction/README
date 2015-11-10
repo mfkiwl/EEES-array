@@ -1,0 +1,10 @@
+Short description of each algorithm
+
+reduce1:  			sum sections of 32 elements in the RF using the pipelined reduction algorithm
+reduce1_outmem:		can reduce sections of any lenght, but needs to access the memory more often than the in memory version
+reduce_naive:		reduce into CP by pipelining interleaved valid columns, for example  the Pes look like 1xxx1xxx1xxx1, where 1 is a valid column and x is invalid. This algorithm can get the sum of these valid com=lumns into the CP
+reduce2:			reduce vectors of any length according to algorithm 2
+gather2:			collect segments of reduce 2 and sum them in the first segment, after that reduction into CP should then be trivial	(code for this is also included in this test case)
+
+reduce2_full:		uses reduce2+gather2 to implement a full reduction algorithm that obtains the sum of an arbitrary number of vectors with an arbitrary number of elements
+reduce1_full:		uses reduce1 reduce1_outmem and reduce_naive (interleaved) to implement full reduction algorithm for arbitrary number of vectors and arbitrary vector length

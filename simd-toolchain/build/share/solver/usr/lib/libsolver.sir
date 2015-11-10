@@ -1,0 +1,156 @@
+################################################################################
+#  _solver_set_comm_boundary_mode(): set communication boundary mode
+################################################################################
+    .text
+    .globl  _solver_set_comm_boundary_mode
+    .type   _solver_set_comm_boundary_mode
+    .ent    _solver_set_comm_boundary_mode
+_solver_set_comm_boundary_mode:
+    args       1
+    mnum       1
+    bb         0
+    mloc       1
+    sw         %a0, %ZERO, -1
+    ret        %RA
+    .end       _solver_set_comm_boundary_mode
+
+################################################################################
+#  _solver_get_comm_boundary_mode(): read communication boundary mode
+################################################################################
+    .text
+    .globl  _solver_get_comm_boundary_mode
+    .type   _solver_get_comm_boundary_mode
+    .ent    _solver_get_comm_boundary_mode
+_solver_get_comm_boundary_mode:
+    mnum       1
+    rvals      32
+    bb         0
+    mloc       1
+    lw         %v0, %ZERO, -1
+    ret        %RA
+    .end       _solver_get_comm_boundary_mode
+
+################################################################################
+#  _solver_shift_row_to_cp(): shift a row in PE data memory to CP data memory
+################################################################################
+    .text
+    .globl  _solver_shift_row_to_cp
+    .type   _solver_shift_row_to_cp,@function
+    .ent    _solver_shift_row_to_cp
+_solver_shift_row_to_cp:
+    .frame     %SP,0
+    args       2
+    mnum       2
+    bb         0
+    succ       1
+    mov        %r0, %NUMPE
+    mloc       1
+    v.lw       %r1, %a1, 0
+$_solver_shift_row_to_cp_BB1:
+    bb         1
+    pred       0
+    pred       1
+    succ       1
+    succ       2
+    read_h     %r3, %r1, 1
+    v.read_r   %r1, %r1, 1
+    mloc       2
+    sw         %r3, %a0, 0
+    add        %a0, %a0, 4
+    add        %r0, %r0, -1
+    brgt       %r0, 0, $_solver_shift_row_to_cp_BB1
+    bb         2
+    pred       1
+    ret        %RA
+    .end       _solver_shift_row_to_cp
+
+################################################################################
+#  _solver_shift_nrow_to_cp(): shift N rows in PE data memory to CP data memory
+################################################################################
+    .text
+    .globl  _solver_shift_nrow_to_cp
+    .type   _solver_shift_nrow_to_cp,@function
+    .ent    _solver_shift_nrow_to_cp
+_solver_shift_nrow_to_cp:
+    .frame     %SP,0
+    args       3
+    mnum       2
+    bb         0
+    succ       1
+    succ       4
+    brle       %a2, 0, $_solver_shift_nrow_to_cp_end
+$_solver_shift_nrow_to_cp_N_loop:
+    bb         1
+    pred       0
+    pred       3
+    succ       2
+    mov        %r0, %NUMPE
+    mloc       1
+    v.lw       %r1, %a1, 0
+$_solver_shift_nrow_to_cp_P_loop:
+    bb         2
+    pred       1
+    pred       2
+    succ       2
+    succ       3
+    read_h     %r3, %r1, 1
+    v.read_r   %r1, %r1, 1
+    mloc       2
+    sw         %r3, %a0, 0
+    add        %a0, %a0, 4
+    add        %r0, %r0, -1
+    brgt       %r0, 0, $_solver_shift_nrow_to_cp_P_loop
+    bb         3
+    pred       2
+    succ       1
+    succ       4
+    add        %a1, %a1, 4
+    add        %a2, %a2, -1
+    brne       %a2, 0, $_solver_shift_nrow_to_cp_N_loop
+$_solver_shift_nrow_to_cp_end:
+    bb         4
+    pred       1
+    pred       3
+    ret        %RA
+    .end       _solver_shift_nrow_to_cp
+
+################################################################################
+#  _solver_shift_row_to_pe(): shift a row to PE data memory from CP data memory
+################################################################################
+    .text
+    .globl  _solver_shift_row_to_pe
+    .type   _solver_shift_row_to_pe,@function
+    .ent    _solver_shift_row_to_pe
+_solver_shift_row_to_pe:
+    .frame     %SP,0
+    args       2
+    mnum       5
+    bb         0
+    succ       1
+    mloc       1
+    lw         %r100, %ZERO, -1
+    mov        %r101, 1
+    mloc       2
+    sw         %r101, %ZERO, -1 # Set boundary mode to scalar
+    v.mov      %r2, 0
+    mov        %r0, %NUMPE
+$shift_row_to_pe_P_loop:
+    bb         1
+    pred       0
+    pred       1
+    succ       1
+    succ       2
+    mloc       3
+    lw         %r1,  %a1, 0
+    v.push_h   %r2, %r1, %r2
+    add        %a1, %a1, 4
+    add        %r0, %r0, -1
+    brgt       %r0, 0, $shift_row_to_pe_P_loop
+    bb         2
+    pred       1
+    mloc       4
+    v.sw       %r2,   %a0,   0
+    mloc       5
+    sw         %r100, %ZERO, -1
+    ret        %RA
+    .end       _solver_shift_row_to_pe

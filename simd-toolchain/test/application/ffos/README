@@ -1,0 +1,7 @@
+The is a test application based on the fast-focus on structure (FFOS).
+The C source code of this application can be found in the benchmark directory.
+
+The test cases in this application check the following:
+1. The otsu threshold;
+2. The number of center points (both X and Y directions);
+3. The position of the center OLED.

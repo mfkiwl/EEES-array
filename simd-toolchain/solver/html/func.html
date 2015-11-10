@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="css/instr_table.css">
+{% endblock %}
+{% block title %}Function {{func['name']}}(){% endblock %}
+
+{% block topbar %} <h1>Function {{func['name']}}()</h1> {% endblock %}
+
+{% block sidebar %}
+  <div class="info_div">
+    <div id="func_info">
+      <h4>Function Information</h4>
+      <table>
+        <tr><td>Name</td><td>{{func['name']}}</td></tr>
+        <tr><td>Address</td><td>{{func['address']}}</td></tr>
+        <tr><td>Size</td><td>{{func['size']}}</td></tr>
+        <tr><td>BB</td><td>{{func['bb']|length}}</td></tr>
+      </table>
+    </div>
+    <div id="op_info">
+      <h4>Selected Operation</h4>
+      <table id="selected_op_info">
+        <tr><td>Selected</td><td id="op_asm">--</td></tr>
+        <tr><td>Time</td><td id="op_time">--</td></tr>
+        <tr><td>Value</td><td id="op_value">--</td></tr>
+        <tr><td>Latency</td><td id="op_latency">--</td></tr>
+        <tr><td>Use</td><td id="op_lastuse">--</td></tr>
+      </table>
+      <div class="button_div" style="margin-left:5px;margin-top:5px;">
+        <a id="goto_op" href="#">Goto</a>
+        <a id="clear_op" href="#" style="margin-left:20px">Clear</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+    <div class="code_viewer">
+      {%- for bb in func['bb'] %}
+      <p><h3>BB {{bb['bb_id']}}</h3></p>
+      <a name="bb{{bb['bb_id']}}"></a> 
+      <p>Size = {{bb['size']}}, address = {{bb['address']}}</p>
+      {% if bb['loop_depth'] -%}
+      <p>Loop depth = {{bb['loop_depth']}}</p>
+      {%- endif %}
+      <div class="instr_grid">
+       <table class="instr_table" id="{{func['name']}}.B{{bb['bb_id']}}_instr">
+         <tr>
+           <th></th>
+           <th>CP</th>
+           <th>PE</th>
+         </tr>
+         {%- for p in bb['packets'] %}
+         <tr>
+           <td style="background-color:#E6E6E6">{{p['time']}}</td>
+           {%- for op in p['operations'] %}
+           <td style="text-align: left" id="b{{bb['bb_id']}}.{{p['time']}}.{{loop.index0}}" class="issue_op">
+             <span class="hidden">
+               {%- for u in op.users -%}
+               {{u.time}},{{u.issue}};
+               {%- endfor -%}
+               |
+               {%- for s in op.operands -%}
+               {%- if s.produce_time -%}
+               {{s.produce_time}},{{s.produce_issue}};
+               {%- endif -%}
+               {%- endfor -%}
+             </span>
+             <span class="hidden">
+               {%- if op['value'] -%}
+               {{op['value']}}
+               {%- else -%}
+               -1
+               {%- endif -%}
+             </span>
+             <span class="hidden">
+               {%- if op['latency'] -%}
+               {{op['latency']}}
+               {%- else -%}
+               1
+               {%- endif -%}
+             </span>
+             <span>
+               {%- if op['value'] -%}
+               ({{'%6d'%op['value']}})
+               {%- endif -%}
+             </span>
+             {%- if op['asm'].strip() == 'nop' -%}
+             --
+             {%- else -%}
+             {{op['asm'].strip()}}
+             {%- endif -%}
+           </td>
+           {%- endfor %}
+         </tr>
+         {%- endfor %}
+       </table>
+       </div>
+      {%- endfor %}
+    </div>
+{% endblock %}
+
+{% block bodyend %}<script src="js/instr_table.js"></script>{% endblock %}
+    
+

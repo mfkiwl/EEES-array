@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>s-rtl-gen - ES-SIMD RTL generator &mdash; ES-SIMD 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="ES-SIMD 0.1 documentation" href="../index.html" />
+    <link rel="up" title="ES-SIMD Command Guide" href="index.html" />
+    <link rel="prev" title="s-run-sim - ES-SIMD simulation driver" href="s-run-sim.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="s-run-sim.html" title="s-run-sim - ES-SIMD simulation driver"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">ES-SIMD 0.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">ES-SIMD Command Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="s-rtl-gen-es-simd-rtl-generator">
+<h1>s-rtl-gen - ES-SIMD RTL generator<a class="headerlink" href="#s-rtl-gen-es-simd-rtl-generator" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="synopsis">
+<h2>SYNOPSIS<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<p><strong class="program">s-rtl-gen</strong> [<em>options</em>] config.json</p>
+</div>
+<div class="section" id="description">
+<h2>DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>The <strong class="program">s-rtl-gen</strong> command generates the RTL and testbench files for
+a specified architecture.</p>
+<p>The target architecture is determined by the configuration file <tt class="docutils literal"><span class="pre">config.json</span></tt>.</p>
+<p>The output of <strong class="program">s-rtl-gen</strong> contains:</p>
+<blockquote>
+<div><p><em>rtl/</em></p>
+<p>Folder containing all the RTL source codes.</p>
+<p><em>define/</em></p>
+<p>Folder containing all RTL include files.</p>
+<p><em>testbench/</em></p>
+<p>Folder containing all testbench files.</p>
+<p><em>misc/</em></p>
+<p>Miscellaneous files for various purposes, currently the following files are
+generated:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">vsim.compile.do</span></tt> - TCL script for Modelsim compilation.</li>
+<li><tt class="docutils literal"><span class="pre">vsim.run.do</span></tt> - TCL script for Modelsim simulation.</li>
+<li><tt class="docutils literal"><span class="pre">filelist.txt</span></tt> - List of generated verilog files. It can be used by,
+for example, Icarus Verilog (<strong class="program">iverilog</strong>).</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="options">
+<h2>OPTIONS<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<p>The input file is a architecture configuration file in JSON format (<tt class="docutils literal"><span class="pre">.json</span></tt>).</p>
+<p>To allow <strong class="program">s-rtl-gen</strong> to function properly. The following path should
+be set:</p>
+<blockquote>
+<div><p><em>SOLVER_HOME</em></p>
+<p>Path to the ES-SIMD toolchain installation. It can be set by environment
+variable or by <a class="reference internal" href="#cmdoption--solver-prefix"><em class="xref std std-option">--solver-prefix</em></a> option.
+If this option is not set, <a class="reference internal" href="#cmdoption--solver-py-path"><em class="xref std std-option">--solver-py-path</em></a> and <a class="reference internal" href="#cmdoption--solver-rtl-root"><em class="xref std std-option">--solver-rtl-root</em></a>
+has to be set to proper value.</p>
+</div></blockquote>
+<p>If the <a class="reference internal" href="#cmdoption-o"><em class="xref std std-option">-o</em></a> option is omitted, then <strong class="program">s-rtl-gen</strong> will send its
+output to <tt class="docutils literal"><span class="pre">RTL-$target_attr</span></tt> folder in the current working directory,
+where <tt class="docutils literal"><span class="pre">target_attr</span></tt> is a string describes the targets.</p>
+<p>Other <strong class="program">s-rtl-gen</strong> options are described below.</p>
+<div class="section" id="end-user-options">
+<h3>End-user Options<a class="headerlink" href="#end-user-options" title="Permalink to this headline">¶</a></h3>
+<dl class="option">
+<dt id="cmdoption-h">
+<tt class="descname">-h</tt><tt class="descclassname"></tt><tt class="descclassname">, </tt><tt class="descname">--help</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-h" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the help message and exit.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-v">
+<tt class="descname">-v</tt><tt class="descclassname"></tt><tt class="descclassname">, </tt><tt class="descname">--verbose</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run in verbose mode.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-o">
+<tt class="descname">-o</tt><tt class="descclassname"> OUTPUT_DIR</tt><a class="headerlink" href="#cmdoption-o" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path to the output files. <strong>All existing files in the output directory will be
+deleted.</strong></p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--target">
+<tt class="descname">--target</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption--target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specific target platform. Some target-specific optimization may be enabled.
+Currently two options are available:</p>
+<p><em>generic</em></p>
+<p>Generic synthesizable RTL. It is suitable for all purposes, including ASIC.</p>
+<p><em>xilinx</em></p>
+<p>RTL for Xilinx FPGA. It enables the following optimization(s):</p>
+<ul class="simple">
+<li>Use distributed RAM for small memory blocks (e.g., the RF).</li>
+<li>Disable operand isolation for FUs.</li>
+</ul>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--xil-pcore">
+<tt class="descname">--xil-pcore</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption--xil-pcore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate pcore package that can be used in Xilinx EDK projects.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--xil-sys-type">
+<tt class="descname">--xil-sys-type</tt><tt class="descclassname">=XIL_SYS_TYPE</tt><a class="headerlink" href="#cmdoption--xil-sys-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the system interface type for Xilinx pcore IP. The default is axilite.
+It is only useful if <a class="reference internal" href="#cmdoption--xil-pcore"><em class="xref std std-option">--xil-pcore</em></a> is used.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--sys-addr-size">
+<tt class="descname">--sys-addr-size</tt><tt class="descclassname">=SYS_ADR_SIZE</tt><a class="headerlink" href="#cmdoption--sys-addr-size" title="Permalink to this definition">¶</a></dt>
+<dd><p>System address space size for the Xilinx pcore IP. The default value is 1M.
+The option accepts a positive number of bytes or a valid size string (e.g.,
+1M, 1MB or 256 KB). It is only useful if <a class="reference internal" href="#cmdoption--xil-pcore"><em class="xref std std-option">--xil-pcore</em></a> is used.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="tool-options">
+<h3>Tool Options<a class="headerlink" href="#tool-options" title="Permalink to this headline">¶</a></h3>
+<dl class="option">
+<dt id="cmdoption--solver-prefix">
+<tt class="descname">--solver-prefix</tt><tt class="descclassname">=SOLVER_HOME</tt><a class="headerlink" href="#cmdoption--solver-prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify path to ES-SIMD toolchain installation path (default=$SOLVER_HOME).</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--solver-py-path">
+<tt class="descname">--solver-py-path</tt><tt class="descclassname">=SOLVER_PY_PATH</tt><a class="headerlink" href="#cmdoption--solver-py-path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify path to Solver Python modules (default=$SOLVER_HOME/lib/solver/python).</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption--solver-rtl-root">
+<tt class="descname">--solver-rtl-root</tt><tt class="descclassname">=SOLVER_RTL_ROOT</tt><a class="headerlink" href="#cmdoption--solver-rtl-root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify path to RTL root directory (default=$SOLVER_HOME/share/solver/rtl).</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="exit-status">
+<h2>EXIT STATUS<a class="headerlink" href="#exit-status" title="Permalink to this headline">¶</a></h2>
+<p>If <strong class="program">s-rtl-gen</strong> succeeds, it will exit with 0. Otherwise, if an error
+occurs, it will exit with a non-zero value.</p>
+</div>
+<div class="section" id="see-also">
+<h2>SEE ALSO<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<p>s-run-sim</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">s-rtl-gen - ES-SIMD RTL generator</a><ul>
+<li><a class="reference internal" href="#synopsis">SYNOPSIS</a></li>
+<li><a class="reference internal" href="#description">DESCRIPTION</a></li>
+<li><a class="reference internal" href="#options">OPTIONS</a><ul>
+<li><a class="reference internal" href="#end-user-options">End-user Options</a></li>
+<li><a class="reference internal" href="#tool-options">Tool Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exit-status">EXIT STATUS</a></li>
+<li><a class="reference internal" href="#see-also">SEE ALSO</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="s-run-sim.html"
+                        title="previous chapter">s-run-sim - ES-SIMD simulation driver</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/ToolGuide/s-rtl-gen.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="s-run-sim.html" title="s-run-sim - ES-SIMD simulation driver"
+             >previous</a> |</li>
+        <li><a href="../index.html">ES-SIMD 0.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >ES-SIMD Command Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dongrui She.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

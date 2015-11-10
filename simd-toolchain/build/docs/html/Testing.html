@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ES-SIMD Testing Framework &mdash; ES-SIMD 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="ES-SIMD 0.1 documentation" href="index.html" />
+    <link rel="next" title="ES-SIMD Command Guide" href="ToolGuide/index.html" />
+    <link rel="prev" title="ES-SIMD Python Bindings" href="PythonBinding.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ToolGuide/index.html" title="ES-SIMD Command Guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="PythonBinding.html" title="ES-SIMD Python Bindings"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">ES-SIMD 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="es-simd-testing-framework">
+<h1>ES-SIMD Testing Framework<a class="headerlink" href="#es-simd-testing-framework" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="regression-test">
+<h2>Regression Test<a class="headerlink" href="#regression-test" title="Permalink to this headline">¶</a></h2>
+<p>To run the regression test, use the following command in the build directory:</p>
+<div class="highlight-bash"><div class="highlight"><pre>make check
+</pre></div>
+</div>
+<div class="section" id="specifying-a-test-case">
+<h3>Specifying a Test Case<a class="headerlink" href="#specifying-a-test-case" title="Permalink to this headline">¶</a></h3>
+<p>A test case is specified by comment lines in any file with name ends with <tt class="docutils literal"><span class="pre">.s</span></tt>
+in the <tt class="docutils literal"><span class="pre">test</span></tt> folder in the project source tree. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">###BEGIN: dangling separator</span>
+<span class="c">###TOOL: path of the tool to be tested</span>
+<span class="c">###ARGS: command line arguments for running the tools</span>
+<span class="c">###ERR: expected string in stderr, multiple lines allowed</span>
+<span class="c">###OUT: expected string in stdout, multiple lines allowed</span>
+<span class="c">###OFILE: name of output file, multiple lines allowed</span>
+<span class="c">###MDUMP: name of memory dump file, miltiple lines allowed</span>
+<span class="c">###END:</span>
+</pre></div>
+</div>
+<p>Each case is specified by lines between <tt class="docutils literal"><span class="pre">###BEGIN:</span></tt> and <tt class="docutils literal"><span class="pre">###END:</span></tt>.
+In general, it is possible to specify <em>multiple</em> test cases in one file.</p>
+<p>Some predefined variables can be used. The format is ${VAR}. Available special
+variables are listed in the following table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>S_CG</td>
+<td>Path to code generator (s-cg)</td>
+</tr>
+<tr class="row-odd"><td>S_AS</td>
+<td>Path to assembler executable (s-as)</td>
+</tr>
+<tr class="row-even"><td>S_SIM</td>
+<td>Path to simulator executable (s-sim)</td>
+</tr>
+<tr class="row-odd"><td>S_CC</td>
+<td>Path to compiler driver (s-cc)</td>
+</tr>
+<tr class="row-even"><td>FILE</td>
+<td>Path to current test file</td>
+</tr>
+<tr class="row-odd"><td>FILEDIR</td>
+<td>Path to current test file directory</td>
+</tr>
+<tr class="row-even"><td>SOLVER_ROOT</td>
+<td>Path to Solver target root directory</td>
+</tr>
+</tbody>
+</table>
+<p>For each test case, the test driver runs the command sequences defined in the
+specification. Each command is specified by a tuple
+<tt class="docutils literal"><span class="pre">(TOOL,</span> <span class="pre">ARGS,</span> <span class="pre">ERR,</span> <span class="pre">OUT,</span> <span class="pre">OFILE,</span> <span class="pre">MDUMP)</span></tt>. When there are multiple commands,
+the test driver runs them <em>in the same order as they are specified</em>.
+For each command, the test driver runs the tool with given arguments and checks:</p>
+<ul class="simple">
+<li>If all expected <em>stdout</em> and/or <em>stderr</em> string found in corresponding output.</li>
+<li>If <strong>NO</strong> expected output string is specified, the corresponding output should
+be <strong>empty</strong>.</li>
+<li>For each specified output file, the tool should produce a file that contains
+<em>the same text content</em> as the reference file.</li>
+<li>For each specified memory dump file, the tool should produce the dumps that
+contains <em>the same value</em> as the reference files. Note that the test driver
+only checks the locations specified in the reference file.</li>
+</ul>
+<p>Note: for <em>OFILE</em> and <em>MDUMP</em>, there are two ways to specify the file name:</p>
+<ol class="arabic simple">
+<li>Just one file name <em>f</em>. The test driver assumes that:<ul>
+<li>the tool produces an output file named <em>f</em>, and</li>
+<li>there is a reference file name <em>f.ref</em> in the test file directory.</li>
+</ul>
+</li>
+<li>Two file names <em>f:ref</em>. The test driver assumes that:<ul>
+<li>the tool produces an output file named <em>f</em>, and</li>
+<li>there is a reference file name <em>ref</em> in the test file directory.</li>
+</ul>
+</li>
+</ol>
+<p>The test driver stops and reports error if <em>any</em> of the specified command fails.</p>
+</div>
+<div class="section" id="testing-with-rtl-simulation">
+<h3>Testing with RTL Simulation<a class="headerlink" href="#testing-with-rtl-simulation" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://www.mentor.com/products/fpga/model">Modelsim</a> or
+<a class="reference external" href="http://iverilog.icarus.com/">Icarus Verilog</a> is required to run the RTL
+simulation.</p>
+<p>An RTL test case can be specified in a similar way as a tool test case. The only
+difference is that instead of specifying the command using the <tt class="docutils literal"><span class="pre">###TOOL:</span></tt>
+directive, the <tt class="docutils literal"><span class="pre">###RTL:</span></tt> directive is used:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">###RTL: binary_archive.zip processor_config.json path_to_RTL_root</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">binary_archive.zip</span></tt> should be an archive file compatible with the one
+generated by <a class="reference internal" href="ToolGuide/s-cc.html"><em>s-cc</em></a>.</p>
+</div>
+<div class="section" id="testing-with-a-memory-checker">
+<h3>Testing with a Memory Checker<a class="headerlink" href="#testing-with-a-memory-checker" title="Permalink to this headline">¶</a></h3>
+<p>Currently the toolflow supports running the non-RTL test cases with
+<a class="reference external" href="http://valgrind.org/">Valgrind</a>. What you need to do is to run:</p>
+<div class="highlight-bash"><div class="highlight"><pre>make memcheck
+</pre></div>
+</div>
+<p>The test driver runs valgrind in quiet mode. If there is any error, you will
+see the message output provided by Valgrind.</p>
+<p>NOTE: runnning test with Valgrind is <strong>significantly slower</strong> than normal test
+run (often &gt;100x slower). And it consumes a lot of resources.
+So be prepared when you actually want to do it.</p>
+</div>
+</div>
+<div class="section" id="unit-test">
+<h2>Unit Test<a class="headerlink" href="#unit-test" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://code.google.com/p/googletest/">Google C++ Testing Framework</a> is
+used to perform unit-testing on the code.</p>
+<p>To run the unit test, use the following command in the build directory:</p>
+<div class="highlight-bash"><div class="highlight"><pre>make unittest
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ES-SIMD Testing Framework</a><ul>
+<li><a class="reference internal" href="#regression-test">Regression Test</a><ul>
+<li><a class="reference internal" href="#specifying-a-test-case">Specifying a Test Case</a></li>
+<li><a class="reference internal" href="#testing-with-rtl-simulation">Testing with RTL Simulation</a></li>
+<li><a class="reference internal" href="#testing-with-a-memory-checker">Testing with a Memory Checker</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#unit-test">Unit Test</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="PythonBinding.html"
+                        title="previous chapter">ES-SIMD Python Bindings</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ToolGuide/index.html"
+                        title="next chapter">ES-SIMD Command Guide</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Testing.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ToolGuide/index.html" title="ES-SIMD Command Guide"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="PythonBinding.html" title="ES-SIMD Python Bindings"
+             >previous</a> |</li>
+        <li><a href="index.html">ES-SIMD 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dongrui She.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

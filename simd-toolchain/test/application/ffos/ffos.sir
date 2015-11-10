@@ -1,0 +1,3802 @@
+###BEGIN: ffos 4 stage bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o ffos-4-b.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json -arch-param cp-dmem-depth:8192
+###TOOL: ${S_AS}
+###ARGS: ffos-4-b.s -o ffos-4-b -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json -arch-param cp-dmem-depth:8192
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:ffos-4-b --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json -arch-param cp-dmem-depth:8192 -dmem 0:cp:ffos-4-b.cp.dmem_init -max-cycle 2500000 -dump-dmem -dump-dmem-prefix ffos-4-b
+###MDUMP: ffos-4-b.baseline.scalar.dump:ffos.scalar.out.ref
+###END:
+
+###BEGIN: ffos 4 stage
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o ffos-4.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json -arch-param cp-dmem-depth:8192
+###TOOL: ${S_AS}
+###ARGS: ffos-4.s -o ffos-4 -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json -arch-param cp-dmem-depth:8192
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:ffos-4 --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage.json -arch-param cp-dmem-depth:8192 -dmem 0:cp:ffos-4.cp.dmem_init -max-cycle 2500000 -dump-dmem -dump-dmem-prefix ffos-4
+###MDUMP: ffos-4.baseline.scalar.dump:ffos.scalar.out.ref
+###END:
+
+###BEGIN: ffos 5 stage bypass
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o ffos-5-b.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json -arch-param cp-dmem-depth:8192
+###TOOL: ${S_AS}
+###ARGS: ffos-5-b.s -o ffos-5-b -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json -arch-param cp-dmem-depth:8192
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:ffos-5-b --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage-bypass.json -arch-param cp-dmem-depth:8192 -dmem 0:cp:ffos-5-b.cp.dmem_init -max-cycle 2500000 -dump-dmem -dump-dmem-prefix ffos-5-b
+###MDUMP: ffos-5-b.baseline.scalar.dump:ffos.scalar.out.ref
+###END:
+
+###BEGIN: ffos 5 stage
+###TOOL: ${S_CG}
+###ARGS: ${FILE} ${SOLVER_ROOT}/usr/lib/libc.sir -o ffos-5.s -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json -arch-param cp-dmem-depth:8192
+###TOOL: ${S_AS}
+###ARGS: ffos-5.s -o ffos-5 -arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json -arch-param cp-dmem-depth:8192
+###TOOL: ${S_SIM}
+###ARGS: -imem 0:uni:ffos-5 --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-5stage.json -arch-param cp-dmem-depth:8192 -dmem 0:cp:ffos-5.cp.dmem_init -max-cycle 2500000 -dump-dmem -dump-dmem-prefix ffos-5
+###MDUMP: ffos-5.baseline.scalar.dump:ffos.scalar.out.ref
+###END:
+
+###BEGIN: ffos 4 stage CP only bypass RTL
+###TOOL: ${S_CC}
+###ARGS: ${FILE} -o ffos-4-b --arch-cfg ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json
+###RTL: ffos-4-b.zip ${SOLVER_ROOT}/arch/baseline-32b-4stage-bypass.json ${SOLVER_ROOT}/rtl
+###MDUMP: cp.dmem.dump:crc32.out.ref
+###END:
+	 .text
+	.globl	get_bounding_box
+	.align	2
+	.type	get_bounding_box,@function
+	.ent       get_bounding_box     # @get_bounding_box
+get_bounding_box:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       5
+	mnum       6
+	bb         0
+	rli        %a4
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	mov        %r1, global_cfg
+	mloc       1
+	lw         %r0, %r1, 16
+	srl        %r2, %r0, 31
+	add        %r0, %r0, %r2
+	sra        %r0, %r0, 1
+	sub       %r2, %a1, %r0
+	sel_lt      %r2, %r2, 0, %ZERO, %r2
+	mloc       2
+	lw         %r1, %r1, 20
+	mloc       3
+	sw         %r2, %a0, 0
+	srl        %r2, %r1, 31
+	add        %r1, %r1, %r2
+	sra        %r1, %r1, 1
+	sub       %r2, %a2, %r1
+	sel_lt      %r2, %r2, 0, %ZERO, %r2
+	mloc       4
+	sw         %r2, %a0, 4
+	add        %r0, %r0, %a1
+	add        %r2, %a3, -1
+	sel_lt      %r0, %r0, %a3, %r0, %r2
+	mloc       5
+	sw         %r0, %a0, 8
+	add        %r0, %r1, %a2
+	add        %r1, %a4, -1
+	sel_lt      %r0, %r0, %a4, %r0, %r1
+	mloc       6
+	sw         %r0, %a0, 12
+	ret        %RA
+	.end       get_bounding_box
+$tmp0:
+	.size	get_bounding_box, ($tmp0)-get_bounding_box
+
+	.globl	erode
+	.align	2
+	.type	erode,@function
+	.ent       erode                # @erode
+erode:
+	.frame     %SP,8
+# BB#0:                                 # %entry
+	args       3
+	mnum       39
+	malias     38, 39
+	malias     37, 39
+	malias     37, 38
+	malias     36, 39
+	malias     36, 38
+	malias     36, 37
+	malias     35, 39
+	malias     35, 38
+	malias     35, 37
+	malias     35, 36
+	malias     34, 39
+	malias     34, 38
+	malias     34, 37
+	malias     34, 36
+	malias     34, 35
+	malias     33, 39
+	malias     33, 38
+	malias     33, 37
+	malias     33, 36
+	malias     33, 35
+	malias     33, 34
+	malias     32, 39
+	malias     32, 38
+	malias     32, 37
+	malias     32, 36
+	malias     32, 35
+	malias     32, 34
+	malias     32, 33
+	malias     31, 39
+	malias     31, 38
+	malias     31, 37
+	malias     31, 36
+	malias     31, 35
+	malias     31, 34
+	malias     31, 33
+	malias     31, 32
+	malias     30, 39
+	malias     30, 38
+	malias     30, 37
+	malias     30, 36
+	malias     30, 35
+	malias     30, 34
+	malias     30, 33
+	malias     30, 32
+	malias     30, 31
+	malias     29, 39
+	malias     29, 38
+	malias     29, 37
+	malias     29, 36
+	malias     29, 35
+	malias     29, 34
+	malias     29, 33
+	malias     29, 32
+	malias     29, 31
+	malias     29, 30
+	malias     28, 39
+	malias     28, 38
+	malias     28, 37
+	malias     28, 36
+	malias     28, 35
+	malias     28, 34
+	malias     28, 33
+	malias     28, 32
+	malias     28, 31
+	malias     28, 30
+	malias     28, 29
+	malias     27, 39
+	malias     27, 38
+	malias     27, 37
+	malias     27, 36
+	malias     27, 35
+	malias     27, 34
+	malias     27, 33
+	malias     27, 32
+	malias     27, 31
+	malias     27, 30
+	malias     27, 29
+	malias     27, 28
+	malias     26, 39
+	malias     26, 38
+	malias     26, 37
+	malias     26, 36
+	malias     26, 35
+	malias     26, 34
+	malias     26, 33
+	malias     26, 32
+	malias     26, 31
+	malias     26, 30
+	malias     26, 29
+	malias     26, 28
+	malias     26, 27
+	malias     25, 39
+	malias     25, 38
+	malias     25, 37
+	malias     25, 36
+	malias     25, 35
+	malias     25, 34
+	malias     25, 33
+	malias     25, 32
+	malias     25, 31
+	malias     25, 30
+	malias     25, 29
+	malias     25, 28
+	malias     25, 27
+	malias     25, 26
+	malias     24, 39
+	malias     24, 38
+	malias     24, 37
+	malias     24, 36
+	malias     24, 35
+	malias     24, 34
+	malias     24, 33
+	malias     24, 32
+	malias     24, 31
+	malias     24, 30
+	malias     24, 29
+	malias     24, 28
+	malias     24, 27
+	malias     24, 26
+	malias     24, 25
+	malias     23, 39
+	malias     23, 38
+	malias     23, 37
+	malias     23, 36
+	malias     23, 35
+	malias     23, 34
+	malias     23, 33
+	malias     23, 32
+	malias     23, 31
+	malias     23, 30
+	malias     23, 29
+	malias     23, 28
+	malias     23, 27
+	malias     23, 26
+	malias     23, 25
+	malias     23, 24
+	malias     22, 39
+	malias     22, 38
+	malias     22, 37
+	malias     22, 36
+	malias     22, 35
+	malias     22, 34
+	malias     22, 33
+	malias     22, 32
+	malias     22, 31
+	malias     22, 30
+	malias     22, 29
+	malias     22, 28
+	malias     22, 27
+	malias     22, 26
+	malias     22, 25
+	malias     22, 24
+	malias     22, 23
+	malias     21, 39
+	malias     21, 38
+	malias     21, 37
+	malias     21, 36
+	malias     21, 35
+	malias     21, 34
+	malias     21, 33
+	malias     21, 32
+	malias     21, 31
+	malias     21, 30
+	malias     21, 29
+	malias     21, 28
+	malias     21, 27
+	malias     21, 26
+	malias     21, 25
+	malias     21, 24
+	malias     21, 23
+	malias     21, 22
+	malias     20, 39
+	malias     20, 38
+	malias     20, 37
+	malias     20, 36
+	malias     20, 35
+	malias     20, 34
+	malias     20, 33
+	malias     20, 32
+	malias     20, 31
+	malias     20, 30
+	malias     20, 29
+	malias     20, 28
+	malias     20, 27
+	malias     20, 26
+	malias     20, 25
+	malias     20, 24
+	malias     20, 23
+	malias     20, 22
+	malias     20, 21
+	malias     19, 39
+	malias     19, 38
+	malias     19, 37
+	malias     19, 36
+	malias     19, 35
+	malias     19, 34
+	malias     19, 33
+	malias     19, 32
+	malias     19, 31
+	malias     19, 30
+	malias     19, 29
+	malias     19, 28
+	malias     19, 27
+	malias     19, 26
+	malias     19, 25
+	malias     19, 24
+	malias     19, 23
+	malias     19, 22
+	malias     19, 21
+	malias     19, 20
+	malias     18, 39
+	malias     18, 38
+	malias     18, 37
+	malias     18, 36
+	malias     18, 35
+	malias     18, 34
+	malias     18, 33
+	malias     18, 32
+	malias     18, 31
+	malias     18, 30
+	malias     18, 29
+	malias     18, 28
+	malias     18, 27
+	malias     18, 26
+	malias     18, 25
+	malias     18, 24
+	malias     18, 23
+	malias     18, 22
+	malias     18, 21
+	malias     18, 20
+	malias     18, 19
+	malias     17, 39
+	malias     17, 38
+	malias     17, 37
+	malias     17, 36
+	malias     17, 35
+	malias     17, 34
+	malias     17, 33
+	malias     17, 32
+	malias     17, 31
+	malias     17, 30
+	malias     17, 28
+	malias     17, 27
+	malias     17, 26
+	malias     17, 25
+	malias     17, 24
+	malias     17, 23
+	malias     17, 22
+	malias     17, 21
+	malias     17, 20
+	malias     17, 19
+	malias     16, 39
+	malias     16, 38
+	malias     16, 37
+	malias     16, 36
+	malias     16, 35
+	malias     16, 34
+	malias     16, 33
+	malias     16, 32
+	malias     16, 31
+	malias     16, 30
+	malias     16, 28
+	malias     16, 27
+	malias     16, 26
+	malias     16, 25
+	malias     16, 24
+	malias     16, 23
+	malias     16, 22
+	malias     16, 21
+	malias     16, 20
+	malias     16, 19
+	malias     16, 17
+	malias     15, 39
+	malias     15, 38
+	malias     15, 37
+	malias     15, 36
+	malias     15, 35
+	malias     15, 34
+	malias     15, 33
+	malias     15, 32
+	malias     15, 31
+	malias     15, 30
+	malias     15, 28
+	malias     15, 27
+	malias     15, 26
+	malias     15, 25
+	malias     15, 24
+	malias     15, 23
+	malias     15, 22
+	malias     15, 21
+	malias     15, 20
+	malias     15, 19
+	malias     15, 17
+	malias     15, 16
+	malias     14, 39
+	malias     14, 38
+	malias     14, 37
+	malias     14, 36
+	malias     14, 35
+	malias     14, 34
+	malias     14, 33
+	malias     14, 32
+	malias     14, 31
+	malias     14, 30
+	malias     14, 28
+	malias     14, 27
+	malias     14, 26
+	malias     14, 25
+	malias     14, 24
+	malias     14, 23
+	malias     14, 22
+	malias     14, 21
+	malias     14, 20
+	malias     14, 19
+	malias     14, 17
+	malias     14, 16
+	malias     13, 39
+	malias     13, 38
+	malias     13, 37
+	malias     13, 36
+	malias     13, 35
+	malias     13, 34
+	malias     13, 33
+	malias     13, 32
+	malias     13, 31
+	malias     13, 30
+	malias     13, 28
+	malias     13, 27
+	malias     13, 26
+	malias     13, 25
+	malias     13, 24
+	malias     13, 23
+	malias     13, 22
+	malias     13, 21
+	malias     13, 20
+	malias     13, 19
+	malias     13, 17
+	malias     13, 16
+	malias     12, 39
+	malias     12, 38
+	malias     12, 37
+	malias     12, 36
+	malias     12, 35
+	malias     12, 34
+	malias     12, 33
+	malias     12, 32
+	malias     12, 31
+	malias     12, 30
+	malias     12, 28
+	malias     12, 27
+	malias     12, 26
+	malias     12, 25
+	malias     12, 24
+	malias     12, 23
+	malias     12, 22
+	malias     12, 21
+	malias     12, 20
+	malias     12, 19
+	malias     12, 17
+	malias     12, 16
+	malias     12, 15
+	malias     12, 14
+	malias     12, 13
+	malias     11, 39
+	malias     11, 38
+	malias     11, 37
+	malias     11, 36
+	malias     11, 35
+	malias     11, 34
+	malias     11, 33
+	malias     11, 32
+	malias     11, 31
+	malias     11, 30
+	malias     11, 28
+	malias     11, 27
+	malias     11, 26
+	malias     11, 25
+	malias     11, 24
+	malias     11, 23
+	malias     11, 22
+	malias     11, 21
+	malias     11, 20
+	malias     11, 19
+	malias     11, 17
+	malias     11, 16
+	malias     11, 15
+	malias     11, 14
+	malias     11, 13
+	malias     11, 12
+	malias     10, 39
+	malias     10, 38
+	malias     10, 37
+	malias     10, 36
+	malias     10, 35
+	malias     10, 34
+	malias     10, 33
+	malias     10, 32
+	malias     10, 31
+	malias     10, 30
+	malias     10, 28
+	malias     10, 27
+	malias     10, 26
+	malias     10, 25
+	malias     10, 24
+	malias     10, 23
+	malias     10, 22
+	malias     10, 21
+	malias     10, 20
+	malias     10, 19
+	malias     10, 17
+	malias     10, 16
+	malias     10, 15
+	malias     10, 14
+	malias     10, 13
+	malias     10, 12
+	malias     10, 11
+	malias     9, 39
+	malias     9, 38
+	malias     9, 37
+	malias     9, 36
+	malias     9, 35
+	malias     9, 34
+	malias     9, 33
+	malias     9, 32
+	malias     9, 31
+	malias     9, 30
+	malias     9, 28
+	malias     9, 27
+	malias     9, 26
+	malias     9, 25
+	malias     9, 24
+	malias     9, 23
+	malias     9, 22
+	malias     9, 21
+	malias     9, 20
+	malias     9, 19
+	malias     9, 17
+	malias     9, 16
+	malias     9, 15
+	malias     9, 14
+	malias     9, 13
+	malias     9, 12
+	malias     9, 11
+	malias     9, 10
+	malias     8, 39
+	malias     8, 38
+	malias     8, 37
+	malias     8, 36
+	malias     8, 35
+	malias     8, 34
+	malias     8, 33
+	malias     8, 32
+	malias     8, 31
+	malias     8, 30
+	malias     8, 28
+	malias     8, 27
+	malias     8, 26
+	malias     8, 25
+	malias     8, 24
+	malias     8, 23
+	malias     8, 22
+	malias     8, 21
+	malias     8, 20
+	malias     8, 19
+	malias     8, 17
+	malias     8, 16
+	malias     8, 15
+	malias     8, 14
+	malias     8, 13
+	malias     8, 12
+	malias     8, 11
+	malias     8, 10
+	malias     7, 39
+	malias     7, 38
+	malias     7, 37
+	malias     7, 36
+	malias     7, 35
+	malias     7, 34
+	malias     7, 33
+	malias     7, 32
+	malias     7, 31
+	malias     7, 30
+	malias     7, 28
+	malias     7, 27
+	malias     7, 26
+	malias     7, 25
+	malias     7, 24
+	malias     7, 23
+	malias     7, 22
+	malias     7, 21
+	malias     7, 20
+	malias     7, 19
+	malias     7, 17
+	malias     7, 16
+	malias     7, 15
+	malias     7, 14
+	malias     7, 13
+	malias     7, 12
+	malias     7, 11
+	malias     7, 10
+	malias     6, 39
+	malias     6, 38
+	malias     6, 37
+	malias     6, 36
+	malias     6, 35
+	malias     6, 34
+	malias     6, 33
+	malias     6, 32
+	malias     6, 31
+	malias     6, 30
+	malias     6, 28
+	malias     6, 27
+	malias     6, 26
+	malias     6, 25
+	malias     6, 24
+	malias     6, 23
+	malias     6, 22
+	malias     6, 21
+	malias     6, 20
+	malias     6, 19
+	malias     6, 17
+	malias     6, 16
+	malias     6, 15
+	malias     6, 14
+	malias     6, 13
+	malias     6, 12
+	malias     6, 11
+	malias     6, 10
+	malias     6, 9
+	malias     6, 8
+	malias     6, 7
+	malias     5, 39
+	malias     5, 38
+	malias     5, 37
+	malias     5, 36
+	malias     5, 35
+	malias     5, 34
+	malias     5, 33
+	malias     5, 32
+	malias     5, 31
+	malias     5, 30
+	malias     5, 28
+	malias     5, 27
+	malias     5, 26
+	malias     5, 25
+	malias     5, 24
+	malias     5, 23
+	malias     5, 22
+	malias     5, 21
+	malias     5, 20
+	malias     5, 19
+	malias     5, 17
+	malias     5, 16
+	malias     5, 15
+	malias     5, 14
+	malias     5, 13
+	malias     5, 12
+	malias     5, 11
+	malias     5, 10
+	malias     5, 9
+	malias     5, 8
+	malias     5, 7
+	malias     5, 6
+	malias     4, 39
+	malias     4, 38
+	malias     4, 37
+	malias     4, 36
+	malias     4, 35
+	malias     4, 34
+	malias     4, 33
+	malias     4, 32
+	malias     4, 31
+	malias     4, 30
+	malias     4, 28
+	malias     4, 27
+	malias     4, 26
+	malias     4, 25
+	malias     4, 24
+	malias     4, 23
+	malias     4, 22
+	malias     4, 21
+	malias     4, 20
+	malias     4, 19
+	malias     4, 17
+	malias     4, 16
+	malias     4, 15
+	malias     4, 14
+	malias     4, 13
+	malias     4, 12
+	malias     4, 11
+	malias     4, 10
+	malias     4, 9
+	malias     4, 8
+	malias     4, 7
+	malias     4, 6
+	malias     4, 5
+	malias     3, 39
+	malias     3, 38
+	malias     3, 37
+	malias     3, 36
+	malias     3, 35
+	malias     3, 34
+	malias     3, 33
+	malias     3, 32
+	malias     3, 31
+	malias     3, 30
+	malias     3, 29
+	malias     3, 28
+	malias     3, 27
+	malias     3, 26
+	malias     3, 25
+	malias     3, 24
+	malias     3, 23
+	malias     3, 22
+	malias     3, 21
+	malias     3, 20
+	malias     3, 19
+	malias     3, 18
+	malias     2, 39
+	malias     2, 38
+	malias     2, 37
+	malias     2, 36
+	malias     2, 35
+	malias     2, 34
+	malias     2, 33
+	malias     2, 32
+	malias     2, 31
+	malias     2, 30
+	malias     2, 29
+	malias     2, 28
+	malias     2, 27
+	malias     2, 26
+	malias     2, 25
+	malias     2, 24
+	malias     2, 23
+	malias     2, 22
+	malias     2, 21
+	malias     2, 20
+	malias     2, 19
+	malias     2, 18
+	malias     2, 3
+	malias     1, 39
+	malias     1, 38
+	malias     1, 37
+	malias     1, 36
+	malias     1, 35
+	malias     1, 34
+	malias     1, 33
+	malias     1, 32
+	malias     1, 31
+	malias     1, 30
+	malias     1, 29
+	malias     1, 28
+	malias     1, 27
+	malias     1, 26
+	malias     1, 25
+	malias     1, 24
+	malias     1, 23
+	malias     1, 22
+	malias     1, 21
+	malias     1, 20
+	malias     1, 19
+	malias     1, 18
+	malias     1, 3
+	bb         0
+	succ       21
+	succ       1
+	dom        21
+	dom        1
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	add        %SP, %SP, -8
+	mov        %r3, %a1
+	mov        %r2, %a0
+	mov        %a0, %r3
+	call       malloc
+	mov        %r0, %v0
+	mloc       1
+	sw         %r0, %SP, 0
+	mov        %a0, %r3
+	call       malloc
+	mov        %r1, %v0
+	mloc       2
+	sw         %r1, %SP, 4
+	add        %r5, %r3, -1
+	add        %r4, %a2, -1
+	mov        %r6, %ZERO
+	brlt       %r4, 2, ($BB1_21)
+# BB#1:                                 # %for.cond4.preheader.lr.ph
+	bb         1
+	pred       0
+	succ       2
+	dom        2
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sub           %r7, 0, %r3
+	mov        %r13, 1
+	mov        %r6, %ZERO
+$BB1_2:                                 # %for.cond4.preheader
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB1_13 Depth 2
+                                        #     Child Loop BB1_5 Depth 2
+	bb         2
+	loop       4
+	lhdr       4, 1
+	pred       20
+	pred       1
+	succ       11
+	succ       3
+	dom        11
+	dom        20
+	dom        3
+	pdom       1
+	rli        %r13
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	brle       %r5, 1, ($BB1_11)
+# BB#3:                                 # %for.body7.lr.ph
+                                        #   in Loop: Header=BB1_2 Depth=1
+	bb         3
+	loop       4
+	pred       2
+	succ       12
+	succ       4
+	dom        12
+	dom        19
+	dom        4
+	rli        %r13
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sll        %r8, %r6, 2
+	add        %r9, %SP, 0
+	mloc       3
+	lw         %r9, %r9, %r8
+	add        %r8, %r13, 1
+	mul        %r10, %r3, %r13
+	add        %r10, %r2, %r10
+	brlt       %r13, 3, ($BB1_12)
+# BB#4:                                 # %if.end.us.preheader
+                                        #   in Loop: Header=BB1_2 Depth=1
+	bb         4
+	loop       4
+	pred       3
+	succ       5
+	dom        5
+	rli        %r10
+	rli        %r10
+	rli        %r13
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	add        %r11, %r13, -2
+	mul        %r11, %r3, %r11
+	add        %r11, %r2, %r11
+	add        %r12, %r13, -1
+	mul        %r12, %r3, %r12
+	add        %r12, %r2, %r12
+	add        %r13, %r13, 1
+	mul        %r13, %r3, %r13
+	add        %r13, %r2, %r13
+	mov        %r14, -2
+$BB1_5:                                 # %if.end.us
+                                        #   Parent Loop BB1_2 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	bb         5
+	loop       6
+	lhdr       6, 2
+	loop       4
+	pred       10
+	pred       4
+	succ       6
+	succ       10
+	dom        6
+	dom        10
+	pdom       4
+	rli        %r6
+	rli        %r14
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r12
+	rli        %r10
+	rli        %r13
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sub       %r16, %r11, %r14
+	sub       %r15, %r9, %r14
+	mloc       4
+	lb         %r17, %r15, -1
+	mloc       5
+	sb         %r17, %r16, -1
+	sub       %r16, %r12, %r14
+	mloc       6
+	lb         %r17, %r16, -1
+	mov        %r16, %ZERO
+	breq       %r17, 0, ($BB1_10)
+# BB#6:                                 # %land.lhs.true.us
+                                        #   in Loop: Header=BB1_5 Depth=2
+	bb         6
+	loop       6
+	loop       4
+	pred       5
+	succ       7
+	succ       10
+	dom        7
+	rli        %r6
+	rli        %r14
+	rli        %r15
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r12
+	rli        %r10
+	rli        %r13
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sub       %r17, %r10, %r14
+	mloc       7
+	lb         %r18, %r17, -2
+	mov        %r16, %ZERO
+	breq       %r18, 0, ($BB1_10)
+# BB#7:                                 # %land.lhs.true24.us
+                                        #   in Loop: Header=BB1_5 Depth=2
+	bb         7
+	loop       6
+	loop       4
+	pred       6
+	succ       8
+	succ       10
+	dom        8
+	rli        %r6
+	rli        %r14
+	rli        %r17
+	rli        %r15
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r12
+	rli        %r10
+	rli        %r13
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	mloc       8
+	lb         %r17, %r17, -1
+	mov        %r16, %ZERO
+	breq       %r17, 0, ($BB1_10)
+# BB#8:                                 # %land.lhs.true30.us
+                                        #   in Loop: Header=BB1_5 Depth=2
+	bb         8
+	loop       6
+	loop       4
+	pred       7
+	succ       9
+	succ       10
+	dom        9
+	rli        %r6
+	rli        %r14
+	rli        %r15
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r12
+	rli        %r10
+	rli        %r13
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sub       %r16, %r10, %r14
+	mloc       9
+	lb         %r17, %r16, 0
+	mov        %r16, %ZERO
+	breq       %r17, 0, ($BB1_10)
+# BB#9:                                 # %land.rhs.us
+                                        #   in Loop: Header=BB1_5 Depth=2
+	bb         9
+	loop       6
+	loop       4
+	pred       8
+	succ       10
+	rli        %r6
+	rli        %r14
+	rli        %r15
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r12
+	rli        %r10
+	rli        %r13
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sub       %r16, %r13, %r14
+	mloc       10
+	lb         %r16, %r16, -1
+	mov        %r17, -1
+	sel_ne     %r16, %r16, 0, %r17, 0
+$BB1_10:                                # %land.end.us
+                                        #   in Loop: Header=BB1_5 Depth=2
+	bb         10
+	loop       6
+	lext       6
+	loop       4
+	pred       9
+	pred       8
+	pred       7
+	pred       6
+	pred       5
+	succ       5
+	succ       19
+	pdom       9
+	pdom       8
+	pdom       7
+	pdom       6
+	pdom       5
+	rli        %r6
+	rli        %r16
+	rli        %r14
+	rli        %r15
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r12
+	rli        %r10
+	rli        %r13
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	mloc       11
+	sb         %r16, %r15, -1
+	add        %r14, %r14, -1
+	brne       %r7, %r14, ($BB1_5)
+	j          ($BB1_19)
+$BB1_11:                                # %for.cond4.preheader.for.end_crit_edge
+                                        #   in Loop: Header=BB1_2 Depth=1
+	bb         11
+	loop       4
+	pred       2
+	succ       20
+	rli        %r13
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	add        %r13, %r13, 1
+	j          ($BB1_20)
+$BB1_12:                                # %if.end.preheader
+                                        #   in Loop: Header=BB1_2 Depth=1
+	bb         12
+	loop       4
+	pred       3
+	succ       13
+	dom        13
+	rli        %r10
+	rli        %r10
+	rli        %r13
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	add        %r11, %r13, -1
+	mul        %r11, %r3, %r11
+	add        %r11, %r2, %r11
+	add        %r12, %r13, 1
+	mul        %r12, %r3, %r12
+	add        %r12, %r2, %r12
+	mov        %r13, -2
+$BB1_13:                                # %if.end
+                                        #   Parent Loop BB1_2 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	bb         13
+	loop       5
+	lhdr       5, 2
+	loop       4
+	pred       18
+	pred       12
+	succ       14
+	succ       18
+	dom        14
+	dom        18
+	pdom       12
+	rli        %r13
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r10
+	rli        %r12
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sub       %r14, %r11, %r13
+	mloc       12
+	lb         %r15, %r14, -1
+	mov        %r14, %ZERO
+	breq       %r15, 0, ($BB1_18)
+# BB#14:                                # %land.lhs.true
+                                        #   in Loop: Header=BB1_13 Depth=2
+	bb         14
+	loop       5
+	loop       4
+	pred       13
+	succ       15
+	succ       18
+	dom        15
+	rli        %r13
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r10
+	rli        %r12
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sub       %r15, %r10, %r13
+	mloc       13
+	lb         %r16, %r15, -2
+	mov        %r14, %ZERO
+	breq       %r16, 0, ($BB1_18)
+# BB#15:                                # %land.lhs.true24
+                                        #   in Loop: Header=BB1_13 Depth=2
+	bb         15
+	loop       5
+	loop       4
+	pred       14
+	succ       16
+	succ       18
+	dom        16
+	rli        %r13
+	rli        %r6
+	rli        %r15
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r10
+	rli        %r12
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	mloc       14
+	lb         %r15, %r15, -1
+	mov        %r14, %ZERO
+	breq       %r15, 0, ($BB1_18)
+# BB#16:                                # %land.lhs.true30
+                                        #   in Loop: Header=BB1_13 Depth=2
+	bb         16
+	loop       5
+	loop       4
+	pred       15
+	succ       17
+	succ       18
+	dom        17
+	rli        %r13
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r10
+	rli        %r12
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sub       %r14, %r10, %r13
+	mloc       15
+	lb         %r15, %r14, 0
+	mov        %r14, %ZERO
+	breq       %r15, 0, ($BB1_18)
+# BB#17:                                # %land.rhs
+                                        #   in Loop: Header=BB1_13 Depth=2
+	bb         17
+	loop       5
+	loop       4
+	pred       16
+	succ       18
+	rli        %r13
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r10
+	rli        %r12
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sub       %r14, %r12, %r13
+	mloc       16
+	lb         %r14, %r14, -1
+	mov        %r15, -1
+	sel_ne     %r14, %r14, 0, %r15, 0
+$BB1_18:                                # %land.end
+                                        #   in Loop: Header=BB1_13 Depth=2
+	bb         18
+	loop       5
+	lext       5
+	loop       4
+	pred       17
+	pred       16
+	pred       15
+	pred       14
+	pred       13
+	succ       13
+	succ       19
+	pdom       17
+	pdom       16
+	pdom       15
+	pdom       14
+	pdom       13
+	rli        %r14
+	rli        %r13
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r11
+	rli        %r10
+	rli        %r12
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sub       %r15, %r9, %r13
+	mloc       17
+	sb         %r14, %r15, -1
+	add        %r13, %r13, -1
+	brne       %r7, %r13, ($BB1_13)
+$BB1_19:                                #   in Loop: Header=BB1_2 Depth=1
+	bb         19
+	loop       4
+	pred       10
+	pred       18
+	succ       20
+	pdom       10
+	pdom       3
+	pdom       18
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r8
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	mov        %r13, %r8
+$BB1_20:                                # %for.end
+                                        #   in Loop: Header=BB1_2 Depth=1
+	bb         20
+	loop       4
+	lext       4
+	pred       19
+	pred       11
+	succ       2
+	succ       21
+	pdom       19
+	pdom       2
+	pdom       11
+	rli        %r13
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	add        %r6, %r6, 1
+	srl        %r8, %r6, 31
+	add        %r8, %r6, %r8
+	and        %r8, %r8, 4294967294
+	sub       %r6, %r6, %r8
+	brne       %r13, %r4, ($BB1_2)
+$BB1_21:                                # %for.cond50.preheader
+	bb         21
+	pred       20
+	pred       0
+	succ       41
+	succ       22
+	dom        41
+	dom        22
+	pdom       20
+	pdom       0
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	brlt       %r5, 2, ($BB1_41)
+# BB#22:                                # %for.body54.lr.ph
+	bb         22
+	pred       21
+	succ       23
+	succ       28
+	dom        23
+	dom        28
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	sll        %r7, %r6, 2
+	add        %r8, %SP, 0
+	mloc       18
+	lw         %r7, %r8, %r7
+	add        %r10, %r3, -2
+	and        %r9, %r10, 4294967292
+	or         %r8, %r9, 1
+	mov        %r11, 1
+	breq       %r8, 1, ($BB1_28)
+# BB#23:                                # %vector.memcheck175
+	bb         23
+	pred       22
+	succ       25
+	succ       24
+	dom        25
+	dom        24
+	rli        %r11
+	rli        %r9
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r8
+	rli        %r10
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	add        %r12, %a2, -3
+	mul        %r13, %r12, %r3
+	add        %r12, %r7, %r10
+	add        %r10, %r13, %r2
+	add        %r13, %r10, 1
+	add        %r10, %r7, 1
+	brgtu      %r13, %r12, ($BB1_25)
+	j          ($BB1_24)
+$BB1_24:                                # %vector.memcheck175
+	bb         24
+	pred       23
+	succ       25
+	succ       28
+	rli        %r11
+	rli        %r9
+	rli        %r10
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r8
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	add        %r12, %a2, -2
+	mul        %r12, %r12, %r3
+	add        %r12, %r12, %r2
+	add        %r12, %r12, -2
+	brleu      %r10, %r12, ($BB1_28)
+	j          ($BB1_25)
+$BB1_25:                                # %vector.body159.preheader
+	bb         25
+	pred       24
+	pred       23
+	succ       26
+	dom        26
+	rli        %r9
+	rli        %r10
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r8
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	add        %r11, %a2, -3
+	mul        %r11, %r3, %r11
+	add        %r11, %r11, %r2
+	add        %r11, %r11, 1
+$BB1_26:                                # %vector.body159
+                                        # =>This Inner Loop Header: Depth=1
+	bb         26
+	loop       3
+	lext       3
+	lhdr       3, 1
+	pred       26
+	pred       25
+	succ       26
+	succ       27
+	dom        27
+	pdom       25
+	rli        %r9
+	rli        %r11
+	rli        %r10
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r8
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	mloc       19
+	lb         %r12, %r10, 0
+	mloc       20
+	lb         %r13, %r10, 1
+	mloc       21
+	lb         %r14, %r10, 2
+	mloc       22
+	lb         %r15, %r10, 3
+	mloc       23
+	sb         %r15, %r11, 3
+	mloc       24
+	sb         %r14, %r11, 2
+	mloc       25
+	sb         %r13, %r11, 1
+	mloc       26
+	sb         %r12, %r11, 0
+	add        %r10, %r10, 4
+	add        %r11, %r11, 4
+	add        %r9, %r9, -4
+	brne       %r9, 0, ($BB1_26)
+# BB#27:
+	bb         27
+	pred       26
+	succ       28
+	pdom       26
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r8
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	mov        %r11, %r8
+$BB1_28:                                # %middle.block160
+	bb         28
+	pred       22
+	pred       27
+	pred       24
+	succ       29
+	succ       31
+	dom        29
+	dom        31
+	pdom       27
+	pdom       22
+	pdom       23
+	pdom       24
+	rli        %r11
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	add        %r8, %r3, -1
+	breq       %r8, %r11, ($BB1_31)
+# BB#29:                                # %for.body54.preheader
+	bb         29
+	pred       28
+	succ       30
+	dom        30
+	rli        %r11
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r7
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	add        %r7, %r7, %r11
+	add        %r8, %r3, -1
+	sub       %r8, %r8, %r11
+	add        %r9, %a2, -3
+	mul        %r9, %r3, %r9
+	add        %r9, %r11, %r9
+	add        %r9, %r2, %r9
+$BB1_30:                                # %for.body54
+                                        # =>This Inner Loop Header: Depth=1
+	bb         30
+	loop       2
+	lext       2
+	lhdr       2, 1
+	pred       30
+	pred       29
+	succ       30
+	succ       31
+	pdom       29
+	rli        %r8
+	rli        %r9
+	rli        %r7
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	mloc       27
+	lb         %r10, %r7, 0
+	mloc       28
+	sb         %r10, %r9, 0
+	add        %r7, %r7, 1
+	add        %r9, %r9, 1
+	add        %r8, %r8, -1
+	brne       %r8, 0, ($BB1_30)
+$BB1_31:                                # %for.end64
+	bb         31
+	pred       30
+	pred       28
+	succ       41
+	succ       32
+	dom        32
+	pdom       30
+	pdom       28
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	brlt       %r5, 2, ($BB1_41)
+# BB#32:                                # %for.body71.lr.ph
+	bb         32
+	pred       31
+	succ       33
+	succ       38
+	dom        33
+	dom        38
+	rli        %r6
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	add        %r5, %r6, 1
+	srl        %r6, %r5, 31
+	add        %r6, %r5, %r6
+	and        %r6, %r6, 1073741822
+	sub       %r5, %r5, %r6
+	sll        %r5, %r5, 2
+	add        %r6, %SP, 0
+	mloc       29
+	lw         %r5, %r6, %r5
+	add        %r8, %r3, -2
+	and        %r7, %r8, 4294967292
+	or         %r6, %r7, 1
+	mov        %r9, 1
+	breq       %r6, 1, ($BB1_38)
+# BB#33:                                # %vector.memcheck
+	bb         33
+	pred       32
+	succ       35
+	succ       34
+	dom        35
+	dom        34
+	rli        %r9
+	rli        %r7
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r6
+	rli        %r8
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	add        %r10, %a2, -2
+	mul        %r11, %r10, %r3
+	add        %r10, %r5, %r8
+	add        %r8, %r11, %r2
+	add        %r11, %r8, 1
+	add        %r8, %r5, 1
+	brgtu      %r11, %r10, ($BB1_35)
+	j          ($BB1_34)
+$BB1_34:                                # %vector.memcheck
+	bb         34
+	pred       33
+	succ       35
+	succ       38
+	rli        %r9
+	rli        %r7
+	rli        %r8
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r6
+	rli        %r5
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	mul        %r4, %r4, %r3
+	add        %r4, %r4, %r2
+	add        %r4, %r4, -2
+	brleu      %r8, %r4, ($BB1_38)
+	j          ($BB1_35)
+$BB1_35:                                # %vector.body.preheader
+	bb         35
+	pred       34
+	pred       33
+	succ       36
+	dom        36
+	rli        %r7
+	rli        %r8
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r6
+	rli        %r5
+	rli        %r1
+	rli        %r0
+	add        %r4, %a2, -2
+	mul        %r4, %r3, %r4
+	add        %r4, %r4, %r2
+	add        %r4, %r4, 1
+$BB1_36:                                # %vector.body
+                                        # =>This Inner Loop Header: Depth=1
+	bb         36
+	loop       1
+	lext       1
+	lhdr       1, 1
+	pred       36
+	pred       35
+	succ       36
+	succ       37
+	dom        37
+	pdom       35
+	rli        %r7
+	rli        %r4
+	rli        %r8
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r6
+	rli        %r5
+	rli        %r1
+	rli        %r0
+	mloc       30
+	lb         %r9, %r8, 0
+	mloc       31
+	lb         %r10, %r8, 1
+	mloc       32
+	lb         %r11, %r8, 2
+	mloc       33
+	lb         %r12, %r8, 3
+	mloc       34
+	sb         %r12, %r4, 3
+	mloc       35
+	sb         %r11, %r4, 2
+	mloc       36
+	sb         %r10, %r4, 1
+	mloc       37
+	sb         %r9, %r4, 0
+	add        %r8, %r8, 4
+	add        %r4, %r4, 4
+	add        %r7, %r7, -4
+	brne       %r7, 0, ($BB1_36)
+# BB#37:
+	bb         37
+	pred       36
+	succ       38
+	pdom       36
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r6
+	rli        %r5
+	rli        %r1
+	rli        %r0
+	mov        %r9, %r6
+$BB1_38:                                # %middle.block
+	bb         38
+	pred       32
+	pred       37
+	pred       34
+	succ       39
+	succ       41
+	dom        39
+	pdom       37
+	pdom       32
+	pdom       33
+	pdom       34
+	rli        %r9
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r5
+	rli        %r1
+	rli        %r0
+	add        %r4, %r3, -1
+	breq       %r4, %r9, ($BB1_41)
+# BB#39:                                # %for.body71.preheader
+	bb         39
+	pred       38
+	succ       40
+	dom        40
+	rli        %r9
+	rli        %a2
+	rli        %r3
+	rli        %r2
+	rli        %r5
+	rli        %r1
+	rli        %r0
+	add        %r4, %r5, %r9
+	add        %r5, %r3, -1
+	sub       %r5, %r5, %r9
+	add        %r6, %a2, -2
+	mul        %r3, %r3, %r6
+	add        %r3, %r9, %r3
+	add        %r2, %r2, %r3
+$BB1_40:                                # %for.body71
+                                        # =>This Inner Loop Header: Depth=1
+	bb         40
+	loop       0
+	lext       0
+	lhdr       0, 1
+	pred       40
+	pred       39
+	succ       40
+	succ       41
+	pdom       39
+	rli        %r5
+	rli        %r2
+	rli        %r4
+	rli        %r1
+	rli        %r0
+	mloc       38
+	lb         %r3, %r4, 0
+	mloc       39
+	sb         %r3, %r2, 0
+	add        %r4, %r4, 1
+	add        %r2, %r2, 1
+	add        %r5, %r5, -1
+	brne       %r5, 0, ($BB1_40)
+$BB1_41:                                # %for.end81
+	bb         41
+	pred       40
+	pred       38
+	pred       31
+	pred       21
+	pdom       40
+	pdom       38
+	pdom       31
+	pdom       21
+	rli        %r1
+	rli        %r0
+	mov        %a0, %r0
+	call       free
+	mov        %a0, %r1
+	call       free
+	add        %SP, %SP, 8
+	ret        %RA
+	.end       erode
+$tmp1:
+	.size	erode, ($tmp1)-erode
+
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main                 # @main
+main:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       0
+	rvals      32
+	mnum       11
+	bb         0
+	mov        %r0, global_cfg
+	mov        %a1, 160
+	mloc       1
+	sw         %a1, %r0, 0
+	mov        %a2, 55
+	mloc       2
+	sw         %a2, %r0, 4
+	mov        %r1, 36
+	mloc       3
+	sw         %r1, %r0, 8
+	mov        %r1, 12
+	mloc       4
+	sw         %r1, %r0, 12
+	mov        %r1, 40
+	mloc       5
+	sw         %r1, %r0, 16
+	mov        %r1, 16
+	mloc       6
+	sw         %r1, %r0, 20
+	mov        %r1, 3
+	mloc       7
+	sw         %r1, %r0, 24
+	mov        %r2, 1275
+	mloc       8
+	sw         %r2, %r0, 28
+	mov        %r3, 15
+	mloc       9
+	sw         %r3, %r0, 32
+	mloc       10
+	sw         %r2, %r0, 36
+	mloc       11
+	sw         %r1, %r0, 40
+	mov        %a0, input_buffer
+	call       ffos_process_image
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp2:
+	.size	main, ($tmp2)-main
+
+	.globl	center_of_gravity_i
+	.align	2
+	.type	center_of_gravity_i,@function
+	.ent       center_of_gravity_i  # @center_of_gravity_i
+center_of_gravity_i:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       5
+	mnum       7
+	malias     6, 7
+	malias     5, 7
+	malias     5, 6
+	malias     4, 7
+	malias     4, 6
+	malias     4, 5
+	malias     3, 7
+	malias     3, 6
+	malias     3, 5
+	malias     2, 7
+	malias     2, 6
+	malias     2, 5
+	malias     1, 7
+	malias     1, 6
+	malias     1, 5
+	bb         0
+	succ       2
+	succ       1
+	dom        2
+	dom        7
+	dom        1
+	rli        %a4
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	mov        %r0, %a1
+	mov        %r1, %a0
+	mloc       1
+	lw         %r2, %a4, 12
+	mloc       2
+	lw         %r9, %a4, 4
+	mov        %a1, %ZERO
+	brle       %r9, %r2, ($BB3_2)
+# BB#1:
+	bb         1
+	pred       0
+	succ       7
+	rli        %a1
+	rli        %r0
+	rli        %r1
+	mov        %r3, %a1
+	mov        %r6, %a1
+	j          ($BB3_7)
+$BB3_2:                                 # %entry
+	bb         2
+	pred       0
+	succ       3
+	succ       7
+	dom        3
+	rli        %a1
+	rli        %r9
+	rli        %a4
+	rli        %a3
+	rli        %a2
+	rli        %r0
+	rli        %r1
+	rli        %r2
+	mloc       3
+	lw         %r4, %a4, 8
+	mloc       4
+	lw         %r5, %a4, 0
+	mov        %r3, %a1
+	mov        %r6, %a1
+	brgt       %r5, %r4, ($BB3_7)
+# BB#3:                                 # %for.body3.lr.ph.preheader
+	bb         3
+	pred       2
+	succ       4
+	dom        4
+	rli        %r9
+	rli        %a3
+	rli        %a2
+	rli        %r0
+	rli        %r1
+	rli        %r2
+	rli        %r4
+	rli        %r5
+	mul        %r3, %r9, %a3
+	add        %r3, %r5, %r3
+	add        %r7, %a2, %r3
+	mov        %a1, %ZERO
+	mov        %r3, %ZERO
+	mov        %r6, %ZERO
+$BB3_4:                                 # %for.body3.lr.ph
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB3_5 Depth 2
+	bb         4
+	loop       0
+	lhdr       0, 1
+	pred       6
+	pred       3
+	succ       5
+	dom        5
+	pdom       3
+	rli        %r6
+	rli        %r3
+	rli        %a1
+	rli        %r9
+	rli        %r7
+	rli        %a3
+	rli        %r0
+	rli        %r1
+	rli        %r2
+	rli        %r4
+	rli        %r5
+	mov        %r8, %r9
+	mov        %r9, %r7
+	mov        %r11, %r5
+$BB3_5:                                 # %for.body3
+                                        #   Parent Loop BB3_4 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	bb         5
+	loop       1
+	lext       1
+	lhdr       1, 2
+	loop       0
+	pred       5
+	pred       4
+	succ       6
+	succ       5
+	dom        6
+	pdom       4
+	rli        %r6
+	rli        %r3
+	rli        %a1
+	rli        %r11
+	rli        %r9
+	rli        %r7
+	rli        %a3
+	rli        %r0
+	rli        %r1
+	rli        %r8
+	rli        %r2
+	rli        %r4
+	rli        %r5
+	mov        %r10, %r11
+	mloc       5
+	lb         %r11, %r9, 0
+	add        %a1, %r11, %a1
+	mul        %r12, %r11, %r8
+	add        %r3, %r12, %r3
+	mul        %r11, %r11, %r10
+	add        %r6, %r11, %r6
+	add        %r9, %r9, 1
+	add        %r11, %r10, 1
+	brlt       %r10, %r4, ($BB3_5)
+# BB#6:                                 # %for.inc9
+                                        #   in Loop: Header=BB3_4 Depth=1
+	bb         6
+	loop       0
+	lext       0
+	pred       5
+	succ       7
+	succ       4
+	pdom       5
+	rli        %r6
+	rli        %r3
+	rli        %a1
+	rli        %r7
+	rli        %a3
+	rli        %r0
+	rli        %r1
+	rli        %r8
+	rli        %r2
+	rli        %r4
+	rli        %r5
+	add        %r7, %r7, %a3
+	add        %r9, %r8, 1
+	brlt       %r8, %r2, ($BB3_4)
+$BB3_7:                                 # %for.end11
+	bb         7
+	pred       1
+	pred       6
+	pred       2
+	pdom       1
+	pdom       6
+	pdom       0
+	pdom       2
+	rli        %r6
+	rli        %r3
+	rli        %a1
+	rli        %r0
+	rli        %r1
+	sra        %r2, %a1, 1
+	add        %a0, %r2, %r6
+	call       __divsi3
+	mloc       6
+	sw         %v0, %r1, 0
+	add        %a0, %r2, %r3
+	call       __divsi3
+	mloc       7
+	sw         %v0, %r0, 0
+	ret        %RA
+	.end       center_of_gravity_i
+$tmp3:
+	.size	center_of_gravity_i, ($tmp3)-center_of_gravity_i
+
+	.globl	calculate_x_position
+	.align	2
+	.type	calculate_x_position,@function
+	.ent       calculate_x_position # @calculate_x_position
+calculate_x_position:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       4
+	rvals      32
+	mnum       7
+	malias     6, 7
+	malias     5, 7
+	malias     5, 6
+	malias     4, 7
+	malias     4, 6
+	malias     4, 5
+	malias     3, 7
+	malias     3, 6
+	malias     3, 5
+	malias     3, 4
+	malias     2, 7
+	malias     2, 6
+	malias     2, 5
+	malias     2, 4
+	malias     2, 3
+	malias     1, 7
+	malias     1, 6
+	malias     1, 5
+	malias     1, 4
+	malias     1, 3
+	malias     1, 2
+	bb         0
+	succ       20
+	succ       1
+	dom        20
+	dom        1
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	mov        %r1, %a0
+	sll        %a0, %a2, 2
+	call       malloc
+	mov        %r0, %ZERO
+	brlt       %a2, 1, ($BB4_20)
+# BB#1:                                 # %for.body.lr.ph
+	bb         1
+	pred       0
+	succ       6
+	succ       2
+	dom        6
+	dom        8
+	dom        2
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %r1
+	rli        %v0
+	brle       %a3, 0, ($BB4_6)
+# BB#2:
+	bb         2
+	pred       1
+	succ       3
+	dom        3
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %r1
+	rli        %v0
+	mov        %r0, %ZERO
+$BB4_3:                                 # %for.body3.lr.ph.us
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB4_4 Depth 2
+	bb         3
+	loop       1
+	lhdr       1, 1
+	pred       2
+	pred       5
+	succ       4
+	dom        4
+	pdom       2
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %r0
+	rli        %r1
+	rli        %v0
+	sll        %r2, %r0, 2
+	mloc       1
+	sw         %ZERO, %v0, %r2
+	mov        %r3, %r1
+	mov        %r5, %a3
+	mov        %r4, %ZERO
+$BB4_4:                                 # %for.body3.us
+                                        #   Parent Loop BB4_3 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	bb         4
+	loop       2
+	lext       2
+	lhdr       2, 2
+	loop       1
+	pred       4
+	pred       3
+	succ       4
+	succ       5
+	dom        5
+	pdom       3
+	rli        %r4
+	rli        %r5
+	rli        %r3
+	rli        %r2
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %r0
+	rli        %r1
+	rli        %v0
+	mloc       2
+	lb         %r6, %r3, 0
+	add        %r4, %r6, %r4
+	mloc       3
+	sw         %r4, %v0, %r2
+	add        %r3, %r3, %a2
+	add        %r5, %r5, -1
+	brne       %r5, 0, ($BB4_4)
+# BB#5:                                 # %for.end.us
+                                        #   in Loop: Header=BB4_3 Depth=1
+	bb         5
+	loop       1
+	lext       1
+	pred       4
+	succ       3
+	succ       8
+	pdom       4
+	rli        %r4
+	rli        %r2
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %r0
+	rli        %r1
+	rli        %v0
+	sel_le     %r3, %r4, 1275, %ZERO, 1
+	mloc       4
+	sw         %r3, %v0, %r2
+	add        %r1, %r1, 1
+	add        %r0, %r0, 1
+	breq       %r0, %a2, ($BB4_8)
+	j          ($BB4_3)
+$BB4_6:
+	bb         6
+	pred       1
+	succ       7
+	dom        7
+	rli        %a2
+	rli        %a1
+	rli        %v0
+	mov        %r0, %v0
+	mov        %r1, %a2
+$BB4_7:                                 # %for.end
+                                        # =>This Inner Loop Header: Depth=1
+	bb         7
+	loop       3
+	lext       3
+	lhdr       3, 1
+	pred       6
+	pred       7
+	succ       7
+	succ       8
+	pdom       6
+	rli        %r1
+	rli        %r0
+	rli        %a2
+	rli        %a1
+	rli        %v0
+	add        %r1, %r1, -1
+	mloc       5
+	sw         %ZERO, %r0, 0
+	add        %r0, %r0, 4
+	brne       %r1, 0, ($BB4_7)
+$BB4_8:                                 # %for.cond17.preheader
+	bb         8
+	pred       5
+	pred       7
+	succ       19
+	succ       9
+	dom        19
+	dom        9
+	pdom       5
+	pdom       1
+	pdom       7
+	rli        %a2
+	rli        %a1
+	rli        %v0
+	brle       %a2, 0, ($BB4_19)
+# BB#9:
+	bb         9
+	pred       8
+	succ       10
+	dom        10
+	rli        %a2
+	rli        %a1
+	rli        %v0
+	mov        %r0, %ZERO
+	mov        %r1, %ZERO
+	mov        %r2, %ZERO
+	mov        %r3, %ZERO
+	mov        %r4, %ZERO
+	mov        %r6, 1
+$BB4_10:                                # %for.body20
+                                        # =>This Inner Loop Header: Depth=1
+	bb         10
+	loop       0
+	lhdr       0, 1
+	pred       9
+	pred       18
+	succ       13
+	succ       11
+	dom        13
+	dom        18
+	dom        11
+	pdom       9
+	rli        %r6
+	rli        %r0
+	rli        %r1
+	rli        %r3
+	rli        %r4
+	rli        %r2
+	rli        %a2
+	rli        %a1
+	rli        %v0
+	sll        %r5, %r2, 2
+	mloc       6
+	lw         %r5, %v0, %r5
+	brne       %r5, 1, ($BB4_13)
+# BB#11:                                # %for.body20
+                                        #   in Loop: Header=BB4_10 Depth=1
+	bb         11
+	loop       0
+	pred       10
+	succ       13
+	succ       12
+	dom        12
+	rli        %r6
+	rli        %r0
+	rli        %r1
+	rli        %r3
+	rli        %r4
+	rli        %r2
+	rli        %a2
+	rli        %a1
+	rli        %r5
+	rli        %v0
+	brne       %r4, 0, ($BB4_13)
+# BB#12:                                #   in Loop: Header=BB4_10 Depth=1
+	bb         12
+	loop       0
+	pred       11
+	succ       18
+	rli        %r0
+	rli        %r1
+	rli        %r2
+	rli        %r6
+	rli        %a2
+	rli        %a1
+	rli        %v0
+	mov        %r4, %r6
+	mov        %r3, %r2
+	j          ($BB4_18)
+$BB4_13:                                # %if.else27
+                                        #   in Loop: Header=BB4_10 Depth=1
+	bb         13
+	loop       0
+	pred       11
+	pred       10
+	succ       18
+	succ       14
+	dom        14
+	rli        %r6
+	rli        %r0
+	rli        %r1
+	rli        %r3
+	rli        %r4
+	rli        %r2
+	rli        %a2
+	rli        %a1
+	rli        %r5
+	rli        %v0
+	brne       %r5, 0, ($BB4_18)
+# BB#14:                                # %if.else27
+                                        #   in Loop: Header=BB4_10 Depth=1
+	bb         14
+	loop       0
+	pred       13
+	succ       18
+	succ       15
+	dom        15
+	rli        %r6
+	rli        %r0
+	rli        %r1
+	rli        %r3
+	rli        %r4
+	rli        %r2
+	rli        %a2
+	rli        %a1
+	rli        %v0
+	brne       %r4, 1, ($BB4_18)
+# BB#15:                                # %if.then34
+                                        #   in Loop: Header=BB4_10 Depth=1
+	bb         15
+	loop       0
+	pred       14
+	succ       17
+	succ       16
+	dom        17
+	dom        16
+	rli        %r6
+	rli        %r0
+	rli        %r1
+	rli        %r3
+	rli        %r2
+	rli        %a2
+	rli        %a1
+	rli        %v0
+	sub       %r4, %r2, %r3
+	brlt       %r4, 16, ($BB4_17)
+# BB#16:                                # %if.then37
+                                        #   in Loop: Header=BB4_10 Depth=1
+	bb         16
+	loop       0
+	pred       15
+	succ       17
+	rli        %r6
+	rli        %r0
+	rli        %r1
+	rli        %r3
+	rli        %r2
+	rli        %a2
+	rli        %a1
+	rli        %v0
+	add        %r4, %r3, %r2
+	srl        %r5, %r4, 31
+	add        %r4, %r4, %r5
+	sra        %r4, %r4, 1
+	sll        %r5, %r1, 2
+	mloc       7
+	sw         %r4, %a1, %r5
+	add        %r1, %r1, 1
+	add        %r0, %r0, 1
+$BB4_17:                                # %if.then37
+                                        #   in Loop: Header=BB4_10 Depth=1
+	bb         17
+	loop       0
+	pred       15
+	pred       16
+	succ       18
+	pdom       15
+	pdom       16
+	mov        %r4, %ZERO
+$BB4_18:                                # %for.inc45
+                                        #   in Loop: Header=BB4_10 Depth=1
+	bb         18
+	loop       0
+	lext       0
+	pred       14
+	pred       13
+	pred       17
+	pred       12
+	succ       10
+	succ       20
+	pdom       13
+	pdom       14
+	pdom       17
+	pdom       10
+	pdom       11
+	pdom       12
+	rli        %r6
+	rli        %r0
+	rli        %r1
+	rli        %r3
+	rli        %r4
+	rli        %r2
+	rli        %a2
+	rli        %a1
+	rli        %v0
+	add        %r2, %r2, 1
+	brne       %a2, %r2, ($BB4_10)
+	j          ($BB4_20)
+$BB4_19:
+	bb         19
+	pred       8
+	succ       20
+	rli        %v0
+	mov        %r0, %ZERO
+$BB4_20:                                # %for.end47
+	bb         20
+	pred       19
+	pred       18
+	pred       0
+	pdom       19
+	pdom       8
+	pdom       18
+	pdom       0
+	rli        %r0
+	rli        %v0
+	mov        %a0, %v0
+	call       free
+	mov        %v0, %r0
+	ret        %RA
+	.end       calculate_x_position
+$tmp4:
+	.size	calculate_x_position, ($tmp4)-calculate_x_position
+
+	.globl	calculate_y_position
+	.align	2
+	.type	calculate_y_position,@function
+	.ent       calculate_y_position # @calculate_y_position
+calculate_y_position:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       4
+	rvals      32
+	mnum       7
+	malias     6, 7
+	malias     5, 7
+	malias     5, 6
+	malias     4, 7
+	malias     4, 6
+	malias     4, 5
+	malias     3, 7
+	malias     3, 6
+	malias     3, 5
+	malias     3, 4
+	malias     2, 7
+	malias     2, 6
+	malias     2, 5
+	malias     2, 4
+	malias     2, 3
+	malias     1, 7
+	malias     1, 6
+	malias     1, 5
+	malias     1, 4
+	malias     1, 3
+	malias     1, 2
+	bb         0
+	succ       20
+	succ       1
+	dom        20
+	dom        1
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	mov        %r1, %a0
+	sll        %a0, %a3, 2
+	call       malloc
+	mov        %r0, %ZERO
+	brlt       %a3, 1, ($BB5_20)
+# BB#1:                                 # %for.body.lr.ph
+	bb         1
+	pred       0
+	succ       6
+	succ       2
+	dom        6
+	dom        8
+	dom        2
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %r1
+	rli        %v0
+	brle       %a2, 0, ($BB5_6)
+# BB#2:
+	bb         2
+	pred       1
+	succ       3
+	dom        3
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %r1
+	rli        %v0
+	mov        %r0, %ZERO
+$BB5_3:                                 # %for.body3.lr.ph.us
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB5_4 Depth 2
+	bb         3
+	loop       1
+	lhdr       1, 1
+	pred       2
+	pred       5
+	succ       4
+	dom        4
+	pdom       2
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %r0
+	rli        %r1
+	rli        %v0
+	sll        %r2, %r0, 2
+	mloc       1
+	sw         %ZERO, %v0, %r2
+	mov        %r3, %r1
+	mov        %r5, %a2
+	mov        %r4, %ZERO
+$BB5_4:                                 # %for.body3.us
+                                        #   Parent Loop BB5_3 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	bb         4
+	loop       2
+	lext       2
+	lhdr       2, 2
+	loop       1
+	pred       4
+	pred       3
+	succ       4
+	succ       5
+	dom        5
+	pdom       3
+	rli        %r4
+	rli        %r5
+	rli        %r3
+	rli        %r2
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %r0
+	rli        %r1
+	rli        %v0
+	mloc       2
+	lb         %r6, %r3, 0
+	add        %r4, %r6, %r4
+	mloc       3
+	sw         %r4, %v0, %r2
+	add        %r3, %r3, 1
+	add        %r5, %r5, -1
+	brne       %r5, 0, ($BB5_4)
+# BB#5:                                 # %for.end.us
+                                        #   in Loop: Header=BB5_3 Depth=1
+	bb         5
+	loop       1
+	lext       1
+	pred       4
+	succ       3
+	succ       8
+	pdom       4
+	rli        %r4
+	rli        %r2
+	rli        %a3
+	rli        %a2
+	rli        %a1
+	rli        %r0
+	rli        %r1
+	rli        %v0
+	sel_le     %r3, %r4, 1274, %ZERO, 1
+	mloc       4
+	sw         %r3, %v0, %r2
+	add        %r1, %r1, %a2
+	add        %r0, %r0, 1
+	breq       %r0, %a3, ($BB5_8)
+	j          ($BB5_3)
+$BB5_6:
+	bb         6
+	pred       1
+	succ       7
+	dom        7
+	rli        %a3
+	rli        %a1
+	rli        %v0
+	mov        %r0, %v0
+	mov        %r1, %a3
+$BB5_7:                                 # %for.end
+                                        # =>This Inner Loop Header: Depth=1
+	bb         7
+	loop       3
+	lext       3
+	lhdr       3, 1
+	pred       6
+	pred       7
+	succ       7
+	succ       8
+	pdom       6
+	rli        %r1
+	rli        %r0
+	rli        %a3
+	rli        %a1
+	rli        %v0
+	add        %r1, %r1, -1
+	mloc       5
+	sw         %ZERO, %r0, 0
+	add        %r0, %r0, 4
+	brne       %r1, 0, ($BB5_7)
+$BB5_8:                                 # %for.cond18.preheader
+	bb         8
+	pred       5
+	pred       7
+	succ       19
+	succ       9
+	dom        19
+	dom        9
+	pdom       5
+	pdom       1
+	pdom       7
+	rli        %a3
+	rli        %a1
+	rli        %v0
+	brle       %a3, 0, ($BB5_19)
+# BB#9:
+	bb         9
+	pred       8
+	succ       10
+	dom        10
+	rli        %a3
+	rli        %a1
+	rli        %v0
+	mov        %r1, %ZERO
+	mov        %r0, %ZERO
+	mov        %r2, %ZERO
+	mov        %r3, %ZERO
+	mov        %r4, %ZERO
+	mov        %r6, 1
+$BB5_10:                                # %for.body21
+                                        # =>This Inner Loop Header: Depth=1
+	bb         10
+	loop       0
+	lhdr       0, 1
+	pred       9
+	pred       18
+	succ       13
+	succ       11
+	dom        13
+	dom        18
+	dom        11
+	pdom       9
+	rli        %r6
+	rli        %r0
+	rli        %r2
+	rli        %r3
+	rli        %r4
+	rli        %r1
+	rli        %a3
+	rli        %a1
+	rli        %v0
+	sll        %r5, %r1, 2
+	mloc       6
+	lw         %r5, %v0, %r5
+	brne       %r5, 1, ($BB5_13)
+# BB#11:                                # %for.body21
+                                        #   in Loop: Header=BB5_10 Depth=1
+	bb         11
+	loop       0
+	pred       10
+	succ       13
+	succ       12
+	dom        12
+	rli        %r6
+	rli        %r0
+	rli        %r2
+	rli        %r3
+	rli        %r4
+	rli        %r1
+	rli        %a3
+	rli        %a1
+	rli        %r5
+	rli        %v0
+	brne       %r4, 0, ($BB5_13)
+# BB#12:                                #   in Loop: Header=BB5_10 Depth=1
+	bb         12
+	loop       0
+	pred       11
+	succ       18
+	rli        %r0
+	rli        %r2
+	rli        %r1
+	rli        %r6
+	rli        %a3
+	rli        %a1
+	rli        %v0
+	mov        %r4, %r6
+	mov        %r3, %r1
+	j          ($BB5_18)
+$BB5_13:                                # %if.else28
+                                        #   in Loop: Header=BB5_10 Depth=1
+	bb         13
+	loop       0
+	pred       11
+	pred       10
+	succ       18
+	succ       14
+	dom        14
+	rli        %r6
+	rli        %r0
+	rli        %r2
+	rli        %r3
+	rli        %r4
+	rli        %r1
+	rli        %a3
+	rli        %a1
+	rli        %r5
+	rli        %v0
+	brne       %r5, 0, ($BB5_18)
+# BB#14:                                # %if.else28
+                                        #   in Loop: Header=BB5_10 Depth=1
+	bb         14
+	loop       0
+	pred       13
+	succ       18
+	succ       15
+	dom        15
+	rli        %r6
+	rli        %r0
+	rli        %r2
+	rli        %r3
+	rli        %r4
+	rli        %r1
+	rli        %a3
+	rli        %a1
+	rli        %v0
+	brne       %r4, 1, ($BB5_18)
+# BB#15:                                # %if.then35
+                                        #   in Loop: Header=BB5_10 Depth=1
+	bb         15
+	loop       0
+	pred       14
+	succ       17
+	succ       16
+	dom        17
+	dom        16
+	rli        %r6
+	rli        %r0
+	rli        %r2
+	rli        %r3
+	rli        %r1
+	rli        %a3
+	rli        %a1
+	rli        %v0
+	sub       %r4, %r1, %r3
+	brlt       %r4, 4, ($BB5_17)
+# BB#16:                                # %if.then38
+                                        #   in Loop: Header=BB5_10 Depth=1
+	bb         16
+	loop       0
+	pred       15
+	succ       17
+	rli        %r6
+	rli        %r0
+	rli        %r2
+	rli        %r3
+	rli        %r1
+	rli        %a3
+	rli        %a1
+	rli        %v0
+	add        %r4, %r3, %r1
+	srl        %r5, %r4, 31
+	add        %r4, %r4, %r5
+	sra        %r4, %r4, 1
+	sll        %r5, %r2, 2
+	mloc       7
+	sw         %r4, %a1, %r5
+	add        %r2, %r2, 1
+	add        %r0, %r0, 1
+$BB5_17:                                # %if.then38
+                                        #   in Loop: Header=BB5_10 Depth=1
+	bb         17
+	loop       0
+	pred       15
+	pred       16
+	succ       18
+	pdom       15
+	pdom       16
+	mov        %r4, %ZERO
+$BB5_18:                                # %for.inc46
+                                        #   in Loop: Header=BB5_10 Depth=1
+	bb         18
+	loop       0
+	lext       0
+	pred       14
+	pred       13
+	pred       17
+	pred       12
+	succ       10
+	succ       20
+	pdom       13
+	pdom       14
+	pdom       17
+	pdom       10
+	pdom       11
+	pdom       12
+	rli        %r6
+	rli        %r0
+	rli        %r2
+	rli        %r3
+	rli        %r4
+	rli        %r1
+	rli        %a3
+	rli        %a1
+	rli        %v0
+	add        %r1, %r1, 1
+	brne       %a3, %r1, ($BB5_10)
+	j          ($BB5_20)
+$BB5_19:
+	bb         19
+	pred       8
+	succ       20
+	rli        %v0
+	mov        %r0, %ZERO
+$BB5_20:                                # %for.end48
+	bb         20
+	pred       19
+	pred       18
+	pred       0
+	pdom       19
+	pdom       8
+	pdom       18
+	pdom       0
+	rli        %r0
+	rli        %v0
+	mov        %a0, %v0
+	call       free
+	mov        %v0, %r0
+	ret        %RA
+	.end       calculate_y_position
+$tmp5:
+	.size	calculate_y_position, ($tmp5)-calculate_y_position
+
+	.globl	ffos_process_image
+	.align	2
+	.type	ffos_process_image,@function
+	.ent       ffos_process_image   # @ffos_process_image
+ffos_process_image:
+	.frame     %SP,24
+# BB#0:                                 # %entry
+	args       3
+	mnum       20
+	malias     16, 20
+	malias     16, 18
+	malias     15, 20
+	malias     15, 18
+	malias     15, 16
+	malias     14, 16
+	malias     14, 15
+	malias     13, 16
+	malias     13, 15
+	malias     12, 20
+	malias     12, 19
+	malias     12, 18
+	malias     12, 17
+	malias     12, 16
+	malias     12, 15
+	malias     12, 14
+	malias     12, 13
+	malias     11, 20
+	malias     11, 19
+	malias     11, 18
+	malias     11, 17
+	malias     11, 16
+	malias     11, 15
+	malias     11, 14
+	malias     11, 13
+	malias     11, 12
+	malias     10, 20
+	malias     10, 18
+	malias     10, 16
+	malias     10, 15
+	malias     10, 14
+	malias     10, 13
+	malias     10, 12
+	malias     10, 11
+	malias     9, 20
+	malias     9, 18
+	malias     9, 16
+	malias     9, 15
+	malias     9, 14
+	malias     9, 13
+	malias     9, 12
+	malias     9, 11
+	malias     9, 10
+	malias     8, 20
+	malias     8, 18
+	malias     8, 16
+	malias     8, 15
+	malias     8, 14
+	malias     8, 13
+	malias     8, 12
+	malias     8, 11
+	malias     8, 10
+	malias     8, 9
+	malias     7, 20
+	malias     7, 18
+	malias     7, 16
+	malias     7, 15
+	malias     7, 14
+	malias     7, 13
+	malias     7, 12
+	malias     7, 11
+	malias     7, 10
+	malias     7, 9
+	malias     7, 8
+	malias     6, 20
+	malias     6, 18
+	malias     6, 16
+	malias     6, 15
+	malias     6, 14
+	malias     6, 13
+	malias     6, 12
+	malias     6, 11
+	malias     6, 10
+	malias     6, 9
+	malias     6, 8
+	malias     6, 7
+	malias     5, 20
+	malias     5, 18
+	malias     5, 16
+	malias     5, 15
+	malias     5, 14
+	malias     5, 13
+	malias     5, 12
+	malias     5, 11
+	malias     5, 10
+	malias     5, 9
+	malias     5, 8
+	malias     5, 7
+	malias     5, 6
+	malias     4, 20
+	malias     4, 18
+	malias     4, 16
+	malias     4, 15
+	malias     4, 14
+	malias     4, 13
+	malias     4, 12
+	malias     4, 11
+	malias     4, 10
+	malias     4, 9
+	malias     4, 8
+	malias     4, 7
+	malias     4, 6
+	malias     4, 5
+	malias     3, 20
+	malias     3, 18
+	malias     3, 16
+	malias     3, 15
+	malias     3, 14
+	malias     3, 13
+	malias     3, 12
+	malias     3, 11
+	malias     3, 10
+	malias     3, 9
+	malias     3, 8
+	malias     3, 7
+	malias     3, 6
+	malias     3, 5
+	malias     3, 4
+	malias     2, 16
+	malias     2, 15
+	malias     2, 12
+	malias     2, 11
+	malias     2, 10
+	malias     2, 9
+	malias     2, 8
+	malias     2, 7
+	malias     2, 6
+	malias     2, 5
+	malias     2, 4
+	malias     2, 3
+	malias     1, 16
+	malias     1, 15
+	malias     1, 12
+	malias     1, 11
+	malias     1, 10
+	malias     1, 9
+	malias     1, 8
+	malias     1, 7
+	malias     1, 6
+	malias     1, 5
+	malias     1, 4
+	malias     1, 3
+	bb         0
+	succ       10
+	succ       1
+	dom        10
+	dom        1
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	add        %SP, %SP, -24
+	mov        %r4, %a2
+	mov        %r1, %a1
+	mov        %r2, %a0
+	call       otsu_i
+	mov        %r5, %v0
+	mov        %r7, global_cfg
+	mloc       1
+	sw         %r5, %r7, 44
+	mul        %r6, %r4, %r1
+	mov        %a0, %r6
+	call       malloc
+	mov        %r0, %v0
+	mov        %a0, %r6
+	call       malloc
+	mov        %r3, %v0
+	mloc       2
+	lw         %r7, %r7, 24
+	mov        %a0, %r0
+	mov        %a1, %r2
+	mov        %a2, %r6
+	call       memcpy
+	brlt       %r6, 1, ($BB6_10)
+# BB#1:                                 # %for.body.lr.ph.i
+	bb         1
+	pred       0
+	succ       2
+	succ       7
+	dom        2
+	dom        7
+	rli        %r7
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r3
+	rli        %r0
+	rli        %r6
+	rli        %r5
+	and        %r8, %r6, 4294967292
+	mov        %r9, %ZERO
+	breq       %r8, 0, ($BB6_7)
+# BB#2:                                 # %vector.memcheck.i
+	bb         2
+	pred       1
+	succ       4
+	succ       3
+	dom        4
+	dom        3
+	rli        %r7
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r8
+	rli        %r3
+	rli        %r0
+	rli        %r6
+	rli        %r5
+	add        %r9, %r6, -1
+	add        %r10, %r2, %r9
+	brltu      %r10, %r3, ($BB6_4)
+	j          ($BB6_3)
+$BB6_3:                                 # %vector.memcheck.i
+	bb         3
+	pred       2
+	succ       4
+	succ       7
+	rli        %r7
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r9
+	rli        %r8
+	rli        %r3
+	rli        %r0
+	rli        %r6
+	rli        %r5
+	add        %r10, %r3, %r9
+	mov        %r9, %ZERO
+	brgeu      %r10, %r2, ($BB6_7)
+	j          ($BB6_4)
+$BB6_4:                                 # %vector.ph.i
+	bb         4
+	pred       3
+	pred       2
+	succ       5
+	dom        5
+	rli        %r7
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r8
+	rli        %r3
+	rli        %r0
+	rli        %r6
+	rli        %r5
+	mov        %r9, %ZERO
+$BB6_5:                                 # %vector.body.i
+                                        # =>This Inner Loop Header: Depth=1
+	bb         5
+	loop       2
+	lext       2
+	lhdr       2, 1
+	pred       5
+	pred       4
+	succ       5
+	succ       6
+	dom        6
+	pdom       4
+	rli        %r7
+	rli        %r9
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r8
+	rli        %r3
+	rli        %r0
+	rli        %r6
+	rli        %r5
+	sub       %r14, %r2, %r9
+	mloc       3
+	lb         %r10, %r14, 3
+	mloc       4
+	lb         %r12, %r14, 0
+	mloc       5
+	lb         %r13, %r14, 1
+	sub       %r11, %r3, %r9
+	mloc       6
+	lb         %r14, %r14, 2
+	sel_lt     %r14, %r14, %r5, %ZERO, 1
+	sll        %r14, %r14, 31
+	sra        %r14, %r14, 31
+	mloc       7
+	sb         %r14, %r11, 2
+	sel_lt     %r13, %r13, %r5, %ZERO, 1
+	sll        %r13, %r13, 31
+	sra        %r13, %r13, 31
+	mloc       8
+	sb         %r13, %r11, 1
+	sel_lt     %r12, %r12, %r5, %ZERO, 1
+	sll        %r12, %r12, 31
+	sra        %r12, %r12, 31
+	mloc       9
+	sb         %r12, %r11, 0
+	sel_lt     %r10, %r10, %r5, %ZERO, 1
+	sll        %r10, %r10, 31
+	sra        %r10, %r10, 31
+	mloc       10
+	sb         %r10, %r11, 3
+	add        %r9, %r9, -4
+	add        %r10, %r8, %r9
+	brne       %r10, 0, ($BB6_5)
+# BB#6:
+	bb         6
+	pred       5
+	succ       7
+	pdom       5
+	rli        %r7
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r8
+	rli        %r3
+	rli        %r0
+	rli        %r6
+	rli        %r5
+	mov        %r9, %r8
+$BB6_7:                                 # %middle.block.i
+	bb         7
+	pred       6
+	pred       3
+	pred       1
+	succ       8
+	succ       10
+	dom        8
+	pdom       6
+	pdom       2
+	pdom       3
+	pdom       1
+	rli        %r7
+	rli        %r9
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r3
+	rli        %r0
+	rli        %r6
+	rli        %r5
+	breq       %r6, %r9, ($BB6_10)
+# BB#8:                                 # %for.body.i.preheader
+	bb         8
+	pred       7
+	succ       9
+	dom        9
+	rli        %r7
+	rli        %r9
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r3
+	rli        %r0
+	rli        %r5
+	add        %r6, %r2, %r9
+	add        %r8, %r3, %r9
+	mul        %r10, %r4, %r1
+	sub       %r9, %r10, %r9
+	mov        %r11, -1
+$BB6_9:                                 # %for.body.i
+                                        # =>This Inner Loop Header: Depth=1
+	bb         9
+	loop       1
+	lext       1
+	lhdr       1, 1
+	pred       9
+	pred       8
+	succ       9
+	succ       10
+	pdom       8
+	rli        %r11
+	rli        %r7
+	rli        %r9
+	rli        %r8
+	rli        %r6
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r3
+	rli        %r0
+	rli        %r5
+	mloc       11
+	lb         %r10, %r6, 0
+	sel_ge     %r10, %r10, %r5, %r11, 0
+	mloc       12
+	sb         %r10, %r8, 0
+	add        %r6, %r6, 1
+	add        %r8, %r8, 1
+	add        %r9, %r9, -1
+	brne       %r9, 0, ($BB6_9)
+$BB6_10:                                # %for.cond.preheader
+	bb         10
+	pred       9
+	pred       7
+	pred       0
+	succ       11
+	succ       12
+	dom        11
+	dom        12
+	pdom       9
+	pdom       7
+	pdom       0
+	rli        %r7
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r3
+	rli        %r0
+	brlt       %r7, 1, ($BB6_12)
+$BB6_11:                                # %for.body
+                                        # =>This Inner Loop Header: Depth=1
+	bb         11
+	loop       0
+	lext       0
+	lhdr       0, 1
+	pred       10
+	pred       11
+	succ       11
+	succ       12
+	rli        %r7
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r3
+	rli        %r0
+	mov        %a0, %r3
+	mov        %a1, %r1
+	mov        %a2, %r4
+	call       erode
+	add        %r7, %r7, -1
+	brne       %r7, 0, ($BB6_11)
+$BB6_12:                                # %for.end
+	bb         12
+	pred       11
+	pred       10
+	pdom       11
+	pdom       10
+	rli        %r4
+	rli        %r1
+	rli        %r2
+	rli        %r3
+	rli        %r0
+	sll        %a0, %r1, 2
+	call       malloc
+	mov        %r5, %v0
+	sll        %a0, %r4, 2
+	call       malloc
+	mov        %r6, %v0
+	mov        %a0, %r3
+	mov        %a1, %r5
+	mov        %a2, %r1
+	mov        %a3, %r4
+	call       calculate_x_position
+	mov        %r7, %v0
+	mov        %a0, %r3
+	mov        %a1, %r6
+	mov        %a2, %r1
+	mov        %a3, %r4
+	call       calculate_y_position
+	mov        %r8, global_cfg
+	mloc       13
+	sw         %r7, %r8, 48
+	mloc       14
+	sw         %v0, %r8, 52
+	srl        %r9, %r7, 31
+	add        %r7, %r7, %r9
+	sll        %r7, %r7, 1
+	and        %r7, %r7, 4294967292
+	mloc       15
+	lw         %a1, %r5, %r7
+	srl        %r7, %v0, 31
+	add        %r7, %v0, %r7
+	sll        %r7, %r7, 1
+	and        %r7, %r7, 4294967292
+	mloc       16
+	lw         %a2, %r6, %r7
+	add        %r7, %SP, 0
+	mov        %a0, %r7
+	mov        %a3, %r1
+	mov        %a4, %r4
+	call       get_bounding_box
+	add        %a0, %SP, 16
+	add        %a1, %SP, 20
+	mov        %a2, %r2
+	mov        %a3, %r1
+	mov        %a4, %r7
+	call       center_of_gravity_i
+	mloc       17
+	lw         %r1, %SP, 16
+	mloc       18
+	sw         %r1, %r8, 56
+	mloc       19
+	lw         %r1, %SP, 20
+	mloc       20
+	sw         %r1, %r8, 60
+	mov        %a0, %r5
+	call       free
+	mov        %a0, %r6
+	call       free
+	mov        %a0, %r3
+	call       free
+	mov        %a0, %r0
+	call       free
+	add        %SP, %SP, 24
+	ret        %RA
+	.end       ffos_process_image
+$tmp6:
+	.size	ffos_process_image, ($tmp6)-ffos_process_image
+
+	.globl	otsu_i
+	.align	2
+	.type	otsu_i,@function
+	.ent       otsu_i               # @otsu_i
+otsu_i:
+	.frame     %SP,2048
+# BB#0:                                 # %entry
+	args       3
+	rvals      32
+	mnum       10
+	malias     9, 10
+	malias     8, 10
+	malias     8, 9
+	malias     6, 7
+	malias     5, 7
+	malias     5, 6
+	malias     4, 7
+	malias     4, 6
+	malias     4, 5
+	malias     3, 10
+	malias     3, 9
+	malias     3, 8
+	malias     3, 7
+	malias     3, 6
+	malias     3, 5
+	malias     3, 4
+	malias     2, 10
+	malias     2, 9
+	malias     2, 8
+	malias     2, 3
+	malias     1, 7
+	malias     1, 6
+	malias     1, 5
+	malias     1, 4
+	malias     1, 3
+	bb         0
+	succ       1
+	dom        1
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	add        %SP, %SP, -2048
+	mov        %r0, %ZERO
+$BB7_1:                                 # %for.body
+                                        # =>This Inner Loop Header: Depth=1
+	bb         1
+	loop       4
+	lext       4
+	lhdr       4, 1
+	pred       1
+	pred       0
+	succ       1
+	succ       2
+	dom        2
+	pdom       0
+	rli        %a0
+	rli        %r0
+	rli        %a2
+	rli        %a1
+	sll        %r1, %r0, 2
+	add        %r2, %SP, 0
+	mloc       1
+	sw         %ZERO, %r2, %r1
+	add        %r2, %SP, 1024
+	mloc       2
+	sw         %ZERO, %r2, %r1
+	add        %r0, %r0, 1
+	brne       %r0, 256, ($BB7_1)
+# BB#2:                                 # %for.cond2.preheader
+	bb         2
+	pred       1
+	succ       5
+	succ       3
+	dom        5
+	dom        3
+	pdom       1
+	rli        %a0
+	rli        %a2
+	rli        %a1
+	mul        %r1, %a2, %a1
+	mov        %r3, %ZERO
+	mov        %r2, %ZERO
+	brlt       %r1, 1, ($BB7_5)
+# BB#3:                                 # %for.body4.preheader
+	bb         3
+	pred       2
+	succ       4
+	dom        4
+	rli        %a0
+	rli        %r1
+	mov        %r0, %r1
+$BB7_4:                                 # %for.body4
+                                        # =>This Inner Loop Header: Depth=1
+	bb         4
+	loop       3
+	lext       3
+	lhdr       3, 1
+	pred       4
+	pred       3
+	succ       4
+	succ       5
+	pdom       3
+	rli        %r0
+	rli        %a0
+	rli        %r1
+	mloc       3
+	lb         %r2, %a0, 0
+	sll        %r2, %r2, 2
+	add        %r3, %SP, 0
+	mloc       4
+	lw         %r4, %r3, %r2
+	add        %r4, %r4, 1
+	mloc       5
+	sw         %r4, %r3, %r2
+	add        %a0, %a0, 1
+	add        %r0, %r0, -1
+	mov        %r3, %ZERO
+	mov        %r2, %ZERO
+	brne       %r0, 0, ($BB7_4)
+$BB7_5:                                 # %for.body13
+                                        # =>This Inner Loop Header: Depth=1
+	bb         5
+	loop       2
+	lext       2
+	lhdr       2, 1
+	pred       5
+	pred       4
+	pred       2
+	succ       5
+	succ       6
+	dom        6
+	pdom       4
+	pdom       2
+	rli        %r2
+	rli        %r3
+	rli        %r1
+	sll        %r0, %r3, 2
+	add        %r4, %SP, 0
+	mloc       6
+	lw         %r0, %r4, %r0
+	mul        %r0, %r0, %r3
+	add        %r2, %r0, %r2
+	add        %r3, %r3, 1
+	brne       %r3, 256, ($BB7_5)
+# BB#6:
+	bb         6
+	pred       5
+	succ       7
+	dom        7
+	pdom       5
+	rli        %r2
+	rli        %r1
+	mov        %r3, %ZERO
+	mov        %r4, %ZERO
+	mov        %r0, %ZERO
+$BB7_7:                                 # %for.body22
+                                        # =>This Inner Loop Header: Depth=1
+	bb         7
+	loop       1
+	lhdr       1, 1
+	pred       6
+	pred       11
+	succ       10
+	succ       8
+	dom        10
+	dom        11
+	dom        8
+	pdom       6
+	rli        %r0
+	rli        %r4
+	rli        %r3
+	rli        %r2
+	rli        %r1
+	sll        %r5, %r3, 2
+	add        %r6, %SP, 0
+	mloc       7
+	lw         %r6, %r6, %r5
+	add        %r0, %r6, %r0
+	mul        %r6, %r6, %r3
+	add        %r4, %r6, %r4
+	breq       %r1, %r0, ($BB7_10)
+# BB#8:                                 # %for.body22
+                                        #   in Loop: Header=BB7_7 Depth=1
+	bb         8
+	loop       1
+	pred       7
+	succ       10
+	succ       9
+	dom        9
+	rli        %r0
+	rli        %r4
+	rli        %r3
+	rli        %r2
+	rli        %r5
+	rli        %r1
+	breq       %r0, 0, ($BB7_10)
+# BB#9:                                 # %if.then
+                                        #   in Loop: Header=BB7_7 Depth=1
+	bb         9
+	loop       1
+	pred       8
+	succ       11
+	rli        %r0
+	rli        %r4
+	rli        %r3
+	rli        %r2
+	rli        %r5
+	rli        %r1
+	sub       %a1, %r1, %r0
+	sub       %r6, %r2, %r4
+	sll        %a0, %r6, 11
+	call       __udivsi3
+	mul        %r6, %v0, %r0
+	srl        %r6, %r6, 11
+	sub       %r6, %r6, %r4
+	sll        %a0, %r4, 11
+	mov        %a1, %r0
+	call       __udivsi3
+	mul        %r7, %v0, %r1
+	srl        %r7, %r7, 11
+	sub       %r7, %r2, %r7
+	mul        %r6, %r6, %r7
+	add        %r7, %SP, 1024
+	mloc       8
+	sw         %r6, %r7, %r5
+	j          ($BB7_11)
+$BB7_10:                                # %if.else
+                                        #   in Loop: Header=BB7_7 Depth=1
+	bb         10
+	loop       1
+	pred       8
+	pred       7
+	succ       11
+	rli        %r0
+	rli        %r4
+	rli        %r3
+	rli        %r2
+	rli        %r5
+	rli        %r1
+	add        %r6, %SP, 1024
+	mloc       9
+	sw         %ZERO, %r6, %r5
+$BB7_11:                                # %for.inc42
+                                        #   in Loop: Header=BB7_7 Depth=1
+	bb         11
+	loop       1
+	lext       1
+	pred       9
+	pred       10
+	succ       7
+	succ       12
+	dom        12
+	pdom       9
+	pdom       8
+	pdom       7
+	pdom       10
+	rli        %r0
+	rli        %r4
+	rli        %r3
+	rli        %r2
+	rli        %r1
+	add        %r3, %r3, 1
+	brne       %r3, 256, ($BB7_7)
+# BB#12:
+	bb         12
+	pred       11
+	succ       13
+	dom        13
+	pdom       11
+	mov        %r0, %ZERO
+	mov        %v0, %ZERO
+	mov        %r1, %ZERO
+$BB7_13:                                # %for.body47
+                                        # =>This Inner Loop Header: Depth=1
+	bb         13
+	loop       0
+	lext       0
+	lhdr       0, 1
+	pred       12
+	pred       13
+	succ       13
+	succ       14
+	dom        14
+	pdom       12
+	rli        %r1
+	rli        %v0
+	rli        %r0
+	sll        %r2, %r0, 2
+	add        %r3, %SP, 1024
+	mloc       10
+	lw         %r2, %r3, %r2
+	sel_gtu     %v0, %r2, %r1, %r0, %v0
+	maxu      %r1, %r2, %r1
+	add        %r0, %r0, 1
+	brne       %r0, 256, ($BB7_13)
+# BB#14:                                # %for.end55
+	bb         14
+	pred       13
+	pdom       13
+	rli        %v0
+	add        %SP, %SP, 2048
+	ret        %RA
+	.end       otsu_i
+$tmp7:
+	.size	otsu_i, ($tmp7)-otsu_i
+
+	.type	global_cfg,@object      # @global_cfg
+	.comm	global_cfg,64,4
+	.type	input_buffer,@object    # @input_buffer
+	.data
+	.globl	input_buffer
+input_buffer:
+	.ascii	 "CA@EJK@6.\031\0202A*\036PU0\032\031\025\0243MRG8-'5HQLKKMMKKHD?@FIMNKFBEA==>72\031\0241J\035(PJ\036\023\037\024\025;aITK?COFEDEGHJLIIJGCHKIEJIEGLNQ?<-\024\032K=\033\0279T#\027\026\020\027FQTSSTONLKJLMLJLOMJH@?JHFEC@AEJKD5'\022&@7\034FiRQNJONA6+\025\0215A*\036OU3\035\036 \024!MZG>6+-DZQSQQRQPQUNHPPTSPMJNF@;8:0\027\032<K\035)UX0\031)\033\0220_YSMCFTKNJOWTRRPOLA0AOOKMMNONLLA;'\024#J4\031%MW#\030\036\032\0243XYSRSSNPRTTUSPQTSJHBAKLFEEDCEGFA4 \024/F8 JdLHEEGD?9)\022\030@C%\032DJ-\032$0\020\0261HLGL=*4MJLLOQNNLKDCNPOOOMKDB>87:&\022&KM\035'QZ7\0345&\023\035>OOKHHGALIHMOONMMJ<$0FMFHIGEFEA=5\037\022+F1\033;nY(\032-,\020\037?LONJIFHMPMMOMMPL>CDCJKFFFEHJC@=/\026\0269O<\037BNHD?=<640!\017 ?=!\02325\"\026#2\024\017\026!+25'!0EACCEGGIHFBAHIIJLKFA>93/+\027\022'@=\030%QS*\024.)\030\021\033&09@C?8@?=@EFGEFE;!,?HCEGB>;82/%\026\027/>+\032=oS%\026+.\017\020\035&1<AB@?CECDEFFGD3:@?ADCBA@CD94. \023\032;C,\033;J333/(#$ \025\022(91\032\022/6\"\024!2\033\013\005\006\r\030\032\023\026$1,0//1253331335688682+&#\031\016\035*/-\025'VM\032\016'+\037\017\b\t\021!*,-'+,++.110120\")1434761,'\"\036\024\024$:;&\030;kU#\023(1\026\013\t\t\023\",-,,.0/00133/#)--.0112334)$\034\021\027';6 \032<Y\027\032\036\035\024\022\025\021\017\0376=1\032\030FN.\027$=-\020\002\000\004\013\017\017\017\024\031\026\033\033\032\032\033\034\031\032\034\034\033\032\035\037\036\036 % \030\026\026\r\f0<3.\030*^S\032\020,8+\023\004\004\004\021\025\023\026\025\027\031\032\031\030\034\034\033\032\034\037\036\"!\035\036\035\037! \033\027\025\020\n\0263LC+\031<pZ$\022->$\r\006\003\007\020\026\026\027\030\033\036\034\036\034\035\035\036\032\027\030\032\032\034\033\035\035\037!!#\031\025\017\t\0349@5\"\035Bl\r\016\016\f\f\f\n\007\r,IL?&$g`7\034+NC\032\004\002\007\013\f\r\r\016\021\022\026\026\024\023\026\025\024\025\026\026\025\023\027\031\027\025\021\023\017\017\r\b\007\013?UJ>\033)a`(\0265L:\027\006\t\t\r\016\016\017\020\023\025\027\027\025\026\030\026\026\027\027\027\032\032\030\026\024\023\024\023\020\016\r\007\005\0257YO4\033=sU#\0244K0\r\007\b\013\017\021\023\026\025\027\033\032\034\033\032\031\030\031\027\025\027\031\032\031\031\024\022\025\025\027\020\r\t\007\027@F<*\"En\031\032\030\024\r\013\n\007\b\036>?1 $WB!\022#=4\022\005\t\017\022\020\025\026\026\031\033\037\037\035\035 \037!\"\"!\036\034 #$!\035\032\026\022\016\013\t\013,HK8\032'VZ0\0250?,\021\t\020\025\025\025\027\030\030\032\036  \037\037\037\037 !  $\" !\034\035\032\027\025\022\016\t\006\017)GD,\030;jD\035\021,;!\f\f\021\027\030\027\031\033\032\033\037!#\"#$\" \036\037\036\037! \037\034\034\033\031\032\027\020\t\006\020*A?(\037Fc)+*#\027\023\021\r\t\0243F;\" E-\024\020\"3%\017\f\024\036%),,,--1-*-//1221/+001410*#\032\022\r\n\037=L9\032%KP/\0305;%\022\023\035#'.20-,-12..+01.013114//-,(\035\030\021\f\r\037AM1\0317_5\034\0231;\027\022\033!\"%+(-,*-13467500.043..//.-*$\034\024\016\013\036AD*\0325]4357,#'#\023\021!DD'\0333!\020\021#/\031\022\035-6;CA>@DBE=;?DEFGGGF@ECBFFIA92+#\023\024/I?\034*OO,\03393\035\031)25?GIHCDFIICDDEFGGHFEGHHF>@A4.- \022\0306X<\0366Y.\032\03024\023\035154;B;A@>AGIFGJKHFCFIG>?CGGC>:4-!\016\025@L1\025'b90/BG9<7\037\020\0209B(\026'\036\020\021 )\022\0343BFMRMIKQORJIMRTUUTVWPQPOQQVRMG@6\034\017 ?E\035/ZX.\0353%\025\"=?ENQSWSUVWUQSWQQWWWTSTUWUHLSKEE3\033\023&Y@ 6W,\030\032)%\021*=DHPRJLLLNRUPPVY[WSRSRHLOUXRLNHA5\025\0166N8\024!a:( >]MC9$\017\f.:&\025*'\023\017\031\036\021'?FHTTPKKOPROORRSUSSUXPOOQQPRTVQF8\037\020\0262H\033.^_4\033&\026\023*E?MQMOWTVTRRQSVOLPUSWTSWUUJLUVUG8#\021\032N9\0366X,\027\027\035\030\0225:ITWTPLKLMOQOOTY]XSQPNJPPTZUOTNF=\034\016&F;\025%U;)\037;aXF6#\021\016+6#\031BA \021\025\022\0221:BNONLIGHKLKLKHJJKLNMFDIMMKGFMOF5\"\023\0250H\034,SS/\032\032\r\0264L?SQIHKKLKKKIMNKC@JJTMGNMNHFKU`C6%\021\027G:\0366\\/\030\030\027\021\030?8NZQFGEBADNOFGLMOJIGFGIHJOSNLQOD3 \017 ?9\0315I@72>KJC8(\024\023/<(\033OQ+\025\023\016\02699@OILLJLOKH9;DGGFIJGCBAFIJIFDDD@4\"\023\024/G\034*?9\036\023\030\r\0316G;QNIHGFGJKJJILJCAHCLIEKIKHGMTUB9'\022\027F; 5[5\035\030\024\017\034E;KSJCBGA=CNODFMMFBFFCAA@ELMIOLI?/#\020!?;\033;RLFDIGEC<+\027\0232?)\034PV4\033\024\017\032=8>SNJOMKNLKCEKLIEGHEDDBEGIIGGFFC6$\025\0250J\036*0&\027\021\032\020\0354>9LIEGHBHKMLIIKKFBFEFDDIHJGJORQA:)\025\033H<!7`?\037\031\025\020\037K:KPED@JF@CLMA?GJCBHF??=>AHJHOEA>3\"\017#D>\035;]VQNQPMH>,\026\0221<&\034LS3\034\025\021\027<8@VRIOMKNLLNOONLGGFHKMOLIIJIJMNH;'\027\0307R *+!\026\021\033\022\0352<7JD@GMEHKMNLLKMKHIGFFFIHJJNQRRA;*\025\034J<\0376dL\"\032\026\020\037N;JOEFEMKDDJLDADFFGKICCDDBGMKH@;:4\036\016%F?\0359^JOSQSUL?,\024\0211:#\033LT1\031\024\022\0236@GSTLMMORMMMOOOOMIIMQTXUOMKKLSTLA)\026\033?Z\"*4+\027\020\036\025\0312F5IA@KSLHJOSRRMPQOOJLMIJKMPRSTRE='\022\035P=\0364cS#\032\030\023\035KEHJILOONIGJLKLJGMNNOLHLLHJSQA:30-\030\f%D<\0348W)@THENMA*\023\021;C&\034M[4\032\026\024\023*KOGVPQQSVPPIKQUURLMRQLPTUTMNQUTNH)\025\037CV$*G=\031\022$\030\022.M8C@DPYQLJRYTVOTSNSQSPJIOQSTVVPN=$\024%X@\0351`M \032 \034\031BRICKTUQNMLMLLRTPVQORQJNRMOUS?/%&%\020\007%A7\0349U+;H<.>MD'\023\030LS-\033IT1\031\037'\021\037AOIMKKJKLLHFJPSUMIIIEEGKMMJKLPTQG\"\025,LL!(QT,\0272\"\017\034<F>8@MQKGAISNOKNMJOMLGB@ABEINPSQ9\034\0273\\A\037/T=\034\033-)\026-MNDHRMNHDFLMKLMLNLKKIEGJIFEA0\037\032\034\033\007\003\02633\0359V=CB3!,6-\031\017#MJ&\033DM-\031!-\021\025$/7ACIFCCB>?@@CIGDA??@CCEEBCCDC:+\025\0251I=\033%MT3\031,$\020\f\034,1.6AEC<6?IFIDEEA@AC@;9;=@BCA>7$\023\0318O4\032-P9\031\031--\025\035*59>FDE@;<CCBA@>B?@BA?@B>:70 \022\020\020\n\001\000\024,+\0305W44/!\024\032\034\024\016\027.@4\032\031FT4\031\035-\030\016\f\021\035*,.+*./.21,,3:;8566444510.,&\033\022\f\0336D4\030%RU,\026''\027\b\b\021\033\037\"%+,*+288;655212674221///+!\027\020\021 ;G+\0271ZJ\036\031+.\031\022\017\026!+0.1.-055530/424887463-&\036\022\007\006\005\001\000\002\034-$\0265]\034\035\032\022\n\f\n\006\f(@B/\027\032Pa=\033\0351)\017\003\003\n\024\025\023\021\023\031\034\035\"\"\035\032 &*)&&%$#\"\" \037\032\026\017\006\006\013*EL;\032']X#\025)5(\017\002\005\t\023\020\r\024\026\033 $'%(%$$#\"#%)(%$!\035\035\036\027\f\003\006\0262HQ2\033;mZ#\0354>&\f\005\005\016\031\033\030\034\036 $'(&%#!&%(++)$%$\036\027\020\n\002\001\000\000\004\02518%\027<k\016\022\023\016\007\003\004\005\0170OO9\034\036\\iB\036!<8\025\004\003\007\n\017\017\013\f\021\023\023\030\030\026\025\026\025\027\027\026\026\027\032\031\030\027\026\030\023\r\007\003\006\0136TXE\034+d^%\032.F7\026\003\006\007\016\f\t\f\016\025\032\034\032\030\032\032\031\031\032\031\031\030\031\031\027\030\030\026\026\026\016\005\000\004\034?U^>#FxR!\036@Q3\n\005\006\f\022\024\021\025\030\032\034\035\036\033\034\034\030\033\033\036\036\036\033\024\023\022\020\016\t\006\002\000\000\001\f0JF)\031Bv\017\022\024\021\n\003\004\006\r&>:.\033 djA\035 >.\022\006\b\016\017\027\027\024\021\024\031\027\031\032\031\031\031\027\026\027\030\032\031\033\036\035\032\031\032\026\021\n\004\006\n+CF8\032*`a0\030,8)\022\b\017\023\026\026\026\025\020\030 \"\037\032\033\032\033\033\032\034\032\032\030\026\027\031\034\031\027\025\020\t\004\003\0240GO4!Gq8\025\0250>*\013\b\016\024\031\035\033\035\035\035\037\037\037\036\037\036\033\030\036\036\037\037\032\016\013\n\013\f\n\006\001\000\000\002\0218H@'\030<f%#\" \027\017\013\n\f\0328C2\033%eb8\026\037;\036\r\t\020\032\036,1-'&***))+*,*,.--,+,.-0)\036\023\r\f\n\034=N<\033(\\_2\031/6 \r\021\034!&,1/(&,2300.+-/**+*)*-0-(\"\031\021\r\b\017&DQ3\0353M(\022\023*3\035\016\026 #&,-/.,-.0/22*')01,$\026\f\013\016\r\007\002\000\000\003\b\017/JH,\0303I9::83(\036\026\022\026'F9\032\036LR0\026\0363\026\n\022\035'0>C@<>CA@BCCDA>BHGGE?=BIIB8-!\032\021\0223TI\035'TX1\03460\030\016\032%)5>CE?9<BFHGC>@FBABABEEFEC=4-%\032\023\034;^=\032\03313\030\030))\025\024&17=B?C@>@@BAACD?<CE;)\032\023\022\020\t\003\002\001\013\026\024\016\037HS5\0272?ILNKH<5+\034\024\02582\025\021'2 \021\027$\020\016\033&3EJIIJNQOJNSRSKINSTTRJEJRRPNF8-\032\017%KR\034&JJ(\0332$\022\025(.6BGHMJFGILMNE<BRQLMMOUTTTTQKJ=-\033\023)\\@\032\026.:\037\035($\023\"8CGNVOPMNQMOLEGQOKNK: \026\030\025\r\004\001\005\030+1$\021\0229O9\0319HPRSRNCB:&\024\r%#\020\t\016\026\017\013\020\027\f\030%.<QOJJNQPQIKQQSKKNOPOPJFILKOUSE9#\022\031;S\034)G?\037\032'\030\021 58EIFDHFHGGGCE<0:OQJMMMQRUTTSRXG8!\016\031L;\033\03477\"\037# \0303CNOQZRQQSSLPMBAKOPNB-\025\022\027\023\t\002\004\024<IC3\027\r'C9\034?SNOOMND<6,\031\r\030\037\026\013\n\r\b\013\021\023\017!.8CILKIHKKNHFHJPLJIIJHMKHIJEJVTD9*\032\0260P\0370QE \034\037\021\025(9?MICBCBDCEEA?:47CHEMKDEELKKLNWC:$\r\026B7\034\03556 \037\035\031!?@MQMMJLNJB@EFB>?FMF3\037\023\022\025\020\b\005\0171SPD;!\020 @=\035AVHGFBGF93.\030\016\0321*\t\t\b\005\t\017\016\017 (7D@GKC@GID?CGEFDGIIHBDGGFFHGNNC;,\033\024'C\034/WW1\031\031\021\035.7=GC@BFDBCEEBB=>8.43BFBAACEECEG>5\"\016\022;8\036\036:=\"\037\032\024\037<:LQIIDIJD=:>CCA?@H=&\024\017\021\f\007\002\n'GQLD:(\023\036A@\034@YBDDEJE>:1\032\016\0333+\t\007\007\b\f\r\013\020\"&3DAAGD@DKB>ADCCBFLKEACDDDDJGKLE<1\036\025&=\032/\\]4\031\033\021!16>GD@EKFDFGGEGD@-\031!\0350AE??=AC@=?85'\023\027B= ,VI' \032\025!=<MMCCDGECBAABDEB@C3\034\017\020\020\t\004\020,GKMMF;.\026\035@A\037G]=@EJJHC>1\031\013\0361&\b\007\t\013\017\017\f\020#$-?ABHGCEKHDDEEHHFFFBADCCECHGJNI=5\036\025*C\033.ZU(\030\034\022\"6;?JGBEKFEFGEEGE;$\021\023\020\0338G>><>A>8<59+\025\031E>\037*RB$ \031\024\"?:LOCEGJFEGEEDFFDBA-\026\016\022\n\004\004#JOIMOJ=/\023\036?>\"Md?CJNKMG>/\027\b#/\037\006\n\013\r\021\024\020\f!\"&159EJHHMPLIGHMI@?DDFHFGIGIKOQJ>6\034\0262M\036.VL \026\036\023!7A>KJCCGGJKKJHJC5!\020\n\007\013(@@?@@@>:C;?-\022\031B8\033 <2\037\037\032\024 A;NTKJKNKIKKKJJJIKB(\023\017\023\005\001\n0RMJQQLA*\020\"A=\037EiGMRPQOKA/\023\n)/\031\007\016\017\022\022\025\025\b\030\"\" !$7GLKQSQLHIMD;>HKMMNNMMORTQH?1\032\033<R /TN%\027!\026\032/>;GKFBFJPSSRPPC3\"\022\005\003\006\0271CAEDBACMGD,\020\034E5\032\0351- \037 \033\035>FQWSLNROOSSSSRPPVA#\021\021\023\004\003\0305IOQURNC$\023*G=\0310hJMONOKKE.\r\r03\033\f\021\027\031\026\025\031\t\016\"%\030\025\025!4DMRSSMHGJE?AHLNNOONLMNMID='\027%GR\036.WV.\030%\034\026\034(4<BFFGKMPQQQQG4\"\022\t\f\f\020%>@EEGIIKJC&\021'YD!$CD% *&\0331INOQNRROQVTTUURQS9\035\021\021\r\001\r)>GSWVSM;\034\0278M:\027\"jIKKJJFI>!\n\02467\036\016\024\031\034\026\024\033\013\b\033%\037\031\027\026\032,DOQMLIEHIDCEHGILMLLONHA<5\032\023*KM\037+V]7\030( \023\f\023&6;>DKKOMLLKLF;)\031\025\032\033\030\"7=@BGGA>:.\032\024-G8\033-ZS'\0350/\030$8CCENQQMMQQQPQLGE+\024\016\016\005\001\0312=AORIF>)\025\032=I0\025+a58;83//$\023\016\033/-\033\025+#\035\025\032'\016\007\021\032\031\024\020\r\f\027,8:7773473013446777;830-!\021\0301E=\034+[[,\025*%\027\n\007\023#(*.379788762.%\031\023\033\036\031\036,-22330,$\030\017\027.7&\0279jP\037\03316\035\027\036),-5:=:99:;:93.+\032\f\007\005\001\003\033),0971-#\026\025'@F/\036LU\032\035\037\035\031\030\025\016\f\032,70\034\02652\"\025\034*\022\t\b\f\f\013\006\007\006\n\026\034\036\035\035\037\035\033\035\033\031\031\032\034\032\033\034\033\032\034\033\032\033\031\020\016'BL<\034,^X\"\02406&\017\002\t\021\025\027\026\030\033\034\036 !\036\036\033\033\031\024\r\022\025\022\024\034\033 \033\030\030\026\026\020\b\f :@)\031?oE\033\0346B-\022\016\022\027\030\032\034   \037 \" \034\027\022\020\t\004\001\000\000\005\024\027\026\031\035\033\033\030\017\n\031:GE0$]M\n\f\r\f\f\r\f\b\f$:D<\"\021,=)\027\032\"\025\n\004\003\004\b\004\005\002\003\013\016\017\017\020\021\021\020\020\016\r\f\016\016\f\f\016\r\t\n\f\017\020\r\t\0162LRD\034+\\T \0251D5\024\001\007\013\016\016\013\n\013\016\020\022\024\021\023\023\024\024\023\016\f\016\016\017\020\022\023\013\006\005\004\006\003\000\f(AN4\033?n=\034\0337J6\020\013\n\016\022\021\016\020\021\022\024\024\025\021\013\005\000\000\000\000\000\000\000\007\017\017\r\017\022\021\022\016\b\007\031DKC- SG\021\025\031\027\022\023\022\f\r 5A>%\016!6(\033\032\031\022\t\006\003\005\016\f\013\004\003\f\026\027\030\031\032\033\031\031\027\024\024\025\024\023\022\025\027\023\026\027\027\026\022\f\r+@D;\033*VM\036\024&@4\024\005\r\021\025\027\025\020\022\027\030\031\031\032\034\036 \035\033\031\024\026\032\033\030\030\027\f\007\007\005\003\001\000\013#3D.\031;j=\034\025/@-\017\016\023\027\033\037\035\035\031\032\036\037\036\025\n\002\000\000\000\000\000\000\004\021\031\033\034\037 \036\027\020\t\006\0236C?)\033>?%(+&\037\033\033\030\024\0334A:!\017\"-, \025\027\022\n\t\f\023\035\035\032\020\017\033(/-/0-),*&$%$#\"(...*$\037\032\030\022!:F6\027)SN$\023*;*\025\017\027\033%.0,*,.-,+//0/-)\"%,.'%'\026\017\020\r\n\004\004\t\0313H1\0337`F \0315@'\027\030 #'04630251\037\017\004\000\000\000\000\000\t\037+246740\"\034\025\f\021.GG/\036>A<?@;4!\035\037\034\031+FD'\020\035*&\032\023\025\016\013\020\026\035+)$\025\027.CHEEFC=@C@=@?@<>DDD<6*!(\034\0321MJ\035*QT/\0264:%\025\033\"#3?A??CDDB=??>=<;56971+/\037\026\030\024\023\t\t\007\0174^A!5_M' 9>\" '-3;DILHDFJC'\017\004\000\000\000\000\n%>BGGGGB@3,#\030\024!KX; HHPQQOL6##'\030\035>C'\017\0356%\024\020\020\t\022\031 +3( \030&COTNMPOHMSRNOLSQNOQTMH;.0%\031%FT\")QQ)\0273/\035\034++1DJINOPNKIDDCB@@EB@<60('  \037\030\031\f\b\006\013'`F\"5aT(!21\034+5<GPMMPPPQRG%\013\002\000\000\000\002\036BMMPMLLHHB:4+\033\025=YC\037MEQSTSSH-&,\033\0242<$\021.O/\024\017\013\006\025\034\"*+ \036\"7QOTIFMQMOQONNJTSONOTRMF:0+\032\0318S!%NJ \026)\037\031&63=NOKNNKKGCBA@A>>B>>:64)\037\035\"#\033\031\r\t\b\b\027RC!3bS( % \0325<EPVNFIKLON<\033\006\000\000\000\000\f/JIJLHGGDGFC@7#\021*OE\036IBDGJHIJ6+,!\023-:%\030If:\032\023\n\007\022\030\033\035\033\035*5ETKL@=ELMKFBCIGKFEGCGGGHA-.\035\0260N\035%GD\037\025 \026\032,;;BLNHDAAEA;>>@@=:;158=@7(\035\035  \027\017\020\f\004\020B@\"2`L( \035\027\033;=INKJADBBFE.\020\002\000\000\000\000\0337@?BFDB@=CCGB6-\026\"HE\037DNBDDCGK>1.%\025-;)\037Zb9\037\031\017\n\031\032\034\"#+<EKOEC?AEFIGC?BIMHBDH@@@FJA/1 \027/N\036'JC\036\025\034\023\0330BDEKJB@IIE=9=@BB?<;37?CCE>'\034 !\033\025\026\017\006\r:=#4`K&\037\034\026\037C>PPCFFFDA@?$\016\002\000\000\000\003*??BCEJIB<@CHA40\032!GH\037BcEB>BHKD9.$\027,<-\037QY7!\033\022\022'#(74=HKKKCACHIFFCCBBABDBCF>?;CMG33#\0300P\035+C8\032\024\033\023\0374DHIHC?AFOG?<;9CGD@>56AGEIJ4\037\031\037\037\031\031\025\n\f1:$4^K%\037\032\024!J;MN?ADFEB<7\036\t\000\000\000\000\0213B?CBHMMG?@AID3/\033!FG\036BbEB@DIKF</#\027,=,\034KS6!\032\024\03045;GCFGHIIGGFJMIEDIGA>;BB?>>?:@GD44!\0270M\033'=9\"\026\032\022\0368JDNG?>=.8@A<8:BCCCA;;?BCDK9 \030#-%(\037\013\n#3$5_M$\035\031\023!M9IL=<AGEA;1\027\004\000\000\000\006\"6ADDEGCDG?>BLG4+\027 HH\034B_EDFHLNH>3\"\023/?)\032HS7\037\031\027\0319HLKNMGGJLMNMJHJEHLJFDAJE??AD@CGB41\033\024/J\031\";<%\030\031\022\0318SETNGE<\"-?EAACCCEFFDCBDGEI7!\035-7.-!\r\b\034* 6`N$\034\032\024\035JEQPECCGGGB.\020\002\000\000\003\0318AGKIJA4=G<>FOG3(\023$JF\034E_GJMOQQE@: \0236B(\033FU6\037\035\036\0271RVJRQNMNQTSUJDLKNKLNNPSLEFFKHIHA6,\026\0253K\032!BC'\032\033\024\0243WQZYVQD.<ILLQNKLNMPNMKMPNK5\"$55,%\033\017\r\036!\0337aM\"\036 \032\031?V]YVSLLKPL.\r\001\000\000\0178NRTUSQ;-:K@BKOD1$\024.PD\035GaIMRSOF68;\036\032@E(\033ES5\037#*\027\"GULMPSQOQVVVKGSUQLNTUXTPKGFMKG?86%\024\036AP\036%PV2\033!\032\023(N][\\^\\QDRROSXVVYXVXVSRSUSN6$(7+\"\033\023\017\030#\034\031;bG  *%\027.X`[]^WQNRL-\n\000\000\005\"SZZZ[[U>0<PMLOM@.\"\031<YE\034B`CFGB7'!,.\027 CC$\032BL2\034$3\025\031+;CEDGFEGEKJFGMONNOONRPHCCBD?6-)/\034\023)KP\036&SX0\027&#\030\0330BINSURMPD@JTRQQRRRKNLKMKF2!\"/&\033\023\013\016 ,$\037CmO\"\0372/\026\0343BHNUTMGHA#\007\001\000\007)RUSQQSMC?HTVRKE6#\032 DV>\034B[:?A7'\034\031\033\032\027#6.\027\0238H/\032\"0\030\022\024\032!+,2225486579;;>?><;<;97:<8*\037\036\036\022\030/C>\030%SR&\023*-\035\023\025\035'17:<:9/,2;=;:::;8724;82*\035\032'\"\024\n\013\025$0+\037?pX$\03313\027\022\025\035'2:>=970\032\003\000\000\007\"===::<999>EFF91&\030\031*GN3\033@^\"'*\"\030\022\017\f\017 -,\034\f\013#:.\034!3(\023\t\006\t\025\032\036\035\034\036\035\035\033\035\037\036 \036 !! \035\035!! $($\031\021\017\r\013\";D6\025%Z[,\02609(\021\006\t\016\031 !\"!!\034\032\034\036! \037\036\037\037\037\035\031\033!\036\036\036\027\021\025\024\t\002\017%44(\030(R](\03627\035\f\006\006\017\034$%'%#\035\021\002\000\000\003\022\" \"\"!\"!#%'+,,\"\033\023\016\034<KH/\033Ee\021\023\026\022\017\013\t\005\f(6)\025\006\005\024.-\037\"74\026\006\000\001\f\023\025\021\017\020\016\013\013\016\017\016\020\f\f\r\r\016\013\t\r\017\017\023\030\024\r\b\007\005\b)EJ7\024'ag6\0334@0\023\002\004\006\020\026\025\024\023\025\023\021\020\016\021\020\016\016\017\017\016\017\r\r\020\017\022\025\021\013\t\t\001\000\0221A6#\022\0256_+!4:!\n\003\000\006\024\032\030\031\031\027\022\013\001\000\000\001\b\022\017\022\025\024\022\024\024\026\027\032\034\032\024\016\b\b\036INF/\035Kk"
+	.size	input_buffer, 8800
+
+

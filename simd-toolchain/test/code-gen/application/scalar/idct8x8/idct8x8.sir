@@ -1,0 +1,1539 @@
+	.file	"idct8x8.c"
+	.text
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main
+main:
+	.frame     %SP,0
+	args       0
+        rvals      32
+	bb         0
+	mov        %a0, fblock
+	mov        %a1, pblock
+	call       idct8x8
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp0:
+	.size	main, ($tmp0)-main
+
+	.globl	idct8x8
+	.align	2
+	.type	idct8x8,@function
+	.ent       idct8x8
+idct8x8:
+	.frame     %SP,256
+	args       2
+	mnum       47
+	malias     46, 47
+	malias     45, 47
+	malias     45, 46
+	malias     44, 47
+	malias     44, 46
+	malias     44, 45
+	malias     43, 47
+	malias     43, 46
+	malias     43, 45
+	malias     43, 44
+	malias     42, 47
+	malias     42, 46
+	malias     42, 45
+	malias     42, 44
+	malias     42, 43
+	malias     41, 47
+	malias     41, 46
+	malias     41, 45
+	malias     41, 44
+	malias     41, 43
+	malias     41, 42
+	malias     40, 47
+	malias     40, 46
+	malias     40, 45
+	malias     40, 44
+	malias     40, 43
+	malias     40, 42
+	malias     40, 41
+	malias     39, 47
+	malias     39, 46
+	malias     39, 45
+	malias     39, 44
+	malias     39, 43
+	malias     39, 42
+	malias     39, 41
+	malias     39, 40
+	malias     38, 47
+	malias     38, 46
+	malias     38, 45
+	malias     38, 44
+	malias     38, 43
+	malias     38, 42
+	malias     38, 41
+	malias     38, 40
+	malias     38, 39
+	malias     37, 47
+	malias     37, 46
+	malias     37, 45
+	malias     37, 44
+	malias     37, 43
+	malias     37, 42
+	malias     37, 41
+	malias     37, 40
+	malias     37, 39
+	malias     37, 38
+	malias     36, 47
+	malias     36, 46
+	malias     36, 45
+	malias     36, 44
+	malias     36, 43
+	malias     36, 42
+	malias     36, 41
+	malias     36, 40
+	malias     36, 39
+	malias     36, 38
+	malias     36, 37
+	malias     35, 47
+	malias     35, 46
+	malias     35, 45
+	malias     35, 44
+	malias     35, 43
+	malias     35, 42
+	malias     35, 41
+	malias     35, 40
+	malias     35, 39
+	malias     35, 38
+	malias     35, 37
+	malias     35, 36
+	malias     34, 47
+	malias     34, 46
+	malias     34, 45
+	malias     34, 44
+	malias     34, 43
+	malias     34, 42
+	malias     34, 41
+	malias     34, 40
+	malias     34, 39
+	malias     34, 38
+	malias     34, 37
+	malias     34, 36
+	malias     34, 35
+	malias     33, 47
+	malias     33, 46
+	malias     33, 45
+	malias     33, 44
+	malias     33, 43
+	malias     33, 42
+	malias     33, 41
+	malias     33, 40
+	malias     33, 39
+	malias     33, 38
+	malias     33, 37
+	malias     33, 36
+	malias     33, 35
+	malias     33, 34
+	malias     32, 47
+	malias     32, 46
+	malias     32, 45
+	malias     32, 44
+	malias     32, 43
+	malias     32, 42
+	malias     32, 41
+	malias     32, 40
+	malias     32, 39
+	malias     32, 38
+	malias     32, 37
+	malias     32, 36
+	malias     32, 35
+	malias     32, 34
+	malias     32, 33
+	malias     31, 47
+	malias     31, 46
+	malias     31, 45
+	malias     31, 44
+	malias     31, 43
+	malias     31, 42
+	malias     31, 41
+	malias     31, 40
+	malias     31, 39
+	malias     31, 38
+	malias     31, 37
+	malias     31, 36
+	malias     31, 35
+	malias     31, 34
+	malias     31, 33
+	malias     31, 32
+	malias     30, 47
+	malias     30, 46
+	malias     30, 45
+	malias     30, 44
+	malias     30, 43
+	malias     30, 42
+	malias     30, 41
+	malias     30, 40
+	malias     30, 39
+	malias     30, 38
+	malias     30, 37
+	malias     30, 36
+	malias     30, 35
+	malias     30, 34
+	malias     30, 33
+	malias     30, 32
+	malias     30, 31
+	malias     29, 47
+	malias     29, 46
+	malias     29, 45
+	malias     29, 44
+	malias     29, 43
+	malias     29, 42
+	malias     29, 41
+	malias     29, 40
+	malias     29, 39
+	malias     29, 38
+	malias     29, 37
+	malias     29, 36
+	malias     29, 35
+	malias     29, 34
+	malias     29, 33
+	malias     29, 32
+	malias     29, 31
+	malias     29, 30
+	malias     28, 47
+	malias     28, 46
+	malias     28, 45
+	malias     28, 44
+	malias     28, 43
+	malias     28, 42
+	malias     28, 41
+	malias     28, 40
+	malias     28, 39
+	malias     28, 38
+	malias     28, 37
+	malias     28, 36
+	malias     28, 35
+	malias     28, 34
+	malias     28, 33
+	malias     28, 32
+	malias     28, 31
+	malias     28, 30
+	malias     28, 29
+	malias     27, 47
+	malias     27, 46
+	malias     27, 45
+	malias     27, 44
+	malias     27, 43
+	malias     27, 42
+	malias     27, 41
+	malias     27, 40
+	malias     27, 39
+	malias     27, 38
+	malias     27, 37
+	malias     27, 36
+	malias     27, 35
+	malias     27, 34
+	malias     27, 33
+	malias     27, 32
+	malias     27, 31
+	malias     27, 30
+	malias     27, 29
+	malias     27, 28
+	malias     26, 47
+	malias     26, 46
+	malias     26, 45
+	malias     26, 44
+	malias     26, 43
+	malias     26, 42
+	malias     26, 41
+	malias     26, 40
+	malias     26, 39
+	malias     26, 38
+	malias     26, 37
+	malias     26, 36
+	malias     26, 35
+	malias     26, 34
+	malias     26, 33
+	malias     26, 32
+	malias     26, 31
+	malias     26, 30
+	malias     26, 29
+	malias     26, 28
+	malias     26, 27
+	malias     25, 47
+	malias     25, 46
+	malias     25, 45
+	malias     25, 44
+	malias     25, 43
+	malias     25, 42
+	malias     25, 41
+	malias     25, 40
+	malias     25, 39
+	malias     25, 38
+	malias     25, 37
+	malias     25, 36
+	malias     25, 35
+	malias     25, 34
+	malias     25, 33
+	malias     25, 32
+	malias     25, 31
+	malias     25, 30
+	malias     25, 29
+	malias     25, 28
+	malias     25, 27
+	malias     25, 26
+	malias     24, 47
+	malias     24, 46
+	malias     24, 45
+	malias     24, 44
+	malias     24, 43
+	malias     24, 42
+	malias     24, 41
+	malias     24, 40
+	malias     24, 39
+	malias     24, 38
+	malias     24, 37
+	malias     24, 36
+	malias     24, 35
+	malias     24, 34
+	malias     24, 33
+	malias     24, 32
+	malias     24, 31
+	malias     24, 30
+	malias     24, 29
+	malias     24, 28
+	malias     24, 27
+	malias     24, 26
+	malias     24, 25
+	malias     23, 47
+	malias     23, 46
+	malias     23, 45
+	malias     23, 44
+	malias     23, 43
+	malias     23, 42
+	malias     23, 41
+	malias     23, 40
+	malias     23, 39
+	malias     23, 38
+	malias     23, 37
+	malias     23, 36
+	malias     23, 35
+	malias     23, 34
+	malias     23, 33
+	malias     23, 32
+	malias     23, 31
+	malias     23, 30
+	malias     23, 29
+	malias     23, 28
+	malias     23, 27
+	malias     23, 26
+	malias     23, 25
+	malias     23, 24
+	malias     22, 47
+	malias     22, 46
+	malias     22, 45
+	malias     22, 44
+	malias     22, 43
+	malias     22, 42
+	malias     22, 41
+	malias     22, 40
+	malias     22, 39
+	malias     22, 38
+	malias     22, 37
+	malias     22, 36
+	malias     22, 35
+	malias     22, 34
+	malias     22, 33
+	malias     22, 32
+	malias     22, 31
+	malias     22, 30
+	malias     22, 29
+	malias     22, 28
+	malias     22, 27
+	malias     22, 26
+	malias     22, 25
+	malias     22, 24
+	malias     22, 23
+	malias     21, 47
+	malias     21, 46
+	malias     21, 45
+	malias     21, 44
+	malias     21, 43
+	malias     21, 42
+	malias     21, 41
+	malias     21, 40
+	malias     21, 39
+	malias     21, 38
+	malias     21, 37
+	malias     21, 36
+	malias     21, 35
+	malias     21, 34
+	malias     21, 33
+	malias     21, 32
+	malias     21, 31
+	malias     21, 30
+	malias     21, 29
+	malias     21, 28
+	malias     21, 27
+	malias     21, 26
+	malias     21, 25
+	malias     21, 24
+	malias     21, 23
+	malias     21, 22
+	malias     20, 47
+	malias     20, 46
+	malias     20, 45
+	malias     20, 44
+	malias     20, 43
+	malias     20, 42
+	malias     20, 41
+	malias     20, 40
+	malias     20, 39
+	malias     20, 38
+	malias     20, 37
+	malias     20, 36
+	malias     20, 35
+	malias     20, 34
+	malias     20, 33
+	malias     20, 32
+	malias     20, 31
+	malias     20, 30
+	malias     20, 29
+	malias     20, 28
+	malias     20, 27
+	malias     20, 26
+	malias     20, 25
+	malias     20, 24
+	malias     20, 23
+	malias     20, 22
+	malias     20, 21
+	malias     19, 47
+	malias     19, 46
+	malias     19, 45
+	malias     19, 44
+	malias     19, 43
+	malias     19, 42
+	malias     19, 41
+	malias     19, 40
+	malias     19, 39
+	malias     19, 38
+	malias     19, 37
+	malias     19, 36
+	malias     19, 35
+	malias     19, 34
+	malias     19, 33
+	malias     19, 32
+	malias     19, 31
+	malias     19, 30
+	malias     19, 29
+	malias     19, 28
+	malias     19, 27
+	malias     19, 26
+	malias     19, 25
+	malias     19, 24
+	malias     19, 23
+	malias     19, 22
+	malias     19, 21
+	malias     19, 20
+	malias     18, 47
+	malias     18, 46
+	malias     18, 45
+	malias     18, 44
+	malias     18, 43
+	malias     18, 42
+	malias     18, 41
+	malias     18, 40
+	malias     18, 39
+	malias     18, 38
+	malias     18, 37
+	malias     18, 36
+	malias     18, 35
+	malias     18, 34
+	malias     18, 33
+	malias     18, 32
+	malias     18, 31
+	malias     18, 30
+	malias     18, 29
+	malias     18, 28
+	malias     18, 27
+	malias     18, 26
+	malias     18, 25
+	malias     18, 24
+	malias     18, 23
+	malias     18, 22
+	malias     18, 21
+	malias     18, 20
+	malias     18, 19
+	malias     17, 47
+	malias     17, 46
+	malias     17, 45
+	malias     17, 44
+	malias     17, 43
+	malias     17, 42
+	malias     17, 41
+	malias     17, 40
+	malias     17, 39
+	malias     17, 38
+	malias     17, 37
+	malias     17, 36
+	malias     17, 35
+	malias     17, 34
+	malias     17, 33
+	malias     17, 32
+	malias     17, 31
+	malias     17, 30
+	malias     17, 29
+	malias     17, 28
+	malias     17, 27
+	malias     17, 26
+	malias     17, 25
+	malias     17, 24
+	malias     17, 23
+	malias     17, 22
+	malias     17, 21
+	malias     17, 20
+	malias     17, 19
+	malias     17, 18
+	malias     16, 47
+	malias     16, 46
+	malias     16, 45
+	malias     16, 44
+	malias     16, 43
+	malias     16, 42
+	malias     16, 41
+	malias     16, 40
+	malias     16, 39
+	malias     16, 38
+	malias     16, 37
+	malias     16, 36
+	malias     16, 35
+	malias     16, 34
+	malias     16, 33
+	malias     16, 32
+	malias     16, 31
+	malias     16, 30
+	malias     16, 29
+	malias     16, 28
+	malias     16, 27
+	malias     16, 26
+	malias     16, 25
+	malias     16, 24
+	malias     16, 23
+	malias     16, 22
+	malias     16, 21
+	malias     16, 20
+	malias     16, 19
+	malias     16, 18
+	malias     16, 17
+	malias     15, 47
+	malias     15, 46
+	malias     15, 45
+	malias     15, 44
+	malias     15, 43
+	malias     15, 42
+	malias     15, 41
+	malias     15, 40
+	malias     15, 39
+	malias     15, 38
+	malias     15, 37
+	malias     15, 36
+	malias     15, 35
+	malias     15, 34
+	malias     15, 33
+	malias     15, 32
+	malias     15, 31
+	malias     15, 30
+	malias     15, 29
+	malias     15, 28
+	malias     15, 27
+	malias     15, 26
+	malias     15, 25
+	malias     15, 24
+	malias     15, 23
+	malias     15, 22
+	malias     15, 21
+	malias     15, 20
+	malias     15, 19
+	malias     15, 18
+	malias     15, 17
+	malias     15, 16
+	malias     14, 47
+	malias     14, 46
+	malias     14, 45
+	malias     14, 44
+	malias     14, 43
+	malias     14, 42
+	malias     14, 41
+	malias     14, 40
+	malias     14, 39
+	malias     14, 38
+	malias     14, 37
+	malias     14, 36
+	malias     14, 35
+	malias     14, 34
+	malias     14, 33
+	malias     14, 32
+	malias     14, 31
+	malias     14, 30
+	malias     14, 29
+	malias     14, 28
+	malias     14, 27
+	malias     14, 26
+	malias     14, 25
+	malias     14, 24
+	malias     14, 23
+	malias     14, 22
+	malias     14, 21
+	malias     14, 20
+	malias     14, 19
+	malias     14, 18
+	malias     14, 17
+	malias     14, 16
+	malias     14, 15
+	malias     13, 47
+	malias     13, 46
+	malias     13, 45
+	malias     13, 44
+	malias     13, 43
+	malias     13, 42
+	malias     13, 41
+	malias     13, 40
+	malias     13, 39
+	malias     13, 38
+	malias     13, 37
+	malias     13, 36
+	malias     13, 35
+	malias     13, 34
+	malias     13, 33
+	malias     13, 32
+	malias     13, 31
+	malias     13, 30
+	malias     13, 29
+	malias     13, 28
+	malias     13, 27
+	malias     13, 26
+	malias     13, 25
+	malias     13, 24
+	malias     13, 23
+	malias     13, 22
+	malias     13, 21
+	malias     13, 20
+	malias     13, 19
+	malias     13, 18
+	malias     13, 17
+	malias     13, 16
+	malias     13, 15
+	malias     13, 14
+	malias     12, 47
+	malias     12, 46
+	malias     12, 45
+	malias     12, 44
+	malias     12, 43
+	malias     12, 42
+	malias     12, 41
+	malias     12, 40
+	malias     12, 39
+	malias     12, 38
+	malias     12, 37
+	malias     12, 36
+	malias     12, 35
+	malias     12, 34
+	malias     12, 33
+	malias     12, 32
+	malias     12, 31
+	malias     12, 30
+	malias     12, 29
+	malias     12, 28
+	malias     12, 27
+	malias     12, 26
+	malias     12, 25
+	malias     12, 24
+	malias     12, 23
+	malias     12, 22
+	malias     12, 21
+	malias     12, 20
+	malias     12, 19
+	malias     12, 18
+	malias     12, 17
+	malias     12, 16
+	malias     12, 15
+	malias     12, 14
+	malias     12, 13
+	malias     11, 47
+	malias     11, 46
+	malias     11, 45
+	malias     11, 44
+	malias     11, 43
+	malias     11, 42
+	malias     11, 41
+	malias     11, 40
+	malias     11, 39
+	malias     11, 38
+	malias     11, 37
+	malias     11, 36
+	malias     11, 35
+	malias     11, 34
+	malias     11, 33
+	malias     11, 32
+	malias     11, 31
+	malias     11, 30
+	malias     11, 29
+	malias     11, 28
+	malias     11, 27
+	malias     11, 26
+	malias     11, 25
+	malias     11, 24
+	malias     11, 23
+	malias     11, 22
+	malias     11, 21
+	malias     11, 20
+	malias     11, 19
+	malias     11, 18
+	malias     11, 17
+	malias     11, 16
+	malias     11, 15
+	malias     11, 14
+	malias     11, 13
+	malias     11, 12
+	malias     10, 47
+	malias     10, 46
+	malias     10, 45
+	malias     10, 44
+	malias     10, 43
+	malias     10, 42
+	malias     10, 41
+	malias     10, 40
+	malias     10, 39
+	malias     10, 38
+	malias     10, 37
+	malias     10, 36
+	malias     10, 35
+	malias     10, 34
+	malias     10, 33
+	malias     10, 32
+	malias     10, 31
+	malias     10, 30
+	malias     10, 29
+	malias     10, 28
+	malias     10, 27
+	malias     10, 26
+	malias     10, 25
+	malias     10, 24
+	malias     10, 23
+	malias     10, 22
+	malias     10, 21
+	malias     10, 20
+	malias     10, 19
+	malias     10, 18
+	malias     10, 17
+	malias     10, 16
+	malias     10, 15
+	malias     10, 14
+	malias     10, 13
+	malias     10, 12
+	malias     10, 11
+	malias     9, 47
+	malias     9, 46
+	malias     9, 45
+	malias     9, 44
+	malias     9, 43
+	malias     9, 42
+	malias     9, 41
+	malias     9, 40
+	malias     9, 39
+	malias     9, 38
+	malias     9, 37
+	malias     9, 36
+	malias     9, 35
+	malias     9, 34
+	malias     9, 33
+	malias     9, 32
+	malias     9, 31
+	malias     9, 30
+	malias     9, 29
+	malias     9, 28
+	malias     9, 27
+	malias     9, 26
+	malias     9, 25
+	malias     9, 24
+	malias     9, 23
+	malias     9, 22
+	malias     9, 21
+	malias     9, 20
+	malias     9, 19
+	malias     9, 18
+	malias     9, 17
+	malias     9, 16
+	malias     9, 15
+	malias     9, 14
+	malias     9, 13
+	malias     9, 12
+	malias     9, 11
+	malias     9, 10
+	malias     8, 47
+	malias     8, 46
+	malias     8, 45
+	malias     8, 44
+	malias     8, 43
+	malias     8, 42
+	malias     8, 41
+	malias     8, 40
+	malias     8, 39
+	malias     8, 38
+	malias     8, 37
+	malias     8, 36
+	malias     8, 35
+	malias     8, 34
+	malias     8, 33
+	malias     8, 32
+	malias     8, 31
+	malias     8, 30
+	malias     8, 29
+	malias     8, 28
+	malias     8, 27
+	malias     8, 26
+	malias     8, 25
+	malias     8, 24
+	malias     8, 23
+	malias     8, 22
+	malias     8, 21
+	malias     8, 20
+	malias     8, 19
+	malias     8, 18
+	malias     8, 17
+	malias     8, 16
+	malias     8, 15
+	malias     8, 14
+	malias     8, 13
+	malias     8, 12
+	malias     8, 11
+	malias     8, 10
+	malias     8, 9
+	malias     7, 47
+	malias     7, 46
+	malias     7, 45
+	malias     7, 44
+	malias     7, 43
+	malias     7, 42
+	malias     7, 41
+	malias     7, 40
+	malias     7, 39
+	malias     7, 38
+	malias     7, 37
+	malias     7, 36
+	malias     7, 35
+	malias     7, 34
+	malias     7, 33
+	malias     7, 32
+	malias     7, 31
+	malias     7, 30
+	malias     7, 29
+	malias     7, 28
+	malias     7, 27
+	malias     7, 26
+	malias     7, 25
+	malias     7, 24
+	malias     7, 23
+	malias     7, 22
+	malias     7, 21
+	malias     7, 20
+	malias     7, 19
+	malias     7, 18
+	malias     7, 17
+	malias     7, 16
+	malias     7, 15
+	malias     7, 14
+	malias     7, 13
+	malias     7, 12
+	malias     7, 11
+	malias     7, 10
+	malias     7, 9
+	malias     7, 8
+	malias     6, 47
+	malias     6, 46
+	malias     6, 45
+	malias     6, 44
+	malias     6, 43
+	malias     6, 42
+	malias     6, 41
+	malias     6, 40
+	malias     6, 39
+	malias     6, 38
+	malias     6, 37
+	malias     6, 36
+	malias     6, 35
+	malias     6, 34
+	malias     6, 33
+	malias     6, 32
+	malias     6, 31
+	malias     6, 30
+	malias     6, 29
+	malias     6, 28
+	malias     6, 27
+	malias     6, 26
+	malias     6, 25
+	malias     6, 24
+	malias     6, 23
+	malias     6, 22
+	malias     6, 21
+	malias     6, 20
+	malias     6, 19
+	malias     6, 18
+	malias     6, 17
+	malias     6, 16
+	malias     6, 15
+	malias     6, 14
+	malias     6, 13
+	malias     6, 12
+	malias     6, 11
+	malias     6, 10
+	malias     6, 9
+	malias     6, 8
+	malias     6, 7
+	malias     5, 47
+	malias     5, 46
+	malias     5, 45
+	malias     5, 44
+	malias     5, 43
+	malias     5, 42
+	malias     5, 41
+	malias     5, 40
+	malias     5, 39
+	malias     5, 38
+	malias     5, 37
+	malias     5, 36
+	malias     5, 35
+	malias     5, 34
+	malias     5, 33
+	malias     5, 32
+	malias     5, 31
+	malias     5, 30
+	malias     5, 29
+	malias     5, 28
+	malias     5, 27
+	malias     5, 26
+	malias     5, 25
+	malias     5, 24
+	malias     5, 23
+	malias     5, 22
+	malias     5, 21
+	malias     5, 20
+	malias     5, 19
+	malias     5, 18
+	malias     5, 17
+	malias     5, 16
+	malias     5, 15
+	malias     5, 14
+	malias     5, 13
+	malias     5, 12
+	malias     5, 11
+	malias     5, 10
+	malias     5, 9
+	malias     5, 8
+	malias     5, 7
+	malias     5, 6
+	malias     4, 47
+	malias     4, 46
+	malias     4, 45
+	malias     4, 44
+	malias     4, 43
+	malias     4, 42
+	malias     4, 41
+	malias     4, 40
+	malias     4, 39
+	malias     4, 38
+	malias     4, 37
+	malias     4, 36
+	malias     4, 35
+	malias     4, 34
+	malias     4, 33
+	malias     4, 32
+	malias     4, 31
+	malias     4, 30
+	malias     4, 29
+	malias     4, 28
+	malias     4, 27
+	malias     4, 26
+	malias     4, 25
+	malias     4, 24
+	malias     4, 23
+	malias     4, 22
+	malias     4, 21
+	malias     4, 20
+	malias     4, 19
+	malias     4, 18
+	malias     4, 17
+	malias     4, 16
+	malias     4, 15
+	malias     4, 14
+	malias     4, 13
+	malias     4, 12
+	malias     4, 11
+	malias     4, 10
+	malias     4, 9
+	malias     4, 8
+	malias     4, 7
+	malias     4, 6
+	malias     4, 5
+	malias     3, 47
+	malias     3, 46
+	malias     3, 45
+	malias     3, 44
+	malias     3, 43
+	malias     3, 42
+	malias     3, 41
+	malias     3, 40
+	malias     3, 39
+	malias     3, 38
+	malias     3, 37
+	malias     3, 36
+	malias     3, 35
+	malias     3, 34
+	malias     3, 33
+	malias     3, 32
+	malias     3, 31
+	malias     3, 30
+	malias     3, 29
+	malias     3, 28
+	malias     3, 27
+	malias     3, 26
+	malias     3, 25
+	malias     3, 24
+	malias     3, 23
+	malias     3, 22
+	malias     3, 21
+	malias     3, 20
+	malias     3, 19
+	malias     3, 18
+	malias     3, 17
+	malias     3, 16
+	malias     3, 15
+	malias     3, 14
+	malias     3, 13
+	malias     3, 12
+	malias     3, 11
+	malias     3, 10
+	malias     3, 9
+	malias     3, 8
+	malias     3, 7
+	malias     3, 6
+	malias     3, 5
+	malias     3, 4
+	malias     2, 47
+	malias     2, 46
+	malias     2, 45
+	malias     2, 44
+	malias     2, 43
+	malias     2, 42
+	malias     2, 41
+	malias     2, 40
+	malias     2, 39
+	malias     2, 38
+	malias     2, 37
+	malias     2, 36
+	malias     2, 35
+	malias     2, 34
+	malias     2, 33
+	malias     2, 32
+	malias     2, 31
+	malias     2, 30
+	malias     2, 29
+	malias     2, 28
+	malias     2, 27
+	malias     2, 26
+	malias     2, 25
+	malias     2, 24
+	malias     2, 23
+	malias     2, 22
+	malias     2, 21
+	malias     2, 20
+	malias     2, 19
+	malias     2, 18
+	malias     2, 17
+	malias     2, 16
+	malias     2, 15
+	malias     2, 14
+	malias     2, 13
+	malias     2, 12
+	malias     2, 11
+	malias     2, 10
+	malias     2, 9
+	malias     2, 8
+	malias     2, 7
+	malias     2, 6
+	malias     2, 5
+	malias     2, 4
+	malias     2, 3
+	malias     1, 47
+	malias     1, 46
+	malias     1, 45
+	malias     1, 44
+	malias     1, 43
+	malias     1, 42
+	malias     1, 41
+	malias     1, 40
+	malias     1, 39
+	malias     1, 38
+	malias     1, 37
+	malias     1, 36
+	malias     1, 35
+	malias     1, 34
+	malias     1, 33
+	malias     1, 32
+	malias     1, 31
+	malias     1, 30
+	malias     1, 29
+	malias     1, 28
+	malias     1, 27
+	malias     1, 26
+	malias     1, 25
+	malias     1, 24
+	malias     1, 23
+	malias     1, 22
+	malias     1, 21
+	malias     1, 20
+	malias     1, 19
+	malias     1, 18
+	malias     1, 17
+	malias     1, 16
+	malias     1, 15
+	malias     1, 14
+	malias     1, 13
+	malias     1, 12
+	malias     1, 11
+	malias     1, 10
+	malias     1, 9
+	malias     1, 8
+	malias     1, 7
+	malias     1, 6
+	malias     1, 5
+	malias     1, 4
+	malias     1, 3
+	malias     1, 2
+	bb         0
+	succ       1
+	dom        1
+	rli        %a1
+	rli        %a0
+	add        %SP, %SP, -256
+	mov        %r0, %ZERO
+$BB1_1:
+	bb         1
+	loop       1
+	lext       1
+	lhdr       1, 1
+	pred       1
+	pred       0
+	succ       1
+	succ       2
+	dom        2
+	pdom       0
+	rli        %r0
+	rli        %a1
+	rli        %a0
+	sll        %r2, %r0, 5
+	mloc       1
+	lw         %r1, %a0, %r2
+	sll        %r1, %r1, 3
+	add        %r4, %SP, 0
+	mloc       2
+	sw         %r1, %r4, %r2
+	add        %r3, %a0, %r2
+	mloc       3
+	lw         %r1, %r3, 4
+	sll        %r5, %r1, 3
+	add        %r1, %r4, %r2
+	mloc       4
+	sw         %r5, %r1, 4
+	mloc       5
+	lw         %r5, %r3, 8
+	sll        %r5, %r5, 3
+	mloc       6
+	sw         %r5, %r1, 8
+	mloc       7
+	lw         %r5, %r3, 12
+	sll        %r5, %r5, 3
+	mloc       8
+	sw         %r5, %r1, 12
+	mloc       9
+	lw         %r5, %r3, 16
+	sll        %r5, %r5, 3
+	mloc       10
+	sw         %r5, %r1, 16
+	mloc       11
+	lw         %r5, %r3, 20
+	sll        %r5, %r5, 3
+	mloc       12
+	sw         %r5, %r1, 20
+	mloc       13
+	lw         %r5, %r3, 24
+	sll        %r5, %r5, 3
+	mloc       14
+	sw         %r5, %r1, 24
+	mloc       15
+	lw         %r3, %r3, 28
+	sll        %r3, %r3, 3
+	mloc       16
+	sw         %r3, %r1, 28
+	mloc       17
+	lw         %r5, %r1, 4
+	add        %r6, %r3, %r5
+	sub       %r7, %r5, %r3
+	mloc       18
+	lw         %r3, %r1, 12
+	mul        %r3, %r3, 23170
+	add        %r3, %r3, 8192
+	sra        %r8, %r3, 14
+	add        %r3, %r8, %r6
+	mul        %r5, %r3, 13623
+	add        %r5, %r5, 8192
+	sra        %r9, %r5, 14
+	mloc       19
+	lw         %r5, %r1, 20
+	mul        %r5, %r5, 23170
+	add        %r5, %r5, 8192
+	sra        %r12, %r5, 14
+	add        %r5, %r12, %r7
+	mul        %r10, %r5, 9102
+	add        %r10, %r10, 8192
+	sra        %r10, %r10, 14
+	add        %r14, %r10, %r9
+	mloc       20
+	lw         %r9, %r1, 8
+	mul        %r10, %r9, 21407
+	add        %r10, %r10, 8192
+	sra        %r10, %r10, 14
+	mloc       21
+	lw         %r13, %r1, 24
+	mul        %r11, %r13, 8867
+	add        %r11, %r11, 8192
+	sra        %r11, %r11, 14
+	add        %r10, %r11, %r10
+	mloc       22
+	lw         %r15, %r4, %r2
+	mloc       23
+	lw         %r16, %r1, 16
+	add        %r11, %r16, %r15
+	add        %r17, %r10, %r11
+	sub       %r18, %r17, %r14
+	mloc       24
+	sw         %r18, %r1, 28
+	add        %r14, %r14, %r17
+	mloc       25
+	sw         %r14, %r4, %r2
+	sub       %r4, %r7, %r12
+	sub       %r2, %r6, %r8
+	sub       %r6, %r15, %r16
+	mul        %r7, %r2, 3196
+	add        %r7, %r7, 8192
+	sra        %r7, %r7, 14
+	mul        %r8, %r4, 16069
+	add        %r8, %r8, 8192
+	sra        %r8, %r8, 14
+	add        %r7, %r8, %r7
+	mul        %r8, %r13, 21407
+	add        %r8, %r8, 8192
+	sra        %r8, %r8, 14
+	mul        %r9, %r9, 8867
+	add        %r9, %r9, 8192
+	sra        %r9, %r9, 14
+	sub       %r9, %r9, %r8
+	add        %r12, %r9, %r6
+	add        %r8, %r7, %r12
+	sub       %r12, %r12, %r7
+	sub       %r7, %r6, %r9
+	sub       %r6, %r11, %r10
+	mloc       26
+	sw         %r12, %r1, 24
+	mloc       27
+	sw         %r8, %r1, 4
+	mul        %r4, %r4, 3196
+	add        %r4, %r4, 8192
+	sra        %r4, %r4, 14
+	mul        %r2, %r2, 16069
+	add        %r2, %r2, 8192
+	sra        %r2, %r2, 14
+	sub       %r2, %r2, %r4
+	sub       %r4, %r7, %r2
+	mloc       28
+	sw         %r4, %r1, 20
+	add        %r2, %r2, %r7
+	mul        %r3, %r3, 9102
+	add        %r3, %r3, 8192
+	sra        %r3, %r3, 14
+	mul        %r4, %r5, 13623
+	add        %r4, %r4, 8192
+	sra        %r4, %r4, 14
+	sub       %r3, %r4, %r3
+	mloc       29
+	sw         %r2, %r1, 8
+	add        %r2, %r3, %r6
+	sub       %r3, %r6, %r3
+	mloc       30
+	sw         %r3, %r1, 16
+	mloc       31
+	sw         %r2, %r1, 12
+	add        %r0, %r0, 1
+	brne       %r0, 8, ($BB1_1)
+	bb         2
+	pred       1
+	succ       3
+	dom        3
+	pdom       1
+	rli        %a1
+	mov        %r0, -8
+$BB1_3:
+	bb         3
+	loop       0
+	lext       0
+	lhdr       0, 1
+	pred       3
+	pred       2
+	succ       3
+	succ       4
+	dom        4
+	pdom       2
+	rli        %r0
+	rli        %a1
+	sll        %r1, %r0, 2
+	add        %r2, %SP, 0
+	add        %r3, %r2, %r1
+	mloc       32
+	lw         %r5, %r3, 224
+	mul        %r2, %r5, 21407
+	add        %r2, %r2, 8192
+	sra        %r2, %r2, 14
+	mloc       33
+	lw         %r10, %r3, 96
+	mul        %r4, %r10, 8867
+	add        %r4, %r4, 8192
+	sra        %r4, %r4, 14
+	sub       %r4, %r4, %r2
+	mloc       34
+	lw         %r2, %r3, 256
+	mloc       35
+	lw         %r7, %r3, 64
+	sub       %r6, %r7, %r2
+	add        %r9, %r2, %r7
+	mloc       36
+	lw         %r2, %r3, 192
+	mul        %r2, %r2, 23170
+	add        %r2, %r2, 8192
+	sra        %r7, %r2, 14
+	add        %r2, %r7, %r6
+	sub       %r6, %r6, %r7
+	mloc       37
+	lw         %r7, %r3, 160
+	mloc       38
+	lw         %r8, %r3, 32
+	sub       %r12, %r8, %r7
+	add        %r7, %r7, %r8
+	mloc       39
+	lw         %r3, %r3, 128
+	mul        %r3, %r3, 23170
+	add        %r3, %r3, 8192
+	sra        %r3, %r3, 14
+	add        %r8, %r3, %r9
+	sub       %r11, %r9, %r3
+	sub       %r3, %r12, %r4
+	add        %r4, %r4, %r12
+	add        %r1, %a1, %r1
+	mul        %r9, %r8, 13623
+	add        %r9, %r9, 8192
+	sra        %r9, %r9, 14
+	mul        %r12, %r2, 9102
+	add        %r12, %r12, 8192
+	sra        %r12, %r12, 14
+	add        %r9, %r12, %r9
+	mul        %r10, %r10, 21407
+	add        %r10, %r10, 8192
+	sra        %r10, %r10, 14
+	mul        %r5, %r5, 8867
+	add        %r5, %r5, 8192
+	sra        %r5, %r5, 14
+	add        %r13, %r5, %r10
+	add        %r10, %r13, %r7
+	add        %r5, %r9, %r10
+	sra        %r12, %r5, 31
+	add        %r5, %r5, %r12
+	mul        %r12, %r6, 3196
+	add        %r12, %r12, 8192
+	sra        %r12, %r12, 14
+	mul        %r14, %r11, 16069
+	add        %r14, %r14, 8192
+	sra        %r14, %r14, 14
+	sub       %r12, %r14, %r12
+	mul        %r11, %r11, 3196
+	add        %r11, %r11, 8192
+	sra        %r11, %r11, 14
+	mul        %r6, %r6, 16069
+	add        %r6, %r6, 8192
+	sra        %r6, %r6, 14
+	add        %r11, %r6, %r11
+	sub       %r7, %r7, %r13
+	mul        %r6, %r8, 9102
+	add        %r6, %r6, 8192
+	sra        %r6, %r6, 14
+	mul        %r2, %r2, 13623
+	add        %r2, %r2, 8192
+	sra        %r2, %r2, 14
+	sub       %r2, %r2, %r6
+	add        %r6, %r2, %r7
+	sub       %r8, %r7, %r2
+	sub       %r2, %r10, %r9
+	sub       %r10, %r4, %r11
+	add        %r7, %r11, %r4
+	sub       %r4, %r3, %r12
+	add        %r9, %r12, %r3
+	add        %r3, %r5, 32
+	sra        %r3, %r3, 6
+	add        %r3, %r3, 128
+	min        %r3, %r3, 255
+	max        %r3, %r3, 0
+	mloc       40
+	sw         %r3, %r1, 32
+	sra        %r3, %r2, 31
+	add        %r2, %r2, %r3
+	sra        %r3, %r10, 31
+	add        %r3, %r10, %r3
+	sra        %r5, %r4, 31
+	add        %r4, %r4, %r5
+	sra        %r5, %r8, 31
+	add        %r5, %r8, %r5
+	sra        %r8, %r6, 31
+	add        %r6, %r6, %r8
+	sra        %r8, %r9, 31
+	add        %r8, %r9, %r8
+	sra        %r9, %r7, 31
+	add        %r7, %r7, %r9
+	add        %r7, %r7, 32
+	sra        %r7, %r7, 6
+	add        %r7, %r7, 128
+	min        %r7, %r7, 255
+	max        %r7, %r7, 0
+	mloc       41
+	sw         %r7, %r1, 64
+	add        %r7, %r8, 32
+	sra        %r7, %r7, 6
+	add        %r7, %r7, 128
+	min        %r7, %r7, 255
+	max        %r7, %r7, 0
+	mloc       42
+	sw         %r7, %r1, 96
+	add        %r6, %r6, 32
+	sra        %r6, %r6, 6
+	add        %r6, %r6, 128
+	min        %r6, %r6, 255
+	max        %r6, %r6, 0
+	mloc       43
+	sw         %r6, %r1, 128
+	add        %r5, %r5, 32
+	sra        %r5, %r5, 6
+	add        %r5, %r5, 128
+	min        %r5, %r5, 255
+	max        %r5, %r5, 0
+	mloc       44
+	sw         %r5, %r1, 160
+	add        %r4, %r4, 32
+	sra        %r4, %r4, 6
+	add        %r4, %r4, 128
+	min        %r4, %r4, 255
+	max        %r4, %r4, 0
+	mloc       45
+	sw         %r4, %r1, 192
+	add        %r3, %r3, 32
+	sra        %r3, %r3, 6
+	add        %r3, %r3, 128
+	min        %r3, %r3, 255
+	max        %r3, %r3, 0
+	mloc       46
+	sw         %r3, %r1, 224
+	add        %r2, %r2, 32
+	sra        %r2, %r2, 6
+	add        %r2, %r2, 128
+	min        %r2, %r2, 255
+	max        %r2, %r2, 0
+	mloc       47
+	sw         %r2, %r1, 256
+	add        %r0, %r0, 1
+	brne       %r0, 0, ($BB1_3)
+	bb         4
+	pred       3
+	pdom       3
+	add        %SP, %SP, 256
+	ret        %RA
+	.end       idct8x8
+$tmp1:
+	.size	idct8x8, ($tmp1)-idct8x8
+
+	.type	fblock,@object
+	.data
+	.globl	fblock
+	.align	2
+fblock:
+	.long	18091
+	.long	17847
+	.long	64754
+	.long	9526
+	.long	29151
+	.long	44089
+	.long	59272
+	.long	50614
+	.long	54335
+	.long	54633
+	.long	60602
+	.long	62706
+	.long	37175
+	.long	12012
+	.long	19047
+	.long	19378
+	.long	14733
+	.long	14724
+	.long	4911
+	.long	62911
+	.long	48259
+	.long	62946
+	.long	3623
+	.long	27244
+	.long	61394
+	.long	58673
+	.long	60986
+	.long	31877
+	.long	28146
+	.long	64267
+	.long	55725
+	.long	10939
+	.long	7665
+	.long	26361
+	.long	53523
+	.long	36011
+	.long	19913
+	.long	6821
+	.long	61944
+	.long	27151
+	.long	60247
+	.long	5009
+	.long	28824
+	.long	25675
+	.long	2547
+	.long	10079
+	.long	39733
+	.long	19229
+	.long	37714
+	.long	2639
+	.long	24542
+	.long	13018
+	.long	41572
+	.long	65312
+	.long	20433
+	.long	12072
+	.long	26633
+	.long	34077
+	.long	43623
+	.long	26841
+	.long	42808
+	.long	46183
+	.long	51384
+	.long	36655
+	.size	fblock, 256
+
+	.type	pblock,@object
+	.comm	pblock,256,4
+

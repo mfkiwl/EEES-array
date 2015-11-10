@@ -1,0 +1,99 @@
+	.text
+	.globl	cl_transpose
+	.align	2
+	.type	cl_transpose,@function
+	.ent       cl_transpose         # @cl_transpose
+cl_transpose:
+	.solverkernel
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       2
+	argspc     1, 0
+	argspc     0, 0
+	mnum       2
+	bb         0
+	rli        %a1
+	rli        %a0
+	mul        %r0, %GROUP_SIZE.X, %ITEM_ID.X
+	add        %r0, %r0, %ITEM_ID.Y
+	sll        %r0, %r0, 2
+	mloc       1
+	lw         %r0, %a1, %r0
+	mul        %r1, %GROUP_SIZE.X, %ITEM_ID.Y
+	add        %r1, %r1, %ITEM_ID.X
+	sll        %r1, %r1, 2
+	mloc       2
+	sw         %r0, %a0, %r1
+	ret        %RA
+	.end       cl_transpose
+$tmp0:
+	.size	cl_transpose, ($tmp0)-cl_transpose
+
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main                 # @main
+main:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       0
+	rvals      32
+	bb         0
+        mov        %a0, 2
+        call       _solver_set_comm_boundary_mode
+	numgr      1, 1, 1
+	grsize     4, 4, 1
+	mov        %r1, input
+	mov        %r0, _output
+        sra        %a0, %r0, 2
+        sra        %a1, %r1, 2
+	call       cl_transpose
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp1:
+	.size	main, ($tmp1)-main
+
+    .type   _output,@object
+    .vdata
+    .globl  _output
+_output:
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .long   0
+    .size   _output, 64
+
+    .type   input,@object
+    .vdata
+    .globl  input
+input:
+    .long   1
+    .long   2
+    .long   3
+    .long   4
+    .long   5
+    .long   6
+    .long   7
+    .long   8
+    .long   9
+    .long   10
+    .long   11
+    .long   12
+    .long   13
+    .long   14
+    .long   15
+    .long   16
+    .size   input, 64

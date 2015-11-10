@@ -1,0 +1,62 @@
+This file contains instructions to build the toolchain for the Solver SIMD
+processor framework
+
+Dependencies
+------------
+
+The following are required to build the tool chain
+
+ * CMake 2.6+ (http://www.cmake.org)
+ * C++ compiler, preferably Clang 3.x
+ * Lemon graph library 1.2.x (http://lemon.cs.elte.hu/)
+ * Python 2 and its development files, 2.6+ (http://www.python.org)
+ * LLVM (3.3, 3.4svn tested OK) (http://llvm.org)
+
+Some dependencies are optional for additional features:
+ * Sphinx: for generating documentation
+ * Modelsim or Icarus Verilog: for RTL simulation
+ * Solver-patched LLVM, to have a working C/C++/OpenCL compiler
+
+Compiling
+---------
+
+It is recommended to use so-called out-of-tree build. First create a build
+directory in the source folder (or any place you like) and go to there:
+  
+  mkdir build
+  cd build
+
+Then use cmake to configure the project:
+  
+  cmake ..
+
+You can use standard cmake variables to control the configuration. For example,
+the following command sets the C++ compiler to clang++ and the install prefix to
+~/local (default is g++ and /usr/local, respectively):
+
+  CC=clang CXX=clang++ cmake -DCMAKE_INSTALL_PREFIX=~/local ..
+
+To compile, run
+
+  make
+
+(Optional) To run the unit tests:
+
+  make unittest
+
+(Optional, recommended) To run the regression tests:
+
+  make check
+
+Installation
+------------
+
+If everything is OK, install the framework by running the following in the
+build directory:
+
+  make install
+
+Clean-up
+--------
+
+To clean up, just remove the content of the build directory.

@@ -1,0 +1,3 @@
+SET(SOLVER_PY_LIB_BUILD_DIR ${SIMD-TOOLCHAIN_BINARY_DIR}/lib/solver/python)
+ADD_SUBDIRECTORY(solver_sim)
+ADD_SUBDIRECTORY(solver_codegen)

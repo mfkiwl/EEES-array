@@ -1,0 +1,8 @@
+{
+    "search_path":"/home/eda/TSMCHOME/digital/Front_End/timing_power_noise/ECSM/tcbn65lp_200a",
+    "library":"tcbn65lptc_ecsm.lib",
+    "lef_lib":"/home/eda/TSMCHOME/digital/Back_End/lef/tcbn65lp_200a/lef/tcbn65lp_6lmT1.lef",
+    "cap_tab":"/home/eda/TSMCHOME/digital/Back_End/lef/tcbn65lp_200a/techfiles/captable/cln65lp_1p06m+alrdl_top1_typical.captable",
+    "sim_vlog":"/home/eda/TSMCHOME/digital/Front_End/verilog/tcbn65lp_200a/tcbn65lp.v",
+    "cds_lib":"/home/eda/TSMCHOME/cds.lib"
+}

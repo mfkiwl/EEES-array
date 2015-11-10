@@ -1,0 +1,44 @@
+library verilog;
+use verilog.vl_types.all;
+entity pe_array_top is
+    port(
+        iClk            : in     vl_logic;
+        iReset          : in     vl_logic;
+        iIMEM_IF_Instruction: in     vl_logic_vector(23 downto 0);
+        iData_Selection : in     vl_logic_vector(1 downto 0);
+        iBoundary_Mode_First_PE: in     vl_logic_vector(1 downto 0);
+        iBoundary_Mode_Last_PE: in     vl_logic_vector(1 downto 0);
+        iPredication    : in     vl_logic_vector(1 downto 0);
+        oPE0_AGU_DMEM_Write_Enable: out    vl_logic;
+        oPE0_AGU_DMEM_Read_Enable: out    vl_logic;
+        oPE0_AGU_DMEM_Address: out    vl_logic_vector(31 downto 0);
+        oPE0_AGU_DMEM_Opcode: out    vl_logic_vector(1 downto 0);
+        oPE0_AGU_DMEM_Byte_Select: out    vl_logic_vector(3 downto 0);
+        oPE0_AGU_DMEM_Store_Data: out    vl_logic_vector(31 downto 0);
+        iPE0_DMEM_EX_Data: in     vl_logic_vector(31 downto 0);
+        oPE1_AGU_DMEM_Write_Enable: out    vl_logic;
+        oPE1_AGU_DMEM_Read_Enable: out    vl_logic;
+        oPE1_AGU_DMEM_Address: out    vl_logic_vector(31 downto 0);
+        oPE1_AGU_DMEM_Opcode: out    vl_logic_vector(1 downto 0);
+        oPE1_AGU_DMEM_Byte_Select: out    vl_logic_vector(3 downto 0);
+        oPE1_AGU_DMEM_Store_Data: out    vl_logic_vector(31 downto 0);
+        iPE1_DMEM_EX_Data: in     vl_logic_vector(31 downto 0);
+        oPE2_AGU_DMEM_Write_Enable: out    vl_logic;
+        oPE2_AGU_DMEM_Read_Enable: out    vl_logic;
+        oPE2_AGU_DMEM_Address: out    vl_logic_vector(31 downto 0);
+        oPE2_AGU_DMEM_Opcode: out    vl_logic_vector(1 downto 0);
+        oPE2_AGU_DMEM_Byte_Select: out    vl_logic_vector(3 downto 0);
+        oPE2_AGU_DMEM_Store_Data: out    vl_logic_vector(31 downto 0);
+        iPE2_DMEM_EX_Data: in     vl_logic_vector(31 downto 0);
+        oPE3_AGU_DMEM_Write_Enable: out    vl_logic;
+        oPE3_AGU_DMEM_Read_Enable: out    vl_logic;
+        oPE3_AGU_DMEM_Address: out    vl_logic_vector(31 downto 0);
+        oPE3_AGU_DMEM_Opcode: out    vl_logic_vector(1 downto 0);
+        oPE3_AGU_DMEM_Byte_Select: out    vl_logic_vector(3 downto 0);
+        oPE3_AGU_DMEM_Store_Data: out    vl_logic_vector(31 downto 0);
+        iPE3_DMEM_EX_Data: in     vl_logic_vector(31 downto 0);
+        iCP_Data        : in     vl_logic_vector(31 downto 0);
+        oFirst_PE_Port1_Data: out    vl_logic_vector(31 downto 0);
+        oLast_PE_Port1_Data: out    vl_logic_vector(31 downto 0)
+    );
+end pe_array_top;

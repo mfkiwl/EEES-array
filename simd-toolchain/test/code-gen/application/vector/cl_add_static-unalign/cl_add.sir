@@ -1,0 +1,55 @@
+	.file	"/tmp/SCCTMP_ADD_CL_NGCP6Z.bc"
+	.text
+	.globl	cl_add
+	.align	2
+	.type	cl_add,@function
+	.ent       cl_add               # @cl_add
+cl_add:
+	.solverkernel
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       3
+	argspc     2, 3
+	argspc     1, 3
+	argspc     0, 3
+	mnum       3
+	bb         0
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	sll        %r0, %GLOBAL_ID.X, 2
+	mloc       1
+	lw         %r1, %a1, %r0
+	mloc       2
+	lw         %r2, %a2, %r0
+	add        %r1, %r2, %r1
+	mloc       3
+	sw         %r1, %a0, %r0
+	ret        %RA
+	.end       cl_add
+$tmp0:
+	.size	cl_add, ($tmp0)-cl_add
+
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main                 # @main
+main:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	args       0
+	rvals      32
+	bb         0
+	numgr      1, 1, 1
+	grsize     14, 1, 1
+	mov        %a1, 16
+	mov        %a2, 32
+	mov        %a0, %ZERO
+	call       cl_add
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp1:
+	.size	main, ($tmp1)-main
+
+

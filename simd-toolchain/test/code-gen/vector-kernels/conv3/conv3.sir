@@ -1,0 +1,57 @@
+	.text
+	.globl	cl_conv3
+	.align	2
+	.type	cl_conv3,@function
+	.ent       cl_conv3
+cl_conv3:
+	.solverkernel
+	.frame     %SP,0
+    args       2
+	argspc     1, 3
+	argspc     0, 3
+	mnum       4
+	bb         0
+	rli        %a1
+	rli        %a0
+	mov        %r2, %a1
+	mov        %r0, %a0
+    add        %r8, %GLOBAL_ID.X, -1
+    add        %r7, %GLOBAL_ID.X, -1
+    sll        %r7, %r7, 2
+	mloc       1
+	lw         %r4, %r2, %r7
+    add        %r7, %GLOBAL_ID.X, 1
+    sll        %r7, %r7, 2
+	mloc       2
+	lw         %r3, %r2, %r7
+	add        %r3, %r3, %r4
+	mul        %r3, %r3, -23
+    sll        %r1, %GLOBAL_ID.X, 2
+	mloc       3
+	lw         %r2, %r2, %r1
+	mul        %r2, %r2, 67
+	add        %r2, %r3, %r2
+	mloc       4
+	sw         %r2, %r0, %r1
+	ret        %RA
+	.end       cl_conv3
+$tmp0:
+	.size	cl_conv3, ($tmp0)-cl_conv3
+
+    .globl	cl_conv3_launch
+	.align	2
+	.type	cl_conv3_launch,@function
+	.ent       cl_conv3_launch 
+cl_conv3_launch:
+	.frame     %SP,0
+# BB#0:                                 # %entry
+	bb		   0
+	numgr      1, 1, 1
+	grsize     32, 1, 1
+    mov        %a0, 0
+    mov        %a1, 8
+	call	   cl_conv3
+	ret		   %RA
+	.end	   cl_conv3_launch
+$tmp1:
+    .size      cl_conv3_launch, ($tmp1)-cl_conv3_launch

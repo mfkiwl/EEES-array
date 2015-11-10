@@ -1,0 +1,127 @@
+	.file	"histogram256.c"
+	.text
+	.globl	main
+	.align	2
+	.type	main,@function
+	.ent       main
+main:
+	.frame     %SP,0
+	args       0
+        rvals      32
+	bb         0
+	mov        %a0, hist
+	mov        %a1, input
+	mov        %a2, 10
+	call       histogram256
+	mov        %v0, %ZERO
+	ret        %RA
+	.end       main
+$tmp0:
+	.size	main, ($tmp0)-main
+
+	.globl	histogram256
+	.align	2
+	.type	histogram256,@function
+	.ent       histogram256
+histogram256:
+	.frame     %SP,0
+	args       3
+	mnum       4
+	malias     3, 4
+	malias     2, 4
+	malias     2, 3
+	malias     1, 4
+	malias     1, 3
+	malias     1, 2
+	bb         0
+	succ       1
+	dom        1
+	rli        %a2
+	rli        %a1
+	rli        %a0
+	mov        %r0, %ZERO
+$BB1_1:
+	bb         1
+	loop       1
+	lext       1
+	lhdr       1, 1
+	pred       1
+	pred       0
+	succ       1
+	succ       2
+	dom        2
+	pdom       0
+	rli        %a1
+	rli        %a2
+	rli        %r0
+	rli        %a0
+	sll        %r1, %r0, 2
+	mloc       1
+	sw         %ZERO, %a0, %r1
+	add        %r0, %r0, 1
+	brne       %r0, 256, ($BB1_1)
+	bb         2
+	pred       1
+	succ       4
+	succ       3
+	dom        4
+	dom        3
+	pdom       1
+	rli        %a1
+	rli        %a2
+	rli        %a0
+	brle       %a2, 0, ($BB1_4)
+$BB1_3:
+	bb         3
+	loop       0
+	lext       0
+	lhdr       0, 1
+	pred       2
+	pred       3
+	succ       3
+	succ       4
+	rli        %a1
+	rli        %a2
+	rli        %a0
+	mloc       2
+	lw         %r0, %a1, 0
+	sll        %r0, %r0, 2
+	mloc       3
+	lw         %r1, %a0, %r0
+	add        %r1, %r1, 1
+	mloc       4
+	sw         %r1, %a0, %r0
+	add        %a1, %a1, 4
+	add        %a2, %a2, -1
+	brne       %a2, 0, ($BB1_3)
+$BB1_4:
+	bb         4
+	pred       3
+	pred       2
+	pdom       3
+	pdom       2
+	ret        %RA
+	.end       histogram256
+$tmp1:
+	.size	histogram256, ($tmp1)-histogram256
+
+	.type	input,@object
+	.data
+	.globl	input
+	.align	2
+input:
+	.long	9
+	.long	16
+	.long	13
+	.long	72
+	.long	101
+	.long	131
+	.long	76
+	.long	203
+	.long	113
+	.long	106
+	.size	input, 40
+
+	.type	hist,@object
+	.comm	hist,1024,4
+

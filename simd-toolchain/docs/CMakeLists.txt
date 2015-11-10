@@ -1,0 +1,53 @@
+IF(NOT DEFINED SPHINX_THEME)
+  SET(SPHINX_THEME default)
+ENDIF(NOT DEFINED SPHINX_THEME)
+
+IF(NOT DEFINED SPHINX_THEME_DIR)
+  SET(SPHINX_THEME_DIR)
+ENDIF(NOT DEFINED SPHINX_THEME_DIR)
+
+# configured documentation tools and intermediate build results
+SET(BINARY_BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/_build")
+
+# Sphinx cache with pickled ReST documents
+SET(SPHINX_CACHE_DIR "${CMAKE_CURRENT_BINARY_DIR}/_doctrees")
+
+# HTML output directory
+SET(SPHINX_HTML_DIR "${CMAKE_CURRENT_BINARY_DIR}/html")
+
+# Manpage output directory
+SET(SPHINX_MAN_DIR "${CMAKE_CURRENT_BINARY_DIR}/man")
+
+ADD_CUSTOM_TARGET(doc)
+
+ADD_CUSTOM_TARGET(es_simd_docs
+    ${SPHINX_EXECUTABLE}
+	-q -b html
+	-d "${SPHINX_CACHE_DIR}"
+	"${CMAKE_CURRENT_SOURCE_DIR}"
+	"${SPHINX_HTML_DIR}"
+	COMMENT "Building HTML documentation with Sphinx")
+ADD_DEPENDENCIES(doc es_simd_docs)
+
+ADD_CUSTOM_TARGET(es_simd_manpages
+    ${SPHINX_EXECUTABLE}
+	-q -b man
+	-d "${SPHINX_CACHE_DIR}"
+	"${CMAKE_CURRENT_SOURCE_DIR}"
+	"${SPHINX_MAN_DIR}"
+	COMMENT "Building manual pages with Sphinx")
+ADD_DEPENDENCIES(doc es_simd_manpages)
+
+INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html DESTINATION share/solver/docs)
+INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/man  DESTINATION share/solver/man)
+
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/Doxygen.cfg.in
+  ${CMAKE_CURRENT_BINARY_DIR}/Doxygen.cfg @ONLY)
+
+IF(DOXYGEN_FOUND)
+  ADD_CUSTOM_TARGET(doxygen
+    COMMAND ${DOXYGEN_EXECUTABLE} Doxygen.cfg
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  )
+  ADD_DEPENDENCIES(doc doxygen)
+ENDIF(DOXYGEN_FOUND)

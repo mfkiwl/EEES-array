@@ -1,0 +1,7 @@
+# do /home/shahnawaz/simd-toolchain/benchmark/vector/transpose/RTL-baseline-32b-4stage-bypass/misc/vsim.compile.do 
+# ** Error: /home/shahnawaz/simd-toolchain/benchmark/vector/transpose/RTL-baseline-32b-4stage-bypass/verilog/pe_bypass.v(164): (vlog-2730) Undefined variable: 'iRight_PE_POrt1_Plus4_Data'.
+# ** Error: /opt/Mentor/Modelsim/10.1a/modeltech/linux_x86_64/vlog failed.
+# Error in macro /home/shahnawaz/simd-toolchain/benchmark/vector/transpose/RTL-baseline-32b-4stage-bypass/misc/vsim.compile.do line 17
+# /opt/Mentor/Modelsim/10.1a/modeltech/linux_x86_64/vlog failed.
+#     while executing
+# "vlog -quiet +incdir+/home/shahnawaz/simd-toolchain/benchmark/vector/transpose/RTL-baseline-32b-4stage-bypass/define /home/shahnawaz/simd-toolchain/ben..."

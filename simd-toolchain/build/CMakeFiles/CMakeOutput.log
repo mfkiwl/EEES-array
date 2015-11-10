@@ -1,0 +1,279 @@
+The system is: Linux - 2.6.32-431.29.2.el6.x86_64 - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/local/bin/clang 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is Clang, found in "/home/shahnawaz/simd-toolchain/build/CMakeFiles/2.8.10.2/CompilerIdC/a.out"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /usr/local/bin/clang++ 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+
+The CXX compiler identification is Clang, found in "/home/shahnawaz/simd-toolchain/build/CMakeFiles/2.8.10.2/CompilerIdCXX/a.out"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec2018350063/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2018350063.dir/build.make CMakeFiles/cmTryCompileExec2018350063.dir/build
+gmake[1]: Entering directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2018350063.dir/testCCompiler.c.o
+/usr/local/bin/clang    -o CMakeFiles/cmTryCompileExec2018350063.dir/testCCompiler.c.o   -c /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTryCompileExec2018350063
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2018350063.dir/link.txt --verbose=1
+/usr/local/bin/clang         CMakeFiles/cmTryCompileExec2018350063.dir/testCCompiler.c.o  -o cmTryCompileExec2018350063 -rdynamic 
+gmake[1]: Leaving directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec1384941682/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1384941682.dir/build.make CMakeFiles/cmTryCompileExec1384941682.dir/build
+gmake[1]: Entering directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1384941682.dir/CMakeCCompilerABI.c.o
+/usr/local/bin/clang    -o CMakeFiles/cmTryCompileExec1384941682.dir/CMakeCCompilerABI.c.o   -c /usr/local/share/cmake-2.8/Modules/CMakeCCompilerABI.c
+Linking C executable cmTryCompileExec1384941682
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1384941682.dir/link.txt --verbose=1
+/usr/local/bin/clang       -v CMakeFiles/cmTryCompileExec1384941682.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec1384941682 -rdynamic  
+clang version 3.2 (tags/RELEASE_32/final)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+ "/usr/bin/ld" -export-dynamic --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec1384941682 /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../.. -L/lib -L/usr/lib CMakeFiles/cmTryCompileExec1384941682.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crtn.o
+gmake[1]: Leaving directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:/usr/bin/gmake "cmTryCompileExec1384941682/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1384941682.dir/build.make CMakeFiles/cmTryCompileExec1384941682.dir/build]
+  ignore line: [gmake[1]: Entering directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/local/bin/cmake -E cmake_progress_report /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building C object CMakeFiles/cmTryCompileExec1384941682.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/local/bin/clang    -o CMakeFiles/cmTryCompileExec1384941682.dir/CMakeCCompilerABI.c.o   -c /usr/local/share/cmake-2.8/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTryCompileExec1384941682]
+  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1384941682.dir/link.txt --verbose=1]
+  ignore line: [/usr/local/bin/clang       -v CMakeFiles/cmTryCompileExec1384941682.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec1384941682 -rdynamic  ]
+  ignore line: [clang version 3.2 (tags/RELEASE_32/final)]
+  ignore line: [Target: x86_64-unknown-linux-gnu]
+  ignore line: [Thread model: posix]
+  link line: [ "/usr/bin/ld" -export-dynamic --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec1384941682 /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../.. -L/lib -L/usr/lib CMakeFiles/cmTryCompileExec1384941682.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crtn.o]
+    arg [/usr/bin/ld] ==> ignore
+    arg [-export-dynamic] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec1384941682] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crt1.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crti.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtbegin.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.6] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64]
+    arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+    arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../..]
+    arg [-L/lib] ==> dir [/lib]
+    arg [-L/usr/lib] ==> dir [/usr/lib]
+    arg [CMakeFiles/cmTryCompileExec1384941682.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [-lc] ==> lib [c]
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtend.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crtn.o] ==> ignore
+  remove lib [gcc]
+  remove lib [gcc_s]
+  remove lib [gcc]
+  remove lib [gcc_s]
+  collapse dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.4.6]
+  collapse dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64] ==> [/usr/lib64]
+  collapse dir [/lib/../lib64] ==> [/lib64]
+  collapse dir [/usr/lib/../lib64] ==> [/usr/lib64]
+  collapse dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../..] ==> [/usr/lib]
+  collapse dir [/lib] ==> [/lib]
+  collapse dir [/usr/lib] ==> [/usr/lib]
+  implicit libs: [c]
+  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.4.6;/usr/lib64;/lib64;/usr/lib;/lib]
+
+
+Determining if the CXX compiler works passed with the following output:
+Change Dir: /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec3723563396/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3723563396.dir/build.make CMakeFiles/cmTryCompileExec3723563396.dir/build
+gmake[1]: Entering directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3723563396.dir/testCXXCompiler.cxx.o
+/usr/local/bin/clang++     -o CMakeFiles/cmTryCompileExec3723563396.dir/testCXXCompiler.cxx.o -c /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTryCompileExec3723563396
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3723563396.dir/link.txt --verbose=1
+/usr/local/bin/clang++          CMakeFiles/cmTryCompileExec3723563396.dir/testCXXCompiler.cxx.o  -o cmTryCompileExec3723563396 -rdynamic 
+gmake[1]: Leaving directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec392792369/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec392792369.dir/build.make CMakeFiles/cmTryCompileExec392792369.dir/build
+gmake[1]: Entering directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec392792369.dir/CMakeCXXCompilerABI.cpp.o
+/usr/local/bin/clang++     -o CMakeFiles/cmTryCompileExec392792369.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-2.8/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTryCompileExec392792369
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec392792369.dir/link.txt --verbose=1
+/usr/local/bin/clang++        -v CMakeFiles/cmTryCompileExec392792369.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec392792369 -rdynamic  
+clang version 3.2 (tags/RELEASE_32/final)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+ "/usr/bin/ld" -export-dynamic --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec392792369 /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../.. -L/lib -L/usr/lib CMakeFiles/cmTryCompileExec392792369.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crtn.o
+gmake[1]: Leaving directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+
+
+Parsed CXX implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:/usr/bin/gmake "cmTryCompileExec392792369/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTryCompileExec392792369.dir/build.make CMakeFiles/cmTryCompileExec392792369.dir/build]
+  ignore line: [gmake[1]: Entering directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/local/bin/cmake -E cmake_progress_report /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building CXX object CMakeFiles/cmTryCompileExec392792369.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/local/bin/clang++     -o CMakeFiles/cmTryCompileExec392792369.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-2.8/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTryCompileExec392792369]
+  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec392792369.dir/link.txt --verbose=1]
+  ignore line: [/usr/local/bin/clang++        -v CMakeFiles/cmTryCompileExec392792369.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec392792369 -rdynamic  ]
+  ignore line: [clang version 3.2 (tags/RELEASE_32/final)]
+  ignore line: [Target: x86_64-unknown-linux-gnu]
+  ignore line: [Thread model: posix]
+  link line: [ "/usr/bin/ld" -export-dynamic --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec392792369 /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../.. -L/lib -L/usr/lib CMakeFiles/cmTryCompileExec392792369.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crtn.o]
+    arg [/usr/bin/ld] ==> ignore
+    arg [-export-dynamic] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec392792369] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crt1.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crti.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtbegin.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.6] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64]
+    arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+    arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../..]
+    arg [-L/lib] ==> dir [/lib]
+    arg [-L/usr/lib] ==> dir [/usr/lib]
+    arg [CMakeFiles/cmTryCompileExec392792369.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [-lstdc++] ==> lib [stdc++]
+    arg [-lm] ==> lib [m]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lc] ==> lib [c]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/crtend.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64/crtn.o] ==> ignore
+  remove lib [gcc_s]
+  remove lib [gcc]
+  remove lib [gcc_s]
+  remove lib [gcc]
+  collapse dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.4.6]
+  collapse dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../../../lib64] ==> [/usr/lib64]
+  collapse dir [/lib/../lib64] ==> [/lib64]
+  collapse dir [/usr/lib/../lib64] ==> [/usr/lib64]
+  collapse dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.6/../../..] ==> [/usr/lib]
+  collapse dir [/lib] ==> [/lib]
+  collapse dir [/usr/lib] ==> [/usr/lib]
+  implicit libs: [stdc++;m;c]
+  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.4.6;/usr/lib64;/lib64;/usr/lib;/lib]
+
+
+Determining if files stdint.h exist passed with the following output:
+Change Dir: /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec1603078533/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1603078533.dir/build.make CMakeFiles/cmTryCompileExec1603078533.dir/build
+gmake[1]: Entering directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1603078533.dir/CheckIncludeFiles.c.o
+/usr/local/bin/clang    -o CMakeFiles/cmTryCompileExec1603078533.dir/CheckIncludeFiles.c.o   -c /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+Linking C executable cmTryCompileExec1603078533
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1603078533.dir/link.txt --verbose=1
+/usr/local/bin/clang         CMakeFiles/cmTryCompileExec1603078533.dir/CheckIncludeFiles.c.o  -o cmTryCompileExec1603078533 -rdynamic 
+gmake[1]: Leaving directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+
+
+Determining if files stdlib.h exist passed with the following output:
+Change Dir: /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec4173053432/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec4173053432.dir/build.make CMakeFiles/cmTryCompileExec4173053432.dir/build
+gmake[1]: Entering directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec4173053432.dir/CheckIncludeFiles.c.o
+/usr/local/bin/clang    -o CMakeFiles/cmTryCompileExec4173053432.dir/CheckIncludeFiles.c.o   -c /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+Linking C executable cmTryCompileExec4173053432
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4173053432.dir/link.txt --verbose=1
+/usr/local/bin/clang         CMakeFiles/cmTryCompileExec4173053432.dir/CheckIncludeFiles.c.o  -o cmTryCompileExec4173053432 -rdynamic 
+gmake[1]: Leaving directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+
+
+Determining if files assert.h exist passed with the following output:
+Change Dir: /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec3129661679/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3129661679.dir/build.make CMakeFiles/cmTryCompileExec3129661679.dir/build
+gmake[1]: Entering directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3129661679.dir/CheckIncludeFiles.c.o
+/usr/local/bin/clang    -o CMakeFiles/cmTryCompileExec3129661679.dir/CheckIncludeFiles.c.o   -c /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+Linking C executable cmTryCompileExec3129661679
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3129661679.dir/link.txt --verbose=1
+/usr/local/bin/clang         CMakeFiles/cmTryCompileExec3129661679.dir/CheckIncludeFiles.c.o  -o cmTryCompileExec3129661679 -rdynamic 
+gmake[1]: Leaving directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+
+
+Determining if files execinfo.h exist passed with the following output:
+Change Dir: /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec1588035702/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1588035702.dir/build.make CMakeFiles/cmTryCompileExec1588035702.dir/build
+gmake[1]: Entering directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1588035702.dir/CheckIncludeFiles.c.o
+/usr/local/bin/clang    -o CMakeFiles/cmTryCompileExec1588035702.dir/CheckIncludeFiles.c.o   -c /home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+Linking C executable cmTryCompileExec1588035702
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1588035702.dir/link.txt --verbose=1
+/usr/local/bin/clang         CMakeFiles/cmTryCompileExec1588035702.dir/CheckIncludeFiles.c.o  -o cmTryCompileExec1588035702 -rdynamic 
+gmake[1]: Leaving directory `/home/shahnawaz/simd-toolchain/build/CMakeFiles/CMakeTmp'
+
+

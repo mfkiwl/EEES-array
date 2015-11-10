@@ -1,0 +1,47 @@
+library verilog;
+use verilog.vl_types.all;
+entity pe_id is
+    port(
+        iClk            : in     vl_logic;
+        iReset          : in     vl_logic;
+        iUpdate_Flag    : in     vl_logic_vector(1 downto 0);
+        iIF_ID_Predication: in     vl_logic_vector(1 downto 0);
+        iEX_ID_P0       : in     vl_logic;
+        iEX_ID_P1       : in     vl_logic;
+        iID_ID_RF_Write_Addr: in     vl_logic_vector(4 downto 0);
+        iID_ID_RF_WriteBack: in     vl_logic_vector(2 downto 0);
+        iID_ID_ALU_Opcode: in     vl_logic_vector(3 downto 0);
+        iID_ID_Is_ALU   : in     vl_logic;
+        iID_ID_LSU_Write_Enable: in     vl_logic;
+        iID_ID_LSU_Read_Enable: in     vl_logic;
+        iID_ID_LSU_Opcode: in     vl_logic_vector(1 downto 0);
+        iID_ID_MUL_SHIFT_LOGIC_Opcode: in     vl_logic_vector(2 downto 0);
+        iID_ID_Is_MUL   : in     vl_logic;
+        iID_ID_Is_Shift : in     vl_logic;
+        iID_ID_Is_MUL_SHIFT_LOGIC: in     vl_logic;
+        oID_EX_RF_Write_Addr: out    vl_logic_vector(4 downto 0);
+        oID_EX_RF_WriteBack: out    vl_logic_vector(2 downto 0);
+        oID_EX_Write_Shadow_Register: out    vl_logic;
+        oID_EX_ALU_Opcode: out    vl_logic_vector(3 downto 0);
+        oID_EX_ALU_Operand_A: out    vl_logic_vector(31 downto 0);
+        oID_EX_ALU_Operand_B: out    vl_logic_vector(31 downto 0);
+        oID_LSU_Memory_Write_Enable: out    vl_logic;
+        oID_LSU_Memory_Read_Enable: out    vl_logic;
+        oID_LSU_Operand_A: out    vl_logic_vector(31 downto 0);
+        oID_LSU_Operand_B: out    vl_logic_vector(31 downto 0);
+        oID_LSU_Opcode  : out    vl_logic_vector(1 downto 0);
+        oID_LSU_Store_Data: out    vl_logic_vector(31 downto 0);
+        oID_EX_MUL_SHIFT_LOGIC_Opcode: out    vl_logic_vector(2 downto 0);
+        oID_EX_MUL_SHIFT_LOGIC_Operand_A: out    vl_logic_vector(31 downto 0);
+        oID_EX_MUL_SHIFT_LOGIC_Operand_B: out    vl_logic_vector(31 downto 0);
+        oID_EX_Is_Multiplication: out    vl_logic;
+        oID_EX_Is_Shift : out    vl_logic;
+        oID_EX_Update_Flag: out    vl_logic;
+        oID_EX_Update_P0: out    vl_logic;
+        oID_EX_Update_P1: out    vl_logic;
+        iBP_ID_Operand_A: in     vl_logic_vector(31 downto 0);
+        iBP_ID_Operand_B: in     vl_logic_vector(31 downto 0);
+        iBP_ID_LSU_Store_Data: in     vl_logic_vector(31 downto 0);
+        oID_BP_Is_SUB   : out    vl_logic
+    );
+end pe_id;

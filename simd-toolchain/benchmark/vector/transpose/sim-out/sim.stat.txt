@@ -1,0 +1,55 @@
+>> BEGIN baseline statistics
+
+>> BEGIN code frequency
+0:1:s.ADD|N|n|i
+1:1:s.SW|n|w|i|M
+2:1:s.ZIMM|i
+3:1:s.ZIMM|i:v.ADD|R|n|i
+4:1:s.ADD|R|n|i:v.ADD|R|r|i
+5:1:s.ADD|R|n|i:v.OR|R|r|i
+6:5:s.ADD|R|w|i:v.SLL|N|w|i
+7:5:s.SFLTS|F|w|i:v.LW|N|w|i|m
+8:5:v.ADD|R|r|r
+9:5:s.BF|f|i:v.ADD|R|r|i
+10:5:s.ADD|N|r|i:v.ADD|N|w|i
+11:2:s.SFGES|F|w|i:v.ADD|N|c|i
+12:2:s.BF|f|i:v.ADD|N|c|i
+13:2:s.ADD|R|r|i:v.ADD|N|c|i
+14:5:s.SFEQ|F|w|i:v.SLL|N|r|i
+15:5:s.BF|f|i:v.SW|w|w|i|M
+16:5:s.SFEQ|F|r|i:v.ADD|N|c|i
+17:3:s.BF|f|i:v.SW|w|w|i|M
+18:3:v.ADD|N|c|i
+19:1:v.SW|w|w|i|M
+20:5:s.SFEQ|F|r|r:v.AND|R|r|r
+21:5:s.BNF|f|i:v.ADD|N|r|i
+22:5:s.ADD|R|r|i:v.AND|R|w|r
+23:4:s.ADD|R|w|i:v.SLL|N|w|i
+24:4:s.SFLTS|F|w|i:v.LW|N|w|i|m
+25:4:v.ADD|R|r|r
+26:4:s.BF|f|i:v.ADD|R|r|i
+27:4:s.ADD|N|r|i:v.ADD|N|w|i
+28:1:s.SFGES|F|w|i:v.ADD|N|c|i
+29:1:s.BF|f|i:v.ADD|N|c|i
+30:1:s.ADD|R|r|i:v.ADD|N|c|i
+31:4:s.SFEQ|F|w|i:v.SLL|N|r|i
+32:4:s.BF|f|i:v.SW|w|w|i|M
+33:4:s.SFEQ|F|r|i:v.ADD|N|c|i
+34:2:s.BF|f|i:v.SW|w|w|i|M
+35:2:v.ADD|N|c|i
+36:1:v.SW|w|w|i|M
+37:4:s.SFEQ|F|r|i:v.AND|R|r|r
+38:4:s.BNF|f|i:v.ADD|N|r|i
+39:4:s.ADD|R|r|i:v.AND|R|w|r
+>> END code frequency
+
+>> BEGIN CP statistics
+issued=126
+branch=35
+taken_br=20
+>> END CP statistics
+
+>> BEGIN PE statistics
+>> END PE statistics
+
+>> END baseline statistics
